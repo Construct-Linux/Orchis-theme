@@ -318,51 +318,8 @@ install_package() {
 }
 
 check_shell() {
-  if [[ "$shell" == "38" ]]; then
-    GS_VERSION="3-28"
-    echo "Install for gnome-shell version < 40.0"
-  elif [[ "$shell" == "40" ]]; then
-    GS_VERSION="40-0"
-    echo "Install for gnome-shell version = 40.0"
-  elif [[ "$shell" == "42" ]]; then
-    GS_VERSION="42-0"
-    echo "Install for gnome-shell version = 42.0"
-  elif [[ "$shell" == "44" ]]; then
-    GS_VERSION="44-0"
-    echo "Install for gnome-shell version = 44.0"
-  elif [[ "$shell" == "46" ]]; then
-    GS_VERSION="46-0"
-    echo "Install for gnome-shell version = 46.0"
-  elif [[ "$shell" == "47" ]]; then
-    GS_VERSION="47-0"
-    echo "Install for gnome-shell version = 47.0"
-  elif [[ "$shell" == "48" ]]; then
-    GS_VERSION="48-0"
-    echo "Install for gnome-shell version = 48.0"
-  elif [[ "$(command -v gnome-shell)" ]]; then
-    gnome-shell --version
-    GNOME_SHELL="true"
-    SHELL_VERSION="$(gnome-shell --version | cut -d ' ' -f 3 | cut -d . -f -1)"
-    if [[ "${SHELL_VERSION:-}" -ge "48" ]]; then
-      GS_VERSION="48-0"
-    elif [[ "${SHELL_VERSION:-}" -ge "47" ]]; then
-      GS_VERSION="47-0"
-    elif [[ "${SHELL_VERSION:-}" -ge "46" ]]; then
-      GS_VERSION="46-0"
-    elif [[ "${SHELL_VERSION:-}" -ge "44" ]]; then
-      GS_VERSION="44-0"
-    elif [[ "${SHELL_VERSION:-}" -ge "42" ]]; then
-      GS_VERSION="42-0"
-    elif [[ "${SHELL_VERSION:-}" -ge "40" ]]; then
-      GS_VERSION="40-0"
-    else
-      GS_VERSION="3-28"
-    fi
-  else
-    echo "'gnome-shell' not found, using styles for last gnome-shell version available."
-    GS_VERSION="48-0"
-    GNOME_SHELL="false"
-  fi
+  # This fork builds for the one GNOME Shell its desktop runs.
+  GS_VERSION="51-0"
 }
 
 tweaks_temp() {
@@ -409,10 +366,6 @@ install_dracula() {
 
 activities_style() {
   sed -i "/\$activities:/s/normal/icon/" $SRC_DIR/_sass/_tweaks-temp.scss
-}
-
-gnome_version() {
-  sed -i "/\$gnome_version:/s/old/new/" $SRC_DIR/_sass/_tweaks-temp.scss
 }
 
 accent_type() {
@@ -492,10 +445,6 @@ theme_tweaks() {
 
   if [[ "$activities" = "icon" ]] ; then
     activities_style
-  fi
-
-  if [[ "$GNOME_SHELL" = "true" && ("$GS_VERSION" = "47-0" || "$GS_VERSION" = "48-0") ]] ; then
-    gnome_version
   fi
 
   if [[ "$fixed" = "true" || "$dracula" == "true" || "$nord" == "true" ]] ; then

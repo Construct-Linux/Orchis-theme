@@ -39,14 +39,6 @@ OPTIONS:
                           ...
                           13. 15px
 
-  --shell                 install gnome-shell version [38|40|42|44|46] (Without this option script will detect shell version and install the right theme)
-                          1. 38                 Gnome-shell version <= 38.0
-                          2. 40                 Gnome-shell version = 40.0
-                          3. 42                 Gnome-shell version = 42.0
-                          4. 44                 Gnome-shell version = 44.0
-                          5. 46                 Gnome-shell version = 46.0
-                          6. 47                 Gnome-shell version = 47.0
-                          7. 48                 Gnome-shell version = 48.0
 
   -r, --remove,
   -u, --uninstall         Uninstall/Remove installed themes
@@ -91,49 +83,6 @@ while [[ "$#" -gt 0 ]]; do
       corner="$2"
       echo -e "Change round corner ${corner} value ..."
       shift 2
-      ;;
-    --shell)
-      shift
-      for shell in $@; do
-        case "$shell" in
-          38)
-            shell="38"
-            shift
-            ;;
-          40)
-            shell="40"
-            shift
-            ;;
-          42)
-            shell="42"
-            shift
-            ;;
-          44)
-            shell="44"
-            shift
-            ;;
-          46)
-            shell="46"
-            shift
-            ;;
-          47)
-            shell="47"
-            shift
-            ;;
-          48)
-            shell="48"
-            shift
-            ;;
-          -*)
-            break
-            ;;
-          *)
-            echo "ERROR: Unrecognized shell variant '$1'."
-            echo "Try '$0 --help' for more information."
-            exit 1
-            ;;
-        esac
-      done
       ;;
     --tweaks)
       shift

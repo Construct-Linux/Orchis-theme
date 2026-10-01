@@ -69,14 +69,6 @@ OPTIONS:
                           ...
                           13. 15px
 
-  --shell                 install gnome-shell version [38|40|42|44|46] (Without this option script will detect shell version and install the right theme)
-                          1. 38                 Gnome-shell version <= 38.0
-                          2. 40                 Gnome-shell version = 40.0
-                          3. 42                 Gnome-shell version = 42.0
-                          4. 44                 Gnome-shell version = 44.0
-                          5. 46                 Gnome-shell version = 46.0
-                          6. 47                 Gnome-shell version = 47.0
-                          7. 48                 Gnome-shell version = 48.0
 
   -r, --remove,
   -u, --uninstall         Uninstall/Remove installed themes
