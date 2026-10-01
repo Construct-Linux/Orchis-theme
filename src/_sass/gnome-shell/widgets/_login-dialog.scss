@@ -40,6 +40,8 @@
 
   .cancel-button,
   .switch-user-button,
+  .a11y-button,
+  .login-dialog-auth-menu-button,
   .login-dialog-session-list-button {
     padding: 0;
     border-radius: 99px;
@@ -66,7 +68,7 @@
 
 .login-dialog-logo-bin { padding: 24px 0px; }
 .login-dialog-banner { color: on(dark, secondary); }
-.login-dialog-button-box { width: 23em; spacing: 5px; }
+.login-dialog-button-box { width: 23em * 1.2; height: 4em; }
 .login-dialog-message { text-align: center; }
 .login-dialog-user-selection-box { padding: 100px 0px; }
 
@@ -134,13 +136,172 @@
 .login-dialog-prompt-layout {
   padding-top: 24px;
   padding-bottom: 12px;
-  spacing: $space-size * 2;
-  width: 23em;
+  width: 23em * 1.2;
+
+  &.web-login-active { width: 23em * 1.5; }
 }
 
+.login-dialog-input-well { spacing: $space-size * 2; }
+
+// The entry holds the next button in its well: room for it at the end.
 .login-dialog-prompt-entry {
   height: 1.5em;
+  &:ltr { padding-right: 2.5em; }
+  &:rtl { padding-left: 2.5em; }
 }
+
+.login-dialog-default-button-well {
+  &:ltr { margin-right: 0.5em; }
+  &:rtl { margin-left: 0.5em; }
+}
+
+.login-dialog-button.next-button {
+  padding: 0;
+  border: none;
+  background-color: transparent;
+  color: on(dark, secondary);
+
+  &:hover,&:focus { color: on(dark); }
+  &:insensitive { color: on(dark, disabled); }
+}
+
+.login-dialog-bottom-button-group {
+  padding: 32px;
+  spacing: 16px;
+}
+
+// Authentication methods, when there is more than one.
+.login-dialog-auth-list-view {
+  -st-vfade-offset: 3em;
+  max-height: 13em;
+}
+
+.login-dialog-auth-list { spacing: $space-size * 1.5; }
+
+.login-dialog-auth-list-title,
+.login-dialog-auth-list-item {
+  border-radius: $material-radius;
+  color: on(dark);
+}
+
+.login-dialog-auth-list-title {
+  margin: 0.5em ($margin-size * 5);
+  background-color: on(dark, divider);
+}
+
+.login-dialog-auth-list-title-label {
+  @extend %title_4;
+  padding: $space-size;
+  text-align: center;
+}
+
+.login-dialog-auth-list-item {
+  min-height: 3em;
+  padding: $space-size * 1.5;
+  margin-bottom: $margin-size;
+  margin-right: $margin-size;
+  background-color: on(dark, divider);
+
+  &:hover,&:focus,&:selected { background-color: on(dark, track); }
+  &:active { background-color: on(dark, disabled); }
+  &.compact { min-height: 1.3em; }
+}
+
+.login-dialog-auth-list-item-title,
+.login-dialog-auth-list-item-subtitle {
+  @extend %heading;
+  text-align: center;
+  padding: ($space-size * 0.3) 2em;
+}
+
+.login-dialog-auth-list-item-title { color: on(dark); }
+.login-dialog-auth-list-item-subtitle { color: on(dark, secondary); font-weight: 500; }
+
+.login-dialog-item-icon {
+  width: 1.3em;
+  height: 1.3em;
+  color: on(dark);
+  padding: ($space-size * 0.7) $space-size;
+  border-radius: $material-radius;
+  &:hover { background-color: on(dark, divider); }
+}
+
+.login-dialog-item-icon-popup-labels {
+  spacing: $space-size * 0.5;
+  @extend %heading;
+  text-align: center;
+}
+
+.login-dialog-auth-menu-button-popup {
+  padding: $space-size * 3;
+  margin-right: $space-size * 2;
+
+  .login-dialog-auth-menu-item-section {
+    padding-top: $space-size;
+    &:first-child { padding-top: 0; }
+  }
+
+  .login-dialog-auth-menu-item-section-label { @extend %heading; }
+
+  .login-dialog-auth-menu-item-icon {
+    icon-size: $medium-icon-size;
+    margin-right: $margin-size * 2;
+  }
+
+  .login-dialog-auth-menu-item-box { spacing: $space-size * 0.5; }
+  .login-dialog-auth-menu-item-box-name { font-weight: bold; }
+}
+
+.login-dialog-auth-menu-button-indicator {
+  background-color: transparent !important;
+  margin: 32px;
+
+  .login-dialog-auth-menu-button-indicator-icons { spacing: $space-size * 3; }
+  .login-dialog-auth-menu-button-indicator-icon { icon-size: 2em; }
+  .login-dialog-auth-menu-button-indicator-description { margin-left: $space-size * 2; }
+}
+
+// Smartcard and web login: a full-width button, and the URL and code a browser elsewhere needs.
+.login-button,
+.web-login-prompt-button {
+  @include fontsize(13);
+  font-weight: bold;
+  text-align: center;
+  color: on(dark);
+  border-radius: $circular-radius;
+  background-color: on(dark, divider);
+
+  &:hover,&:focus { background-color: on(dark, track); }
+  &:active { background-color: on(dark, disabled); }
+}
+
+.login-button {
+  padding: 0;
+  margin: 0.2em ($margin-size * 5);
+  min-width: 12em;
+}
+
+.web-login-prompt-button {
+  padding: ($space-size * 2.5) ($space-size * 4);
+  margin: ($margin-size * 6) ($margin-size * 2);
+  min-width: 8em;
+}
+
+.web-login-prompt {
+  padding: $space-size ($space-size * 4.5);
+  spacing: 1.75em;
+}
+
+.web-login-spinner {
+  background-color: rgba(black, 0.5);
+  border-radius: 50px;
+}
+
+.web-login-title-label { color: on(dark, secondary); text-align: center; }
+.web-login-url-label { @extend %monospace; color: on(dark); text-align: center; }
+.web-login-url-label-long { @include fontsize(9); }
+.web-login-code-title-label { color: on(dark); text-align: center; }
+.web-login-code-label { color: on(dark); font-weight: bold; text-align: center; }
 
 .login-dialog-prompt-label {
   color: on(dark, disabled);

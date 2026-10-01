@@ -27,14 +27,14 @@
 .unlock-dialog-notifications-container {
   margin: 12px 0;
   spacing: 6px;
-  width: 23em;
+  width: 29em;
   background-color: transparent;
   .summary-notification-stack-scrollview {
     padding-top: 0;
     padding-bottom: 0;
   }
 
-  .notification,
+  .message,
   .unlock-dialog-notification-source {
     padding: 12px 6px;
     border: none;
@@ -43,6 +43,9 @@
     border-radius: $material-radius;
 
     &.critical { background-color: transparentize($system, 0.1) }
+    &:active { background-color: transparentize($tooltip, 0.1); }
+
+    .message-header { color: on(dark, secondary); }
   }
 }
 
@@ -74,5 +77,29 @@
     background-color: transparentize($tooltip, 0.7);
     &:hover, &:focus { background-color: transparentize($tooltip,0.5); }
     &:active { background-color: transparentize($primary,0.5); }
+  }
+}
+
+// Parental controls: the screen time limit, over the unlock dialog.
+.parental-controls-shield {
+  spacing: 0.75em;
+
+  .parental-controls-shield-title {
+    margin-top: 0.6em;
+    @extend %title_4;
+    text-align: center;
+  }
+
+  .parental-controls-shield-description { text-align: center; }
+
+  .parental-controls-shield-button {
+    margin-top: 0.85em;
+    @extend %title_4;
+    padding: ($margin-size * 4) ($margin-size * 11);
+    color: on(dark);
+    background-color: on(dark, divider);
+    border-radius: $circular-radius;
+
+    &:hover,&:focus { background-color: on(dark, track); }
   }
 }
