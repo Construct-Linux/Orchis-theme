@@ -57,6 +57,9 @@
 }
 
 // "no results" text
+// "No results": the icon above the text since GNOME 49.
+.search-statusbox { spacing: $space-size * 4; }
+
 .search-statustext {
   @extend %status_text;
   color: on(dark, secondary);

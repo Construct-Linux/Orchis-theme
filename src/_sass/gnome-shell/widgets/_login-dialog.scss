@@ -308,3 +308,12 @@
   font-size: 1em;
   padding-top: 1em;
 }
+
+// The web login's QR code: dark modules on white, the contrast a phone's camera needs.
+.qr-code {
+  border-radius: $material-radius;
+  border-width: 1em;
+  background-color: white;
+  border-color: white;
+  color: black;
+}
