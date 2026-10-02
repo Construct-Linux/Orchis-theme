@@ -53,12 +53,6 @@ install() {
     local else_icon_dark="$icon_color"
   fi
 
-  if [[ "$color" == '-Light' ]]; then
-    local ELSE_LIGHT="$color"
-    local icon_color='-light'
-    local else_icon_light="$icon_color"
-  fi
-
   local THEME_DIR="${1}/${2}${3}${4}${5}${6}"
 
   [[ -d "$THEME_DIR" ]] && rm -rf "$THEME_DIR"
@@ -78,7 +72,6 @@ install() {
   echo "" >>                                                                                 "$THEME_DIR/index.theme"
   echo "[X-GNOME-Metatheme]" >>                                                              "$THEME_DIR/index.theme"
   echo "GtkTheme=${2}${3}${4}${5}${6}" >>                                                    "$THEME_DIR/index.theme"
-  echo "MetacityTheme=${2}${3}${4}${5}${6}" >>                                               "$THEME_DIR/index.theme"
   echo "IconTheme=Tela-circle${else_icon_dark:-}" >>                                         "$THEME_DIR/index.theme"
   echo "CursorTheme=Vimix${else_icon_dark:-}" >>                                             "$THEME_DIR/index.theme"
   echo "ButtonLayout=close,minimize,maximize:menu" >>                                        "$THEME_DIR/index.theme"
@@ -134,72 +127,6 @@ install() {
   if [[ "$color" != '-Dark' ]]; then
     { echo '@media (prefers-color-scheme: dark) {'; cat "$THEME_DIR/gtk-4.0/gtk-dark.css"; echo '}'; } >> "$THEME_DIR/gtk-4.0/gtk.css"
   fi
-
-  mkdir -p                                                                                   "$THEME_DIR/xfwm4"
-  cp -r "$SRC_DIR/xfwm4/xpm/assets/"*.xpm                                                    "$THEME_DIR/xfwm4"
-  cp -r "$SRC_DIR/xfwm4/themerc"                                                             "$THEME_DIR/xfwm4/themerc"
-  mkdir -p                                                                                   "$THEME_DIR-hdpi/xfwm4"
-  cp -r "$SRC_DIR/xfwm4/xpm/assets-hdpi/"*.xpm                                               "$THEME_DIR-hdpi/xfwm4"
-  cp -r "$SRC_DIR/xfwm4/themerc"                                                             "$THEME_DIR-hdpi/xfwm4/themerc"
-  mkdir -p                                                                                   "$THEME_DIR-xhdpi/xfwm4"
-  cp -r "$SRC_DIR/xfwm4/svg/assets${ELSE_LIGHT:-}-xhdpi/"*.svg                               "$THEME_DIR-xhdpi/xfwm4"
-  cp -r "$SRC_DIR/xfwm4/xpm/assets-xhdpi/"*.xpm                                              "$THEME_DIR-xhdpi/xfwm4"
-  cp -r "$SRC_DIR/xfwm4/themerc"                                                             "$THEME_DIR-xhdpi/xfwm4/themerc"
-
-  if [[ "$macstyle" == "true" ]] ; then
-    cp -r "$SRC_DIR/xfwm4/svg/assets${ELSE_LIGHT:-}-mac/"*.svg                               "$THEME_DIR/xfwm4"
-    cp -r "$SRC_DIR/xfwm4/svg/assets${ELSE_LIGHT:-}-mac-hdpi/"*.svg                          "$THEME_DIR-hdpi/xfwm4"
-    cp -r "$SRC_DIR/xfwm4/svg/assets${ELSE_LIGHT:-}-mac-xhdpi/"*.svg                         "$THEME_DIR-xhdpi/xfwm4"
-    mv -f "$THEME_DIR/xfwm4/button-mac-active.xpm"                                           "$THEME_DIR/xfwm4/button-active.xpm"
-    mv -f "$THEME_DIR-hdpi/xfwm4/button-mac-active.xpm"                                      "$THEME_DIR-hdpi/xfwm4/button-active.xpm"
-    mv -f "$THEME_DIR-xhdpi/xfwm4/button-mac-active.xpm"                                     "$THEME_DIR-xhdpi/xfwm4/button-active.xpm"
-    mv -f "$THEME_DIR/xfwm4/button-mac-inactive.xpm"                                         "$THEME_DIR/xfwm4/button-inactive.xpm"
-    mv -f "$THEME_DIR-hdpi/xfwm4/button-mac-inactive.xpm"                                    "$THEME_DIR-hdpi/xfwm4/button-inactive.xpm"
-    mv -f "$THEME_DIR-xhdpi/xfwm4/button-mac-inactive.xpm"                                   "$THEME_DIR-xhdpi/xfwm4/button-inactive.xpm"
-  else
-    cp -r "$SRC_DIR/xfwm4/svg/assets${ELSE_LIGHT:-}/"*.svg                                   "$THEME_DIR/xfwm4"
-    cp -r "$SRC_DIR/xfwm4/svg/assets${ELSE_LIGHT:-}-hdpi/"*.svg                              "$THEME_DIR-hdpi/xfwm4"
-    cp -r "$SRC_DIR/xfwm4/svg/assets${ELSE_LIGHT:-}-xhdpi/"*.svg                             "$THEME_DIR-xhdpi/xfwm4"
-  fi
-
-  if [[ "$macstyle" == "true" && "$ctype" != '' ]] ; then
-    xfwm_button
-  fi
-
-  mkdir -p                                                                                   "$THEME_DIR/cinnamon"
-  cp -r "$SRC_DIR/cinnamon/common-assets"                                                    "$THEME_DIR/cinnamon/assets"
-  cp -r "$SRC_DIR/cinnamon/assets${ELSE_DARK:-}/"*.svg                                       "$THEME_DIR/cinnamon/assets"
-  cp -r "$SRC_DIR/cinnamon/theme$theme$ctype/add-workspace-active${ELSE_DARK:-}.svg"         "$THEME_DIR/cinnamon/assets/add-workspace-active.svg"
-  cp -r "$SRC_DIR/cinnamon/theme$theme$ctype/corner-ripple${ELSE_DARK:-}.svg"                "$THEME_DIR/cinnamon/assets/corner-ripple.svg"
-  cp -r "$SRC_DIR/cinnamon/theme$theme$ctype/toggle-on${ELSE_DARK:-}.svg"                    "$THEME_DIR/cinnamon/assets/toggle-on.svg"
-
-  if [[ "$primary" == 'true' ]]; then
-    cp -r "$SRC_DIR/cinnamon/theme$theme$ctype/checkbox${ELSE_DARK:-}.svg"                   "$THEME_DIR/cinnamon/assets/checkbox.svg"
-    cp -r "$SRC_DIR/cinnamon/theme$theme$ctype/radiobutton${ELSE_DARK:-}.svg"                "$THEME_DIR/cinnamon/assets/radiobutton.svg"
-  fi
-
-  sassc $SASSC_OPT "$SRC_DIR/cinnamon/cinnamon${ELSE_DARK:-}$size.scss"                      "$THEME_DIR/cinnamon/cinnamon.css"
-
-  cp -r "$SRC_DIR/cinnamon/thumbnails/thumbnail$theme${ELSE_DARK:-}$ctype.png"               "$THEME_DIR/cinnamon/thumbnail.png"
-
-  mkdir -p                                                                                   "$THEME_DIR/metacity-1"
-
-  if [[ "$macstyle" == "true" ]] ; then
-    cp -r "$SRC_DIR/metacity-1/metacity-theme-3-mac.xml"                                     "$THEME_DIR/metacity-1/metacity-theme-3.xml"
-    cp -r "$SRC_DIR/metacity-1/assets-mac"                                                   "$THEME_DIR/metacity-1/assets"
-    cp -r "$SRC_DIR/metacity-1/thumbnail${ELSE_DARK:-}-mac.png"                              "$THEME_DIR/metacity-1/thumbnail.png"
-  else
-    cp -r "$SRC_DIR/metacity-1/metacity-theme-3.xml"                                         "$THEME_DIR/metacity-1"
-    cp -r "$SRC_DIR/metacity-1/assets"                                                       "$THEME_DIR/metacity-1"
-    cp -r "$SRC_DIR/metacity-1/thumbnail${ELSE_DARK:-}.png"                                  "$THEME_DIR/metacity-1/thumbnail.png"
-  fi
-
-  (
-    cd "$THEME_DIR/metacity-1" && ln -s metacity-theme-3.xml metacity-theme-2.xml && ln -s metacity-theme-3.xml metacity-theme-1.xml
-  )
-
-  mkdir -p                                                                                   "$THEME_DIR/plank"
-  cp -r "$SRC_DIR/plank/"*                                                                   "$THEME_DIR/plank"
 }
 
 uninstall() {
@@ -212,7 +139,7 @@ uninstall() {
 
   local THEME_DIR="${1}/${2}${3}${4}${5}${6}"
 
-  [[ -d "$THEME_DIR" ]] && rm -rf "$THEME_DIR"{'','-hdpi','-xhdpi'} && echo -e "Uninstalling "$THEME_DIR" ..."
+  [[ -d "$THEME_DIR" ]] && rm -rf "$THEME_DIR" && echo -e "Uninstalling "$THEME_DIR" ..."
 }
 
 uninstall_link() {
@@ -237,71 +164,6 @@ link_libadwaita() {
   ln -sf "${THEME_DIR}/gtk-4.0/assets"                                          "${HOME}/.config/gtk-4.0/assets"
   ln -sf "${THEME_DIR}/gtk-4.0/gtk.css"                                         "${HOME}/.config/gtk-4.0/gtk.css"
   ln -sf "${THEME_DIR}/gtk-4.0/gtk-dark.css"                                    "${HOME}/.config/gtk-4.0/gtk-dark.css"
-}
-
-xfwm_button() {
-  case "$ctype" in
-    '')
-      button_close="#fd5f51"
-      button_max="#38c76a"
-      button_min="#fdbe04"
-      ;;
-    -Nord)
-      button_close="#bf616a"
-      button_max="#a3be8c"
-      button_min="#ebcb8b"
-      ;;
-    -Dracula)
-      if [[ "$color" == '-Light' ]]; then
-        button_close="#ed5d5d"
-        button_max="#43db68"
-        button_min="#e3d93b"
-      else
-        button_close="#f44d4d"
-        button_max="#4be772"
-        button_min="#e8f467"
-      fi
-      ;;
-  esac
-
-  sed -i "s/#fd5f51/${button_close}/g"                                          "${THEME_DIR}/xfwm4/close-active.svg"
-  sed -i "s/#fd5f51/${button_close}/g"                                          "${THEME_DIR}/xfwm4/close-prelight.svg"
-  sed -i "s/#fd5f51/${button_close}/g"                                          "${THEME_DIR}/xfwm4/close-pressed.svg"
-  sed -i "s/#38c76a/${button_max}/g"                                            "${THEME_DIR}/xfwm4/maximize-active.svg"
-  sed -i "s/#38c76a/${button_max}/g"                                            "${THEME_DIR}/xfwm4/maximize-prelight.svg"
-  sed -i "s/#38c76a/${button_max}/g"                                            "${THEME_DIR}/xfwm4/maximize-pressed.svg"
-  sed -i "s/#38c76a/${button_max}/g"                                            "${THEME_DIR}/xfwm4/maximize-toggled-active.svg"
-  sed -i "s/#38c76a/${button_max}/g"                                            "${THEME_DIR}/xfwm4/maximize-toggled-prelight.svg"
-  sed -i "s/#38c76a/${button_max}/g"                                            "${THEME_DIR}/xfwm4/maximize-toggled-pressed.svg"
-  sed -i "s/#fdbe04/${button_min}/g"                                            "${THEME_DIR}/xfwm4/hide-active.svg"
-  sed -i "s/#fdbe04/${button_min}/g"                                            "${THEME_DIR}/xfwm4/hide-prelight.svg"
-  sed -i "s/#fdbe04/${button_min}/g"                                            "${THEME_DIR}/xfwm4/hide-pressed.svg"
-
-  sed -i "s/#fd5f51/${button_close}/g"                                          "${THEME_DIR}-hdpi/xfwm4/close-active.svg"
-  sed -i "s/#fd5f51/${button_close}/g"                                          "${THEME_DIR}-hdpi/xfwm4/close-prelight.svg"
-  sed -i "s/#fd5f51/${button_close}/g"                                          "${THEME_DIR}-hdpi/xfwm4/close-pressed.svg"
-  sed -i "s/#38c76a/${button_max}/g"                                            "${THEME_DIR}-hdpi/xfwm4/maximize-active.svg"
-  sed -i "s/#38c76a/${button_max}/g"                                            "${THEME_DIR}-hdpi/xfwm4/maximize-prelight.svg"
-  sed -i "s/#38c76a/${button_max}/g"                                            "${THEME_DIR}-hdpi/xfwm4/maximize-pressed.svg"
-  sed -i "s/#38c76a/${button_max}/g"                                            "${THEME_DIR}-hdpi/xfwm4/maximize-toggled-active.svg"
-  sed -i "s/#38c76a/${button_max}/g"                                            "${THEME_DIR}-hdpi/xfwm4/maximize-toggled-prelight.svg"
-  sed -i "s/#38c76a/${button_max}/g"                                            "${THEME_DIR}-hdpi/xfwm4/maximize-toggled-pressed.svg"
-  sed -i "s/#fdbe04/${button_min}/g"                                            "${THEME_DIR}-hdpi/xfwm4/hide-active.svg"
-  sed -i "s/#fdbe04/${button_min}/g"                                            "${THEME_DIR}-hdpi/xfwm4/hide-prelight.svg"
-  sed -i "s/#fdbe04/${button_min}/g"                                            "${THEME_DIR}-hdpi/xfwm4/hide-pressed.svg"
-
-  sed -i "s/#fd5f51/${button_close}/g"                                          "${THEME_DIR}-xhdpi/xfwm4/close-active.svg"
-  sed -i "s/#fd5f51/${button_close}/g"                                          "${THEME_DIR}-xhdpi/xfwm4/close-prelight.svg"
-  sed -i "s/#fd5f51/${button_close}/g"                                          "${THEME_DIR}-xhdpi/xfwm4/close-pressed.svg"
-  sed -i "s/#38c76a/${button_max}/g"                                            "${THEME_DIR}-xhdpi/xfwm4/maximize-active.svg"
-  sed -i "s/#38c76a/${button_max}/g"                                            "${THEME_DIR}-xhdpi/xfwm4/maximize-prelight.svg"
-  sed -i "s/#38c76a/${button_max}/g"                                            "${THEME_DIR}-xhdpi/xfwm4/maximize-pressed.svg"
-  sed -i "s/#38c76a/${button_max}/g"                                            "${THEME_DIR}-xhdpi/xfwm4/maximize-toggled-active.svg"
-  sed -i "s/#38c76a/${button_max}/g"                                            "${THEME_DIR}-xhdpi/xfwm4/maximize-toggled-prelight.svg"
-  sed -i "s/#38c76a/${button_max}/g"                                            "${THEME_DIR}-xhdpi/xfwm4/maximize-toggled-pressed.svg"
-  sed -i "s/#fdbe04/${button_min}/g"                                            "${THEME_DIR}-xhdpi/xfwm4/hide-active.svg"
-  sed -i "s/#fdbe04/${button_min}/g"                                            "${THEME_DIR}-xhdpi/xfwm4/hide-prelight.svg"
-  sed -i "s/#fdbe04/${button_min}/g"                                            "${THEME_DIR}-xhdpi/xfwm4/hide-pressed.svg"
 }
 
 #  Install needed packages
@@ -512,22 +374,6 @@ install_theme() {
       done
     done
   done
-
-  if has_command xfce4-popup-whiskermenu; then
-    echo -e "\nFor the rounded float whiskermenu, you need set your whiskermenu background opacity to 0 !"
-
-    if has_command notify-send; then
-      notify-send "You need set your whiskermenu background opacity to 0 !" -i dialog-warning-symbolic
-    fi
-
-    if $(sed -i "s|.*menu-opacity=.*|menu-opacity=0|" "$HOME/.config/xfce4/panel/whiskermenu"*".rc" &> /dev/null); then
-      sed -i "s|.*menu-opacity=.*|menu-opacity=0|" "$HOME/.config/xfce4/panel/whiskermenu"*".rc"
-    fi
-
-    if (pgrep xfce4-session &> /dev/null); then
-      xfce4-panel -r
-    fi
-  fi
 
   local DASH_TO_DOCK_STYLESHEET="$HOME/.local/share/gnome-shell/extensions/dash-to-dock@micxgx.gmail.com/stylesheet.css"
 
