@@ -175,7 +175,7 @@ $screenshot_ui_button_red: $error;
     }
 
     .screenshot-ui-window-selector-check {
-      color: on(dark);
+      color: on($primary);
       background-color: $primary;
     }
   }

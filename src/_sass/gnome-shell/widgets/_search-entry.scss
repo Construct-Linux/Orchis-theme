@@ -8,7 +8,7 @@ $search_entry_width: 320px;
   width: $search_entry_width;
   border-radius: $circular-radius;
   selection-background-color: $primary;
-  selected-color: on(dark) !important;
+  selected-color: on($primary) !important;
   @include entry(normal);
 
   &:hover { @include entry(hover); }
@@ -42,7 +42,7 @@ $search_entry_width: 320px;
     &:focus {
       @include search_entry(focus);
       selection-background-color: $primary;
-      selected-color: on(dark) !important;
+      selected-color: on($primary) !important;
     }
 
     .search-entry-icon {

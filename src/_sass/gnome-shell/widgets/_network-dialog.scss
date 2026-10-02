@@ -51,7 +51,7 @@
 
   &:selected {
     background-color: $primary;
-    color: on(dark);
+    color: on($primary);
   }
 }
 

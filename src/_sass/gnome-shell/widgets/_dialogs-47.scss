@@ -205,7 +205,7 @@ $mdborder_color: if($variant == 'light', rgba(black, 0.15), rgba(black, 0.75));
 .audio-selection-device {
   border: 1px solid $border;
   border-radius: $material-radius;
-  &:active,&:hover,&:focus { background-color: $primary; }
+  &:active,&:hover,&:focus { background-color: $primary; color: on($primary); }
 }
 
 .audio-selection-device-box {

@@ -13,7 +13,7 @@
 
   StEntry {
     selection-background-color: $primary;
-    selected-color: on(dark) !important;
+    selected-color: on($primary) !important;
     @include entry(normal, $fc:on(dark, track));
     &:focus { @include entry(focus, $fc:on(dark)); }
     &:insensitive {

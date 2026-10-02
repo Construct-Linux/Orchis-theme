@@ -61,7 +61,7 @@
 .lg-dialog {
   StEntry {
     selection-background-color: $primary;
-    selected-color: on(dark);
+    selected-color: on($primary);
     background-color: on(dark, divider);
     color: on(dark);
   }

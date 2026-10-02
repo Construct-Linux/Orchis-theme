@@ -56,10 +56,10 @@ $keyboard_active_bg_color: if($variant == 'light', darken($keyboard, 20%), light
 
   &.enter-key {
     background-color: $primary;
-    color: on(dark);
+    color: on($primary);
 
-    &:focus, &:hover { color: on(dark); background-color: lighten($primary, 5%); }
-    &:checked, &:active { color: on(dark); background-color: darken($primary, 10%); }
+    &:focus, &:hover { color: on($primary); background-color: lighten($primary, 5%); }
+    &:checked, &:active { color: on($primary); background-color: darken($primary, 10%); }
   }
 
   &.shift-key-uppercase { color: $primary }

@@ -33,5 +33,5 @@
   background-color: $primary;
   border: none;
   border-radius: $material-radius + $space-size / 2;
-  color: on(dark);
+  color: on($primary);
 }
