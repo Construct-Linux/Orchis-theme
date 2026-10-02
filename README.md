@@ -1,112 +1,39 @@
-# Orchis theme
+# Orchis for CONSTRUCT
 
-Orchis is a [Material Design](https://material.io) theme for GNOME/GTK based desktop environments.
+[CONSTRUCT](https://github.com/Construct-Linux)'s GTK and GNOME Shell theme: a fork of
+[Orchis](https://github.com/vinceliuice/Orchis-theme) by vinceliuice, itself
+based on nana-4's [materia-theme](https://github.com/nana-4/materia-theme), trimmed to the one
+desktop it themes and drawn in CONSTRUCT's colours.
 
-Based on nana-4 -- [materia-theme](https://github.com/nana-4/materia-theme)
+It builds two themes, `Orchis-Construct-Light` and `Orchis-Construct-Dark`, each with:
 
-![screenshot](images/screenshot.png?raw=true)
+- `gtk-3.0` for GTK 3 apps;
+- `gtk-4.0` for GTK 4 and libadwaita apps, which read it from `~/.config/gtk-4.0`. The light
+  theme's `gtk.css` carries the dark styles under `@media (prefers-color-scheme: dark)`, so one
+  copy follows Settings' light/dark switch (GTK >= 4.16);
+- `gnome-shell` for GNOME Shell 51, and only 51.
 
-## Requirements
+The accent, the surfaces and the success, warning and error colours come from the brand
+repository's `palette.toml`, through its generated `palette/construct.scss`, copied here as
+`src/_sass/_construct-palette.scss`. The GTK PNG assets are rendered from `src/gtk/assets.svg`
+by `src/gtk/render-assets.sh` (Inkscape) and committed.
 
-- GTK `>=3.20`
-- `gnome-themes-extra` (or `gnome-themes-standard`)
-- Murrine engine — The package name depends on the distro.
-  - `gtk-engine-murrine` on Arch Linux
-  - `gtk-murrine-engine` on Fedora
-  - `gtk2-engine-murrine` on openSUSE
-  - `gtk2-engines-murrine` on Debian, Ubuntu, etc.
-- `sassc` — build dependency
+## Build and install
 
-## Donate
-
-If you like this project, consider supporting it with a coffee:
-
-<span class="paypal"><a href="https://www.paypal.me/vinceliuice" title="Donate to this project using Paypal"><img src="https://www.paypalobjects.com/webstatic/mktg/Logo/pp-logo-100px.png" alt="PayPal donate button" /></a></span>
-
-## Installation
-
-### Manual Installation
-
-Run the following commands in the terminal:
+Requires `bash`, coreutils and `sassc`.
 
 ```sh
-./install.sh
+./install.sh -d /usr/share/themes        # both themes, system-wide
+./install.sh -c dark                     # one of them, into ~/.local/share/themes
+./install.sh -l                          # also link the light theme's gtk-4.0 for libadwaita
+./install.sh -r                          # uninstall
 ```
 
-> [!TIP]
-> `./install.sh` allows the following options:
+`./install.sh --help` lists the tweaks (`--tweaks solid compact primary macos submenu`,
+`--round`).
 
-```
-OPTIONS:
-  -d, --dest DIR          Specify destination directory (Default: $HOME/.themes)
-  -n, --name NAME         Specify theme name (Default: Orchis)
+## License
 
-  -t, --theme VARIANT     Specify theme color variant(s) [default|purple|pink|red|orange|yellow|green|teal|grey|all] (Default: blue)
-  -c, --color VARIANT     Specify color variant(s) [standard|light|dark] (Default: All variants)s)
-  -s, --size VARIANT      Specify size variant [standard|compact] (Default: All variants)
-
-  -i, --icon VARIANT      Specify icon variant(s) for shell panel activities button
-                          [default|apple|simple|gnome|ubuntu|arch|manjaro|fedora|debian|void|opensuse|popos|mxlinux|zorin|endeavouros|tux|nixos|gentoo|budgie|solus|kali]
-                          (Default: ChromeOS style)
-
-  -l, --libadwaita        Link installed Orchis gtk-4.0 theme to config folder for all libadwaita app use Orchis theme
-  -f, --fixed             Fixed accent(blue) color for gnome-shell >= 47 libadwaita theme
-
-  --tweaks                Specify versions for tweaks [solid|compact|black|primary|macos|submenu|(nord/dracula)] (Options can mix)
-                          1. solid              No transparency panel variant
-                          2. compact            No floating panel variant
-                          3. black              Full black variant
-                          4. primary            Change radio icon checked color to primary theme color (Default is Green)
-                          5. macos              Change window buttons to macOS style
-                          6. submenu            Set normal submenus color contrast (dark submenu style on dark version)
-                          7. [nord|dracula]     Nord/dracula colorscheme themes (nord and dracula can not mix use!)
-                          8. dock               Fix style for 'dash-to-dock' or 'ubuntu-dock' extension
-
-  --round                 Change theme round corner border-radius [Input the px value you want] (Suggested: 2px < value < 16px)
-                          1. 3px
-                          2. 4px
-                          3. 5px
-                          ...
-                          13. 15px
-
-
-  -r, --remove,
-  -u, --uninstall         Uninstall/Remove installed themes
-
-  -h, --help              Show help
-```
-
-> For more information, run: `./install.sh -h`
-
-## Tweaks for Orchis
-
-![tweaks-view](images/tweaks-view.png?raw=true)
-
-### Fix for libadwaita (Gnome-shell >= 42.0)
-
-![libadwaita](images/libadwaita.png?raw=true)
-
-run: `./install.sh -l` (Default light version will installed)
-
-This fix is just a link from selected Ochis gtk-4.0 theme in `$HOME/.theme` to `$HOME/.config/gtk-4.0/gtk.css`
-so it will not support change theme through `Gnome-tweaks`
-if you want install other theme version for libadwaita you can run like:
-
-```sh
-./install.sh -c dark -l #(Link dark version)
-```
-
-```sh
-./install.sh -c dark -t purple -l #(Link dark purple version)
-```
-
-and so on ... 
-
-### Fix for Flatpak
-
-```sh
-sudo flatpak override --filesystem=xdg-config/gtk-3.0 && sudo flatpak override --filesystem=xdg-config/gtk-4.0
-```
-
-If you use flatpak apps, you can run this to fix theme issue.
-
+GPL-3.0, as upstream Orchis: see `COPYING`. The Activities icon
+(`src/gnome-shell/activities/construct.svg`) is CONSTRUCT's mark, from the brand repository,
+under CC-BY-SA-4.0.
