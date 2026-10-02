@@ -112,12 +112,6 @@ $surface:                               if($variant == 'light', background(a), b
 $base:                                  if($variant == 'light', background(a), background(g));
 $base-alt:                              if($variant == 'light', background(b), background(f));
 
-@if $colorscheme != 'default' {
-  $surface:                             if($variant == 'light', background(b), background(h));
-  $base:                                if($variant == 'light', background(b), background(g));
-  $base-alt:                            if($variant == 'light', background(c), background(f));
-}
-
 $tooltip:                               if($variant == 'dark', rgba(darken(background(e), 3%), 0.9), rgba(darken(background(h), 3%), 0.9));
 $osd:                                   background(e);
 $scrim:                                 background(f);

@@ -104,10 +104,6 @@ $windows-border: if($variant == 'light', mix(black, $base, 35%), mix(black, $bas
 
 @define-color wm_button_icon #{"" + white};
 
-@if $colorscheme == 'dracula' {
-  @define-color wm_button_icon alpha(#{black}, 0.5);
-}
-
 @define-color wm_button_close_hover_bg #{"" + $button-close};
 @define-color wm_button_close_active_bg #{"" + darken($button-close, 12%)};
 @define-color wm_button_max_hover_bg #{"" + $button-max};

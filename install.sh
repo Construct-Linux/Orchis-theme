@@ -22,15 +22,14 @@ OPTIONS:
   -l, --libadwaita        Link installed Orchis gtk-4.0 theme to config folder for all libadwaita app use Orchis theme
   -f, --fixed             Fixed accent(blue) color for gnome-shell >= 47 libadwaita theme
 
-  --tweaks                Specify versions for tweaks [solid|compact|black|primary|macos|submenu|(nord/dracula)] (Options can mix)
+  --tweaks                Specify versions for tweaks [solid|compact|black|primary|macos|submenu|dock] (Options can mix)
                           1. solid              No transparency panel variant
                           2. compact            No floating panel variant
                           3. black              Full black variant
                           4. primary            Change radio icon checked color to primary theme color (Default is Green)
                           5. macos              Change window buttons to macOS style
                           6. submenu            Set normal submenus color contrast (dark submenu style on dark version)
-                          7. [nord|dracula]     Nord/dracula colorscheme themes (nord and dracula can not mix use!)
-                          8. dock               Fix style for 'dash-to-dock' or 'ubuntu-dock' extension
+                          7. dock               Fix style for 'dash-to-dock' or 'ubuntu-dock' extension
 
   --round                 Change theme round corner border-radius [Input the px value you want] (Suggested: 2px < value < 16px)
                           1. 3px
@@ -116,18 +115,6 @@ while [[ "$#" -gt 0 ]]; do
           submenu)
             submenu="true"
             echo -e "Install with themed sub-menus ..."
-            shift
-            ;;
-          nord)
-            nord="true"
-            ctype="-Nord"
-            echo -e "Install nord colorscheme ..."
-            shift
-            ;;
-          dracula)
-            dracula="true"
-            ctype="-Dracula"
-            echo -e "Install dracula colorscheme ..."
             shift
             ;;
           dock)
