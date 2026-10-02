@@ -28,8 +28,6 @@ THEME_NAME=Orchis-Construct
 COLOR_VARIANTS=('' '-Light' '-Dark')
 SIZE_VARIANTS=('' '-Compact')
 
-icon='-default'
-
 # Check command availability
 function has_command() {
   command -v $1 > /dev/null
@@ -40,7 +38,6 @@ install() {
   local name="$2"
   local color="$3"
   local size="$4"
-  local icon="$5"
 
   if [[ "$color" == '-Dark' ]]; then
     local ELSE_DARK="$color"
@@ -85,7 +82,7 @@ install() {
   cp -r "$SRC_DIR/gnome-shell/theme/more-results${ELSE_DARK:-}.svg"              "$THEME_DIR/gnome-shell/assets/more-results.svg"
   cp -r "$SRC_DIR/gnome-shell/theme/toggle-on${ELSE_DARK:-}.svg"                 "$THEME_DIR/gnome-shell/assets/toggle-on.svg"
 
-  cp -r "$SRC_DIR/gnome-shell/activities/activities${icon}.svg"                              "$THEME_DIR/gnome-shell/assets/activities.svg"
+  cp -r "$SRC_DIR/gnome-shell/activities/construct.svg"                                    "$THEME_DIR/gnome-shell/assets/activities.svg"
 
   cd "$THEME_DIR/gnome-shell"
   ln -s assets/no-events.svg no-events.svg
@@ -198,10 +195,6 @@ install_submenu() {
   sed -i "/\$submenu_style:/s/false/true/" $SRC_DIR/_sass/_tweaks-temp.scss
 }
 
-activities_style() {
-  sed -i "/\$activities:/s/normal/icon/" $SRC_DIR/_sass/_tweaks-temp.scss
-}
-
 theme_tweaks() {
   install_package; tweaks_temp
 
@@ -227,10 +220,6 @@ theme_tweaks() {
 
   if [[ "$submenu" == "true" ]] ; then
     install_submenu
-  fi
-
-  if [[ "$activities" = "icon" ]] ; then
-    activities_style
   fi
 }
 
@@ -282,7 +271,7 @@ install_theme() {
 
   for color in "${colors[@]}"; do
     for size in "${sizes[@]}"; do
-      install "${dest:-$DEST_DIR}" "${_name:-$THEME_NAME}" "$color" "$size" "$icon"
+      install "${dest:-$DEST_DIR}" "${_name:-$THEME_NAME}" "$color" "$size"
     done
   done
 

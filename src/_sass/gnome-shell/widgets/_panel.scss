@@ -73,21 +73,6 @@ $panel_button_hpadding: ($panel_height - $base-icon-size) / 2;
     }
   }
 
-  %normal_activities {
-    -natural-hpadding: $space-size * 2.5;
-
-    StBoxLayout {
-      spacing: $space-size;
-    }
-
-    .workspace-dot {
-      border-radius: $circular-radius;
-      min-width: 8px;
-      min-height: 8px;
-      background-color: on($panel-solid);
-    }
-  }
-
   // panel menus
   .panel-button {
     font-weight: bold;
@@ -199,13 +184,8 @@ $panel_button_hpadding: ($panel_height - $base-icon-size) / 2;
     //   }
     // }
 
-    &#panelActivities {
-      @if $activities == 'icon' {
-        @extend %icon_activities;
-      } @else {
-        @extend %normal_activities;
-      }
-    }
+    // Construct's mark (assets/activities.svg) instead of the workspace dots.
+    &#panelActivities { @extend %icon_activities; }
   }
 
   // Gjs_ui_panel_AggregateMenu.panel-button,
