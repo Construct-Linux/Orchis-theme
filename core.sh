@@ -2,8 +2,6 @@
 REPO_DIR="$(dirname "$(readlink -m "${0}")")"
 SRC_DIR="$REPO_DIR/src"
 
-source "${REPO_DIR}/gtkrc.sh"
-
 ROOT_UID=0
 DEST_DIR=
 
@@ -96,17 +94,6 @@ install() {
   ln -s assets/no-events.svg no-events.svg
   ln -s assets/process-working.svg process-working.svg
   ln -s assets/no-notifications.svg no-notifications.svg
-
-  mkdir -p                                                                                   "$THEME_DIR/gtk-2.0"
-  cp -r "$SRC_DIR/gtk-2.0/common/"{apps.rc,hacks.rc,main.rc}                                 "$THEME_DIR/gtk-2.0"
-  cp -r "$SRC_DIR/gtk-2.0/assets-folder/assets-common${ELSE_DARK:-}$ctype"                   "$THEME_DIR/gtk-2.0/assets"
-  cp -r "$SRC_DIR/gtk-2.0/assets-folder/assets$theme${ELSE_DARK:-}$ctype/"*"png"             "$THEME_DIR/gtk-2.0/assets"
-
-  make_gtkrc
-
-  if [[ "$primary" != "true" ]]; then
-    cp -rf "$SRC_DIR/gtk-2.0/assets-folder/assets-default-radio${ELSE_DARK:-}$ctype"/*.png   "$THEME_DIR/gtk-2.0/assets"
-  fi
 
   mkdir -p                                                                                   "$THEME_DIR/gtk-3.0"
   cp -r "$SRC_DIR/gtk/assets$theme$ctype"                                                    "$THEME_DIR/gtk-3.0/assets"
