@@ -107,17 +107,19 @@
     background-color: if($variant == 'light', $base, on(dark, divider));
     margin: 2px 6px 6px;
     border: 2px solid transparent !important;
-    box-shadow: 0 3px 3px rgba(black, 0.24), 0 5px 8px rgba(black, 0.05) !important;
+    // One shadow: St draws only the first of a list, and logs "Ignoring excess values in shadow
+    // definition" for the rest at every entry it styles.
+    box-shadow: 0 3px 3px rgba(black, 0.24) !important;
   }
 
   @if $t == focus {
     color: $text;
-    box-shadow: 0 3px 3px rgba(black, 0.20), 0 5px 8px rgba(black, 0.08) !important;
+    box-shadow: 0 3px 3px rgba(black, 0.20) !important;
     border: 2px solid $primary !important;
   }
 
   @if $t == hover {
-    box-shadow: 0 3px 3px rgba(black, 0.20), 0 5px 8px rgba(black, 0.12) !important;
+    box-shadow: 0 3px 3px rgba(black, 0.20) !important;
   }
 
   @if $t == insensitive {
