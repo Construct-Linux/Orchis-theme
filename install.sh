@@ -11,7 +11,6 @@ OPTIONS:
   -d, --dest DIR          Specify destination directory (Default: $DEST_DIR)
   -n, --name NAME         Specify theme name (Default: $THEME_NAME)
 
-  -t, --theme VARIANT     Specify theme color variant(s) [default|purple|pink|red|orange|yellow|green|teal|grey|all] (Default: blue)
   -c, --color VARIANT     Specify color variant(s) [standard|light|dark] (Default: All variants)s)
   -s, --size VARIANT      Specify size variant [standard|compact] (Default: All variants)
 
@@ -20,16 +19,14 @@ OPTIONS:
                           (Default: ChromeOS style)
 
   -l, --libadwaita        Link installed Orchis gtk-4.0 theme to config folder for all libadwaita app use Orchis theme
-  -f, --fixed             Fixed accent(blue) color for gnome-shell >= 47 libadwaita theme
 
-  --tweaks                Specify versions for tweaks [solid|compact|black|primary|macos|submenu|dock] (Options can mix)
+  --tweaks                Specify versions for tweaks [solid|compact|primary|macos|submenu|dock] (Options can mix)
                           1. solid              No transparency panel variant
                           2. compact            No floating panel variant
-                          3. black              Full black variant
-                          4. primary            Change radio icon checked color to primary theme color (Default is Green)
-                          5. macos              Change window buttons to macOS style
-                          6. submenu            Set normal submenus color contrast (dark submenu style on dark version)
-                          7. dock               Fix style for 'dash-to-dock' or 'ubuntu-dock' extension
+                          3. primary            Change radio icon checked color to primary theme color (Default is Green)
+                          4. macos              Change window buttons to macOS style
+                          5. submenu            Set normal submenus color contrast (dark submenu style on dark version)
+                          6. dock               Fix style for 'dash-to-dock' or 'ubuntu-dock' extension
 
   --round                 Change theme round corner border-radius [Input the px value you want] (Suggested: 2px < value < 16px)
                           1. 3px
@@ -46,11 +43,9 @@ OPTIONS:
 EOF
 }
 
-themes=()
 colors=()
 sizes=()
-othemes=()
-ocolors=()
+oocolors=()
 osizes=()
 lcolors=()
 
@@ -73,10 +68,6 @@ while [[ "$#" -gt 0 ]]; do
       libadwaita="true"
       shift
       ;;
-    -f|--fixed)
-      fixed="true"
-      shift
-      ;;
     --round)
       round="true"
       corner="$2"
@@ -95,11 +86,6 @@ while [[ "$#" -gt 0 ]]; do
           compact)
             panel="compact"
             echo -e "Install compact panel version ..."
-            shift
-            ;;
-          black)
-            blackness="true"
-            echo -e "Install black version ..."
             shift
             ;;
           primary)
@@ -127,62 +113,6 @@ while [[ "$#" -gt 0 ]]; do
             ;;
           *)
             echo "ERROR: Unrecognized tweaks variant '$1'."
-            echo "Try '$0 --help' for more information."
-            exit 1
-            ;;
-        esac
-      done
-      ;;
-    -t|--theme)
-      accent='true'
-      shift
-      for variant in "$@"; do
-        case "$variant" in
-          default)
-            themes+=("${THEME_VARIANTS[0]}")
-            shift
-            ;;
-          purple)
-            themes+=("${THEME_VARIANTS[1]}")
-            shift
-            ;;
-          pink)
-            themes+=("${THEME_VARIANTS[2]}")
-            shift
-            ;;
-          red)
-            themes+=("${THEME_VARIANTS[3]}")
-            shift
-            ;;
-          orange)
-            themes+=("${THEME_VARIANTS[4]}")
-            shift
-            ;;
-          yellow)
-            themes+=("${THEME_VARIANTS[5]}")
-            shift
-            ;;
-          green)
-            themes+=("${THEME_VARIANTS[6]}")
-            shift
-            ;;
-          teal)
-            themes+=("${THEME_VARIANTS[7]}")
-            shift
-            ;;
-          grey)
-            themes+=("${THEME_VARIANTS[8]}")
-            shift
-            ;;
-          all)
-            themes+=("${THEME_VARIANTS[@]}")
-            shift
-            ;;
-          -*)
-            break
-            ;;
-          *)
-            echo "ERROR: Unrecognized theme variant '$1'."
             echo "Try '$0 --help' for more information."
             exit 1
             ;;
@@ -354,10 +284,6 @@ while [[ "$#" -gt 0 ]]; do
       ;;
   esac
 done
-
-if [[ "${#themes[@]}" -eq 0 ]] ; then
-  themes=("${THEME_VARIANTS[0]}")
-fi
 
 if [[ "${#colors[@]}" -eq 0 ]] ; then
   colors=("${COLOR_VARIANTS[@]}")

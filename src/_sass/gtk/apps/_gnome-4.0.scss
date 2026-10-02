@@ -214,7 +214,7 @@
     > scrolledwindow {
       margin: 0 0 $space-size * 2 $space-size * 2;
       border-radius: $window-radius - $space-size;
-      background-color: if($topbar =='dark' and $variant =='light', transparent, rgba(theme($theme), 0.08));
+      background-color: if($topbar =='dark' and $variant =='light', transparent, rgba($primary, 0.08));
 
       > overshoot, > undershoot {
         &.top {
@@ -328,8 +328,8 @@
                 border-image-width: 16px 9px 16px 46px;
                 border-image-slice: 16 9 16 46;
                 border-image-repeat: stretch;
-                border-image-source: -gtk-scaled(url("assets/row-selected#{$blackness-asset-suffix}#{$theme-asset-suffix}.png"),
-                  url("assets/row-selected#{$blackness-asset-suffix}#{$theme-asset-suffix}@2.png"));
+                border-image-source: -gtk-scaled(url("assets/row-selected#{$theme-asset-suffix}.png"),
+                  url("assets/row-selected#{$theme-asset-suffix}@2.png"));
               }
 
               label {

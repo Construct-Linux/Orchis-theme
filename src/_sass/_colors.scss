@@ -57,55 +57,26 @@
   @else { @return rgba(white, 0.1); }
 }
 
-@function theme($color) {
-  @if ($variant == 'light') {
-    @if ($color == 'default') { @return $blue-dark; }
-    @if ($color == 'purple') { @return $purple-dark; }
-    @if ($color == 'pink') { @return $pink-dark; }
-    @if ($color == 'red') { @return $red-dark; }
-    @if ($color == 'orange') { @return $orange-dark; }
-    @if ($color == 'yellow') { @return $yellow-dark; }
-    @if ($color == 'green') { @return $green-dark; }
-    @if ($color == 'teal') { @return $teal-dark; }
-    @if ($color == 'grey') { @return $grey-600; }
-  } @else {
-    @if ($color == 'default') { @return $blue-light; }
-    @if ($color == 'purple') { @return $purple-light; }
-    @if ($color == 'pink') { @return $pink-light; }
-    @if ($color == 'red') { @return $red-light; }
-    @if ($color == 'orange') { @return $orange-light; }
-    @if ($color == 'yellow') { @return $yellow-light; }
-    @if ($color == 'green') { @return $green-light; }
-    @if ($color == 'teal') { @return $teal-light; }
-    @if ($color == 'grey') { @return $grey-200; }
-  }
-}
-
+// Orchis's surface scale, a-d light (a the brightest) and e-h dark (e the darkest), in
+// Construct's blue-tinted neutrals.
 @function background($type) {
-  @if ($type == 'a') { @return $white; }
-  @if ($type == 'b') { @return $grey-050; }
-  @if ($type == 'c') { @return $grey-100; }
-  @if ($type == 'd') { @return $grey-250; }
-
-  @if ($blackness == 'true') {
-    @if ($type == 'e') { @return $black; }
-    @if ($type == 'f') { @return $grey-950; }
-    @if ($type == 'g') { @return $grey-900; }
-    @if ($type == 'h') { @return $grey-850; }
-  } @else {
-    @if ($type == 'e') { @return $grey-800; }
-    @if ($type == 'f') { @return $grey-750; }
-    @if ($type == 'g') { @return $grey-700; }
-    @if ($type == 'h') { @return $grey-650; }
-  }
+  @if ($type == 'a') { @return $construct-bg-a; }
+  @if ($type == 'b') { @return $construct-bg-b; }
+  @if ($type == 'c') { @return $construct-bg-c; }
+  @if ($type == 'd') { @return $construct-bg-d; }
+  @if ($type == 'e') { @return $construct-bg-e; }
+  @if ($type == 'f') { @return $construct-bg-f; }
+  @if ($type == 'g') { @return $construct-bg-g; }
+  @if ($type == 'h') { @return $construct-bg-h; }
 }
 
 //
 // Basic colors
 //
 
-$primary:                               theme($theme);
-$primary-fixed:                         theme($theme);
+// The one accent: the logo's cyan on dark surfaces, and the same hue darkened until text in it
+// reads on white on light ones.
+$primary:                               if($variant == 'light', $construct-dark, $construct-light);
 $drop_target_color:                     $orange-dark;
 $background:                            if($variant == 'light', background(c), background(e));
 $surface:                               if($variant == 'light', background(a), background(h));
@@ -120,9 +91,9 @@ $scrim-inverse:                         rgba(white, 0.1);
 $titlebar:                              if($topbar == 'dark', background(g), background(a));
 $titlebar-backdrop:                     if($topbar == 'dark', background(h), background(b));
 
-$keyboard:                              if($variant == 'light', $grey-050, $grey-800); // for gnome-shell keyboard
-$keyboard-alt:                          if($variant == 'light', $grey-300, $grey-900); // for gnome-shell keyboard
-$system:                                if($blackness == 'true', $grey-850, $grey-750); // for gnome-shell keyboard
+$keyboard:                              if($variant == 'light', background(b), background(e)); // for gnome-shell keyboard
+$keyboard-alt:                          if($variant == 'light', darken(background(d), 4%), darken(background(e), 3%)); // for gnome-shell keyboard
+$system:                                background(f); // for gnome-shell keyboard
 $popover:                               if($variant == 'light', background(a), background(e));
 
 $panel-solid:                           if($topbar == 'dark', background(e), background(c)); // for Unity panel which doesn't allow translucent colors
@@ -139,9 +110,9 @@ $entry:                                 gtkalpha(currentColor, 0.05);
 $link:                                  $primary;
 $link-visited:                          if($variant == 'light', $purple-dark, $purple-light);
 
-$warning:                               if($variant == 'light', $yellow-dark, $yellow-light);
-$error:                                 if($variant == 'light', $red-dark, $red-light);
-$success:                               if($variant == 'light', $sea-dark, $sea-light);
+$warning:                               if($variant == 'light', $construct-warning-dark, $construct-warning-light);
+$error:                                 if($variant == 'light', $construct-error-dark, $construct-error-light);
+$success:                               if($variant == 'light', $construct-success-dark, $construct-success-light);
 
 $suggested:                             $primary;
 $destructive:                           $error;

@@ -79,28 +79,28 @@
     <linearGradient
        id="color-primary-dark">
       <stop
-         stop-color="#1A73E8"
+         stop-color="#007A85"
          offset="1"
          id="stop14" />
     </linearGradient>
     <linearGradient
        id="color-primary-light">
       <stop
-         stop-color="#3281EA"
+         stop-color="#00E5FF"
          offset="1"
          id="stop17" />
     </linearGradient>
     <linearGradient
        id="color-background">
       <stop
-         stop-color="#F2F2F2"
+         stop-color="#F4F6F8"
          offset="1"
          id="stop20" />
     </linearGradient>
     <linearGradient
        id="color-background-dark">
       <stop
-         stop-color="#212121"
+         stop-color="#0B1116"
          offset="1"
          id="stop23" />
     </linearGradient>
@@ -118,7 +118,7 @@
        x2="40"
        gradientUnits="userSpaceOnUse">
       <stop
-         stop-color="#3C3C3C"
+         stop-color="#1F2A33"
          offset="1"
          id="stop29" />
     </linearGradient>
@@ -684,7 +684,7 @@
        y="233"
        width="144"
        height="54"
-       fill="#2c2c2c"
+       fill="#172028"
        id="rect186" />
     <path
        d="m216 233c0 4.986-4.014 9-9 9h-93c-9.972 0-18 8.028-18 18s8.028 18 18 18h93c4.986 0 9 4.014 9 9v-45z"
@@ -704,7 +704,7 @@
        id="rect191" />
     <path
        d="m216 233c0 4.986-4.014 9-9 9h-93c-9.972 0-18 8.028-18 18s8.028 18 18 18h93c4.986 0 9 4.014 9 9v-45z"
-       fill="#2c2c2c"
+       fill="#172028"
        id="path193" />
   </g>
   <g
@@ -722,36 +722,5 @@
        d="m188 233c0 4.986-4.014 9-9 9h-93c-9.972 0-18 8.028-18 18s8.028 18 18 18h93c4.986 0 9 4.014 9 9v-45z"
        fill="#ffffff"
        id="path198" />
-  </g>
-  <g
-     id="row-selected-blackness-dark"
-     transform="translate(344.09 -103)">
-    <rect
-       x="71.911"
-       y="233"
-       width="144"
-       height="54"
-       fill="url(#linearGradient210)"
-       opacity=".08"
-       id="rect201" />
-    <path
-       d="m215.91 233c0 4.986-4.014 9-9 9h-93c-9.972 0-18 8.028-18 18s8.028 18 18 18h93c4.986 0 9 4.014 9 9v-45z"
-       fill="#0f0f0f"
-       id="path203" />
-  </g>
-  <g
-     id="row-selected-blackness"
-     transform="translate(344,17)">
-    <rect
-       x="72"
-       y="233"
-       width="144"
-       height="54"
-       fill="#0f0f0f"
-       id="rect206" />
-    <path
-       d="m216 233c0 4.986-4.014 9-9 9h-93c-9.972 0-18 8.028-18 18s8.028 18 18 18h93c4.986 0 9 4.014 9 9v-45z"
-       fill="#ffffff"
-       id="path208" />
   </g>
 </svg>

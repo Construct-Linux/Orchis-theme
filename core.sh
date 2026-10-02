@@ -23,8 +23,8 @@ fi
 
 SASSC_OPT="-M -t expanded"
 
-THEME_NAME=Orchis
-THEME_VARIANTS=('' '-Purple' '-Pink' '-Red' '-Orange' '-Yellow' '-Green' '-Teal' '-Grey')
+# Orchis in Construct's colours: its accent, surfaces and states (src/_sass/_construct-palette.scss).
+THEME_NAME=Orchis-Construct
 COLOR_VARIANTS=('' '-Light' '-Dark')
 SIZE_VARIANTS=('' '-Compact')
 
@@ -38,10 +38,9 @@ function has_command() {
 install() {
   local dest="$1"
   local name="$2"
-  local theme="$3"
-  local color="$4"
-  local size="$5"
-  local icon="$6"
+  local color="$3"
+  local size="$4"
+  local icon="$5"
 
   if [[ "$color" == '-Dark' ]]; then
     local ELSE_DARK="$color"
@@ -49,11 +48,11 @@ install() {
     local else_icon_dark="$icon_color"
   fi
 
-  local THEME_DIR="${1}/${2}${3}${4}${5}"
+  local THEME_DIR="${1}/${2}${3}${4}"
 
   [[ -d "$THEME_DIR" ]] && rm -rf "$THEME_DIR"
 
-  theme_tweaks && install_theme_color
+  theme_tweaks
 
   echo "Installing '$THEME_DIR'..."
 
@@ -62,12 +61,12 @@ install() {
 
   echo "[Desktop Entry]" >>                                                                  "$THEME_DIR/index.theme"
   echo "Type=X-GNOME-Metatheme" >>                                                           "$THEME_DIR/index.theme"
-  echo "Name=${2}${3}${4}${5}" >>                                                        "$THEME_DIR/index.theme"
+  echo "Name=${2}${3}${4}" >>                                                        "$THEME_DIR/index.theme"
   echo "Comment=An flat Materia Gtk+ theme based on Elegant Design" >>                       "$THEME_DIR/index.theme"
   echo "Encoding=UTF-8" >>                                                                   "$THEME_DIR/index.theme"
   echo "" >>                                                                                 "$THEME_DIR/index.theme"
   echo "[X-GNOME-Metatheme]" >>                                                              "$THEME_DIR/index.theme"
-  echo "GtkTheme=${2}${3}${4}${5}" >>                                                    "$THEME_DIR/index.theme"
+  echo "GtkTheme=${2}${3}${4}" >>                                                    "$THEME_DIR/index.theme"
   echo "IconTheme=Tela-circle${else_icon_dark:-}" >>                                         "$THEME_DIR/index.theme"
   echo "CursorTheme=Vimix${else_icon_dark:-}" >>                                             "$THEME_DIR/index.theme"
   echo "ButtonLayout=close,minimize,maximize:menu" >>                                        "$THEME_DIR/index.theme"
@@ -80,11 +79,11 @@ install() {
   cp -r "$SRC_DIR/gnome-shell/assets${ELSE_DARK:-}/"*.svg                                    "$THEME_DIR/gnome-shell/assets"
 
   if [[ "$primary" == 'true' ]]; then
-    cp -r "$SRC_DIR/gnome-shell/theme$theme/checkbox${ELSE_DARK:-}.svg"                "$THEME_DIR/gnome-shell/assets/checkbox.svg"
+    cp -r "$SRC_DIR/gnome-shell/theme/checkbox${ELSE_DARK:-}.svg"                "$THEME_DIR/gnome-shell/assets/checkbox.svg"
   fi
 
-  cp -r "$SRC_DIR/gnome-shell/theme$theme/more-results${ELSE_DARK:-}.svg"              "$THEME_DIR/gnome-shell/assets/more-results.svg"
-  cp -r "$SRC_DIR/gnome-shell/theme$theme/toggle-on${ELSE_DARK:-}.svg"                 "$THEME_DIR/gnome-shell/assets/toggle-on.svg"
+  cp -r "$SRC_DIR/gnome-shell/theme/more-results${ELSE_DARK:-}.svg"              "$THEME_DIR/gnome-shell/assets/more-results.svg"
+  cp -r "$SRC_DIR/gnome-shell/theme/toggle-on${ELSE_DARK:-}.svg"                 "$THEME_DIR/gnome-shell/assets/toggle-on.svg"
 
   cp -r "$SRC_DIR/gnome-shell/activities/activities${icon}.svg"                              "$THEME_DIR/gnome-shell/assets/activities.svg"
 
@@ -94,14 +93,13 @@ install() {
   ln -s assets/no-notifications.svg no-notifications.svg
 
   mkdir -p                                                                                   "$THEME_DIR/gtk-3.0"
-  cp -r "$SRC_DIR/gtk/assets$theme"                                                    "$THEME_DIR/gtk-3.0/assets"
+  cp -r "$SRC_DIR/gtk/assets"                                                          "$THEME_DIR/gtk-3.0/assets"
   cp -r "$SRC_DIR/gtk/scalable"                                                              "$THEME_DIR/gtk-3.0/assets"
-  cp -r "$SRC_DIR/gtk/thumbnails/thumbnail$theme${ELSE_DARK:-}.png"                          "$THEME_DIR/gtk-3.0/thumbnail.png"
   sassc $SASSC_OPT "$SRC_DIR/gtk/3.0/gtk$color$size.scss"                                    "$THEME_DIR/gtk-3.0/gtk.css"
   sassc $SASSC_OPT "$SRC_DIR/gtk/3.0/gtk-Dark$size.scss"                                     "$THEME_DIR/gtk-3.0/gtk-dark.css"
 
   mkdir -p                                                                                   "$THEME_DIR/gtk-4.0"
-  cp -r "$SRC_DIR/gtk/assets$theme"                                                    "$THEME_DIR/gtk-4.0/assets"
+  cp -r "$SRC_DIR/gtk/assets"                                                          "$THEME_DIR/gtk-4.0/assets"
   cp -r "$SRC_DIR/gtk/scalable"                                                              "$THEME_DIR/gtk-4.0/assets"
   sassc $SASSC_OPT "$SRC_DIR/gtk/4.0/gtk$color$size.scss"                                    "$THEME_DIR/gtk-4.0/gtk.css"
   sassc $SASSC_OPT "$SRC_DIR/gtk/4.0/gtk-Dark$size.scss"                                     "$THEME_DIR/gtk-4.0/gtk-dark.css"
@@ -117,11 +115,10 @@ install() {
 uninstall() {
   local dest="$1"
   local name="$2"
-  local theme="$3"
-  local color="$4"
-  local size="$5"
+  local color="$3"
+  local size="$4"
 
-  local THEME_DIR="${1}/${2}${3}${4}${5}"
+  local THEME_DIR="${1}/${2}${3}${4}"
 
   [[ -d "$THEME_DIR" ]] && rm -rf "$THEME_DIR" && echo -e "Uninstalling "$THEME_DIR" ..."
 }
@@ -134,11 +131,10 @@ uninstall_link() {
 link_libadwaita() {
   local dest="$1"
   local name="$2"
-  local theme="$3"
-  local color="$4"
-  local size="$5"
+  local color="$3"
+  local size="$4"
 
-  local THEME_DIR="${1}/${2}${3}${4}${5}"
+  local THEME_DIR="${1}/${2}${3}${4}"
 
   echo -e "\nLink '$THEME_DIR/gtk-4.0' to '${HOME}/.config/gtk-4.0' for libadwaita..."
 
@@ -190,10 +186,6 @@ install_solid() {
   sed -i "/\$opacity:/s/default/solid/" $SRC_DIR/_sass/_tweaks-temp.scss
 }
 
-install_black() {
-  sed -i "/\$blackness:/s/false/true/" $SRC_DIR/_sass/_tweaks-temp.scss
-}
-
 install_mac() {
   sed -i "/\$mac_style:/s/false/true/" $SRC_DIR/_sass/_tweaks-temp.scss
 }
@@ -210,42 +202,6 @@ activities_style() {
   sed -i "/\$activities:/s/normal/icon/" $SRC_DIR/_sass/_tweaks-temp.scss
 }
 
-accent_type() {
-  sed -i "/\$accent_type:/s/default/fixed/" $SRC_DIR/_sass/_tweaks-temp.scss
-}
-
-install_theme_color() {
-  if [[ "$theme" != '' ]]; then
-    case "$theme" in
-      -Purple)
-        theme_color='purple'
-        ;;
-      -Pink)
-        theme_color='pink'
-        ;;
-      -Red)
-        theme_color='red'
-        ;;
-      -Orange)
-        theme_color='orange'
-        ;;
-      -Yellow)
-        theme_color='yellow'
-        ;;
-      -Green)
-        theme_color='green'
-        ;;
-      -Teal)
-        theme_color='teal'
-        ;;
-      -Grey)
-        theme_color='grey'
-        ;;
-    esac
-    sed -i "/\$theme:/s/default/${theme_color}/" $SRC_DIR/_sass/_tweaks-temp.scss
-  fi
-}
-
 theme_tweaks() {
   install_package; tweaks_temp
 
@@ -255,10 +211,6 @@ theme_tweaks() {
 
   if [[ "$opacity" == "solid" ]] ; then
     install_solid
-  fi
-
-  if [[ "$blackness" == "true" ]] ; then
-    install_black
   fi
 
   if [[ "$primary" == "true" ]] ; then
@@ -279,10 +231,6 @@ theme_tweaks() {
 
   if [[ "$activities" = "icon" ]] ; then
     activities_style
-  fi
-
-  if [[ "$fixed" = "true" ]] ; then
-    accent_type
   fi
 }
 
@@ -332,11 +280,9 @@ fix_dash_to_dock() {
 install_theme() {
   check_shell
 
-  for theme in "${themes[@]}"; do
-    for color in "${colors[@]}"; do
-      for size in "${sizes[@]}"; do
-        install "${dest:-$DEST_DIR}" "${_name:-$THEME_NAME}" "$theme" "$color" "$size" "$icon"
-      done
+  for color in "${colors[@]}"; do
+    for size in "${sizes[@]}"; do
+      install "${dest:-$DEST_DIR}" "${_name:-$THEME_NAME}" "$color" "$size" "$icon"
     done
   done
 
@@ -348,11 +294,9 @@ install_theme() {
 }
 
 uninstall_theme() {
-  for theme in "${THEME_VARIANTS[@]}"; do
-    for color in "${COLOR_VARIANTS[@]}"; do
-      for size in "${SIZE_VARIANTS[@]}"; do
-        uninstall "${dest:-$DEST_DIR}" "${_name:-$THEME_NAME}" "$theme" "$color" "$size"
-      done
+  for color in "${COLOR_VARIANTS[@]}"; do
+    for size in "${SIZE_VARIANTS[@]}"; do
+      uninstall "${dest:-$DEST_DIR}" "${_name:-$THEME_NAME}" "$color" "$size"
     done
   done
 
@@ -367,22 +311,16 @@ clean_theme() {
   if [[ "$DEST_DIR" == "$HOME/.themes" ]]; then
     local dest="$HOME/.local/share/themes"
 
-    for theme in "${themes[@]}"; do
-      for color in "${colors[@]}"; do
-        for size in "${sizes[@]}"; do
-          uninstall "${dest}" "${_name:-$THEME_NAME}" "$theme" "$color" "$size"
-        done
+    for color in "${colors[@]}"; do
+      for size in "${sizes[@]}"; do
+        uninstall "${dest}" "${_name:-$THEME_NAME}" "$color" "$size"
       done
     done
   fi
 }
 
 link_theme() {
-  for theme in "${themes[@]}"; do
-    for color in "${lcolors[@]}"; do
-      for size in "${sizes[0]}"; do
-        link_libadwaita "${dest:-$DEST_DIR}" "${_name:-$THEME_NAME}" "$theme" "$color" "$size"
-      done
-    done
+  for color in "${lcolors[@]}"; do
+    link_libadwaita "${dest:-$DEST_DIR}" "${_name:-$THEME_NAME}" "$color" "${sizes[0]}"
   done
 }

@@ -124,9 +124,9 @@ FIXME this is really an API */
 // unfocused window 'dot(s)'
 @define-color budgie_tasklist_indicator_color #{"" + on($panel, secondary)};
 // focused window 'line'
-@define-color budgie_tasklist_indicator_color_active #{"" + theme($theme)};
+@define-color budgie_tasklist_indicator_color_active #{"" + $primary};
 // group-ed and unfocused window 'line(s)'
-@define-color budgie_tasklist_indicator_color_active_window #{"" + mix(theme($theme), $panel, 45%)};
+@define-color budgie_tasklist_indicator_color_active_window #{"" + mix($primary, $panel, 45%)};
 // attention 'dot'
 // FIXME: we can't fill whole widget backgrounds with our suggestion colour
 //        because of lacking specific style-class on 'needs_attention' state,
