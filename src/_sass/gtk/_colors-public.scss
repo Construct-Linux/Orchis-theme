@@ -5,11 +5,6 @@
 
 // Sass thinks we're using the colors in the variables as strings and may shoot
 // warning, it's innocuous and can be defeated by using "" + $var
-
-// In GTK 4's libadwaita mode $primary is a CSS variable (var(--accent-bg-color)), which
-// @define-color does not take: GTK logs "Expected a valid color" for it in every app. There the
-// selection is the named accent color, which it does.
-$selected-color: if(str-index("" + $primary, "var(") == 1, "@accent_bg_color", "" + $primary);
 /*
 widget text/foreground color */
 @define-color theme_fg_color #{"" + $text};
@@ -28,7 +23,7 @@ text widgets and the like base background color */
 
 /*
 base background color of selections */
-@define-color theme_selected_bg_color #{$selected-color};
+@define-color theme_selected_bg_color #{"" + $primary};
 
 /*
 text/foreground color of selections */
@@ -64,7 +59,7 @@ text widgets and the like base background color on backdrop windows */
 
 /*
 base background color of selections on backdrop windows */
-@define-color theme_unfocused_selected_bg_color #{$selected-color};
+@define-color theme_unfocused_selected_bg_color #{"" + $primary};
 
 /*
 text/foreground color of selections on backdrop windows */
