@@ -204,6 +204,11 @@
   background-color: $primary !important;
   border: none;
 
+  // .calendar-day.calendar-weekend outranks .calendar-today alone
+  &.calendar-weekend {
+    color: on($primary) !important;
+  }
+
   &:hover, &:focus {
     background-color: lighten($primary, 3%) !important;
     color: on($primary) !important;
