@@ -22,7 +22,7 @@ by `src/gtk/render-assets.sh` (Inkscape) and committed.
 
 ## Build and install
 
-Requires `bash`, coreutils and `sassc`.
+Requires `bash`, coreutils, `awk` and `sassc`.
 
 ```sh
 ./install.sh -d /usr/share/themes        # both themes, system-wide
