@@ -14,9 +14,10 @@
   .popup-menu-content {
     padding: $space-size;
     margin: 0 3px 14px;
-    background-color: rgba($popover, 0.97);
+    background-color: $popover;
     border-radius: $popup-radius;
-    border: none;
+    // St draws a border with rounded corners; an outline only square, and one box-shadow.
+    border: 1px solid $popover-border;
     box-shadow: $shell-shadow-z3;
   }
 

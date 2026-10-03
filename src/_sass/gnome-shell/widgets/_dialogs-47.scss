@@ -6,7 +6,7 @@ $mdborder_color: if($variant == 'light', rgba(black, 0.15), rgba(black, 0.75));
   border-radius: 20px + $space-size;
   color: $text;
   background-color: $base;
-  border: 0 none $mdborder_color;
+  border: 1px solid $popover-border;
   box-shadow: 0 3px 8px rgba(black, 0.2);
   padding: $space-size * 2;
 

@@ -85,14 +85,15 @@
     box-shadow: none;
     margin: $margin-size;
     color: $text-secondary;
-    background-color: mix($text, $base, if($variant =='light', 6%, 4%)) !important;
+    // Translucent, so a card stays a step above whatever the menu stands on.
+    background-color: rgba($text, 0.06) !important;
 
     &:hover {
-      background-color: mix($text, $base, if($variant == 'light', 10%, 7%)) !important;
+      background-color: rgba($text, 0.10) !important;
     }
 
     &:active {
-      background-color: mix($text, $base, if($variant == 'light', 15%, 10%)) !important;
+      background-color: rgba($text, 0.14) !important;
     }
   }
 

@@ -10,13 +10,12 @@ $notification_banner_width: 34em;
   margin: $space-size;
   padding: $space-size;
   border-radius: $popup-radius;
-  border-left: none;
-  border-bottom: none;
+  border: 1px solid $popover-border;
   box-shadow: $shell-shadow-z2;
   color: $text;
-  background-color: rgba($base, 0.96);
+  background-color: $popover;
 
-  &:hover, &:focus, &:active { background-color: $base; }
+  &:hover, &:focus, &:active { background-color: mix($text, $popover, 4%); }
 }
 
 .notification-buttons-bin {

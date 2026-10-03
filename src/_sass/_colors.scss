@@ -94,7 +94,11 @@ $titlebar-backdrop:                     if($topbar == 'dark', background(h), bac
 $keyboard:                              if($variant == 'light', background(b), background(e)); // for gnome-shell keyboard
 $keyboard-alt:                          if($variant == 'light', darken(background(d), 4%), darken(background(e), 3%)); // for gnome-shell keyboard
 $system:                                background(f); // for gnome-shell keyboard
-$popover:                               if($variant == 'light', background(a), background(e));
+// The shell's menus, OSDs and notifications stand on the raised surface, ringed in the border
+// colour: its desktop is e, the wallpaper's own ink, and a black shadow cannot lift a surface off
+// it (the brand's THEMING.md).
+$popover:                               $surface;
+$popover-border:                        if($variant == 'light', $construct-border-dark, $construct-border-light);
 
 $panel-solid:                           if($topbar == 'dark', background(e), background(c)); // for Unity panel which doesn't allow translucent colors
 $panel:                                 rgba($panel-solid, 0.65);

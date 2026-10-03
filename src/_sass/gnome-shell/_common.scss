@@ -70,7 +70,7 @@ $bubble_button_radius: $circular-radius;
 %osd_panel {
   color: on($popover);
   background-color: $popover;
-  border: none;
+  border: 1px solid $popover-border;
   box-shadow: $shell-shadow-z4;
   padding: $space-size * 2;
 }
