@@ -91,7 +91,6 @@ ButtonLayout=close,minimize,maximize:menu
 EOF
 
   mkdir -p                                                                    "$THEME_DIR/gnome-shell"
-  cp -r "$SRC_DIR/gnome-shell/pad-osd.css"                                    "$THEME_DIR/gnome-shell"
   sassc "${SASSC_OPT[@]}" "$SRC_DIR/gnome-shell/shell-51-0/gnome-shell$ELSE_DARK.scss" "$THEME_DIR/gnome-shell/gnome-shell.css"
 
   cp -r "$SRC_DIR/gnome-shell/common-assets"                                  "$THEME_DIR/gnome-shell/assets"
@@ -101,13 +100,8 @@ EOF
     cp -r "$SRC_DIR/gnome-shell/theme/checkbox$ELSE_DARK.svg"                 "$THEME_DIR/gnome-shell/assets/checkbox.svg"
   fi
 
-  cp -r "$SRC_DIR/gnome-shell/theme/more-results$ELSE_DARK.svg"               "$THEME_DIR/gnome-shell/assets/more-results.svg"
   cp -r "$SRC_DIR/gnome-shell/theme/toggle-on$ELSE_DARK.svg"                  "$THEME_DIR/gnome-shell/assets/toggle-on.svg"
   cp -r "$SRC_DIR/gnome-shell/activities/construct.svg"                       "$THEME_DIR/gnome-shell/assets/activities.svg"
-
-  ln -s assets/no-events.svg                                                  "$THEME_DIR/gnome-shell/no-events.svg"
-  ln -s assets/process-working.svg                                            "$THEME_DIR/gnome-shell/process-working.svg"
-  ln -s assets/no-notifications.svg                                           "$THEME_DIR/gnome-shell/no-notifications.svg"
 
   mkdir -p                                                                    "$THEME_DIR/gtk-3.0"
   cp -r "$SRC_DIR/gtk/assets"                                                 "$THEME_DIR/gtk-3.0/assets"
