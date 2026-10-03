@@ -998,7 +998,7 @@ $sidebar-backdrop: if($variant == 'light' and $topbar == 'dark', $titlebar-backd
 
       &:disabled { color: $titlebar-text-secondary-disabled; }
 
-      &:checked, &:indeterminate { color: $check_radio_primary; }
+      &:checked, &:indeterminate { color: $success; }
 
       &:checked:disabled, &:indeterminate:disabled { color: $titlebar-text-secondary-disabled; }
     }
