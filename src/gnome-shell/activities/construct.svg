@@ -1,4 +1,1 @@
-<!-- CONSTRUCT's mark for the Activities button: logos/construct-activities.svg from the brand repository, CC-BY-SA-4.0. -->
-<svg xmlns="http://www.w3.org/2000/svg" width="48" height="48" viewBox="0 0 48 48">
-<path d="M11.20 33.53 L7.93 40.07 L40.07 40.07 L40.07 7.93 L27.00 17.73 L11.20 17.73 L11.20 33.53 L27.00 33.53 L27.00 17.73 M40.07 40.07 L27.00 33.53" fill="none" stroke="#fff" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"/>
-</svg>
+<svg xmlns="http://www.w3.org/2000/svg" width="48" height="48" viewBox="0 0 48 48"><path fill="none" stroke="#fff" stroke-linecap="round" stroke-linejoin="round" stroke-width="3" d="m11.2 33.53-3.27 6.54h32.14V7.93L27 17.73H11.2zH27v-15.8m13.07 22.34L27 33.53"/></svg>

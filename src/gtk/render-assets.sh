@@ -16,6 +16,6 @@ for i in $(cat assets.txt); do
   "$INKSCAPE" --export-id="$i" --export-id-only --export-filename="assets/$i.png" assets.svg >/dev/null
   "$INKSCAPE" --export-id="$i" --export-id-only --export-dpi=192 --export-filename="assets/$i@2.png" assets.svg >/dev/null
   if [[ -n "${OPTIPNG}" ]]; then
-    "$OPTIPNG" -o7 --quiet "assets/$i.png" "assets/$i@2.png"
+    "$OPTIPNG" -o7 -strip all --quiet "assets/$i.png" "assets/$i@2.png"
   fi
 done
