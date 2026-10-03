@@ -80,6 +80,8 @@ EOF
   mkdir -p                                                                    "$THEME_DIR/gtk-4.0"
   cp -r "$SRC_DIR/gtk/assets"                                                 "$THEME_DIR/gtk-4.0/assets"
   cp -r "$SRC_DIR/gtk/scalable"                                               "$THEME_DIR/gtk-4.0/assets"
+  # GTK 4's selection-mode checks are the symbolic SVGs; the PNGs are GTK 3's.
+  rm -f "$THEME_DIR/gtk-4.0/assets/selectionmode-checkbox-"*
   sassc "${SASSC_OPT[@]}" "$SRC_DIR/gtk/4.0/gtk$color.scss"                   "$THEME_DIR/gtk-4.0/gtk.css"
   sassc "${SASSC_OPT[@]}" "$SRC_DIR/gtk/4.0/gtk-Dark.scss"                    "$THEME_DIR/gtk-4.0/gtk-dark.css"
 
