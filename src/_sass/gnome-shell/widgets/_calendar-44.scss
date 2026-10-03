@@ -153,6 +153,11 @@
   text-shadow: none;
   background-color: transparent !important;
 
+  // before the states below, so hover, active and selected still win on a weekend
+  &.calendar-weekend {
+    color: $text-disabled !important;
+  }
+
   &:hover, &:focus {
     color: $text !important;
     background-color: $secondary-fill !important;
@@ -171,12 +176,6 @@
     border: none !important; //avoid jumparound due to today
     box-shadow: none !important;
     outline: none !important;
-  }
-
-  &.calendar-weekday {}
-
-  &.calendar-weekend {
-    color: $text-disabled;
   }
 }
 
@@ -199,11 +198,6 @@
 
 .calendar-day-top { border-top-width: 0; }
 .calendar-day-left { border-left-width: 0; }
-// .calendar-work-day { }
-.calendar-nonwork-day {
-  color: $text;
-}
-
 .calendar-today {
   font-weight: bold !important;
   color: on($primary) !important;
@@ -231,7 +225,7 @@
   background-image: url("assets/calendar-today.svg");
   background-size: contain;
 
-  &.calendar-work-day {
+  &.calendar-weekday {
     color: $text-disabled;
     font-weight: bold;
   }
@@ -284,8 +278,6 @@
 
 .world-clocks-header,
 .weather-header,
-.message-list-section-title,
-.events-section-title,
 .events-title {
   color: $text-disabled;
   font-weight: bold;
@@ -300,8 +292,7 @@
 }
 
 .world-clocks-header,
-.weather-header,
-.events-section-title {
+.weather-header {
   color: $text-disabled;
   font-weight: bold;
   font-size: if($compact == 'true', 0.9em, 1em);
