@@ -107,7 +107,7 @@ $toggle-height: $space-size * 4 + $margin-size + $base-icon-size;
       border-radius: 0 $circular-radius $circular-radius 0;
     }
 
-    &:rtr > StBoxLayout {
+    &:rtl > StBoxLayout {
       padding-left: 0;
     }
 

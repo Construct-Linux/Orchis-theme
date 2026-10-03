@@ -41,12 +41,6 @@ $keyboard_active_bg_color: if($variant == 'light', darken($keyboard, 20%), light
   &:focus, &:hover { color: $text; background-color: $keyboard_hover_bg_color; }
   &:checked, &:active { color: $text; background-color: $keyboard_active_bg_color; }
 
-  &:grayed { //FIXME
-    background-color: $scrim;
-    color: on(dark);
-    border-color: $scrim;
-  }
-
   &.default-key {
     background-color: $keyboard-alt;
     box-shadow: 0 1px rgba($black, 0.2);
@@ -54,21 +48,11 @@ $keyboard_active_bg_color: if($variant == 'light', darken($keyboard, 20%), light
     &:checked, &:active { color: $text-secondary; background-color: darken($keyboard, 6%); }
   }
 
-  &.enter-key {
-    background-color: $primary;
-    color: on($primary);
-
-    &:focus, &:hover { color: on($primary); background-color: lighten($primary, 5%); }
-    &:checked, &:active { color: on($primary); background-color: darken($primary, 10%); }
-  }
-
-  &.shift-key-uppercase { color: $primary }
-
   StIcon { icon-size: 1.125em; }
 }
 
 // long press on a key popup
-.keyboard-subkeys {
+.keyboard-subkeys-boxpointer {
   color: inherit;
   -arrow-border-radius: $material-radius;
   -arrow-background-color: rgba(black, 0.45);

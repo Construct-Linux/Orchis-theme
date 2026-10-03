@@ -51,10 +51,6 @@
     }
   }
 
-  StBoxLayout#EvalBox { padding: $space-size; spacing: $space-size; }
-
-  StBoxLayout#ResultsArea { spacing: $space-size; }
-
   @extend %scrollbar_on_dark;
 }
 
@@ -105,11 +101,6 @@
   &:insensitive { @include button(flat-insensitive); }
   &:focus { @include button(flat-focus); }
   &:hover { border: none; }
-}
-
-#lookingGlassExtensions {
-  padding: $space-size;
-  color: on(dark, secondary);
 }
 
 .lg-extensions-list {
