@@ -1243,14 +1243,8 @@ headerbar {
       &:backdrop { color: $text-disabled; }
     }
 
-    @if $mac_style == 'true' {
-      button:not(.suggested-action):not(.destructive-action):not(.close):not(.maximize):not(.minimize) {
-        @extend %titlebar-button-reset;
-      }
-    } @else {
-      button:not(.suggested-action):not(.destructive-action) {
-        @extend %titlebar-button-reset;
-      }
+    button:not(.suggested-action):not(.destructive-action) {
+      @extend %titlebar-button-reset;
     }
   }
 
@@ -1492,16 +1486,9 @@ headerbar {
       menubutton {
         padding: 0;
 
-        @if $mac_style == 'true' {
-          min-height: 16px;
-          min-width: 16px;
-          padding: ($small-size - 16px) / 2 0;
-          margin: 0 $space-size - 2px;
-        } @else {
-          min-height: $small-size;
-          min-width: $small-size;
-          margin: $space-size 0;
-        }
+        min-height: $small-size;
+        min-width: $small-size;
+        margin: $space-size 0;
       }
     }
   }
@@ -1525,72 +1512,8 @@ window.devel {
 // Window buttons
 //
 
-%mac_window_button {
-  min-height: 16px;
-  min-width: 16px;
-  padding: ($medium-size - 16px) / 2 0;
-  margin-left: $space-size - 2px;
-  margin-right: $space-size - 2px;
-
-  &.minimize, &.maximize, &.close {
-    color: transparent;
-
-    &, &:hover, &:active {
-      box-shadow: none;
-      background-color: transparent;
-      background-image: none;
-      transition: none;
-      animation: none;
-    }
-
-    &:hover, &:active {
-      color: white;
-    }
-
-    &:backdrop {
-      color: transparent;
-
-      > image { background-color: $titlebar-track; }
-
-      &:hover, &:active {
-        color: $titlebar-text-disabled;
-      }
-    }
-  }
-
-  &.minimize { // Window minimize button
-    > image { background-color: $titlebutton-min; }
-
-    &:active > image {
-      background-color: mix(black, $titlebutton-min, 25%);
-    }
-  }
-
-  &.maximize { // Window maximize button
-    > image { background-color: $titlebutton-max; }
-
-    &:active > image {
-      background-color: mix(black, $titlebutton-max, 25%);
-    }
-  }
-
-  &.close { // Window close button
-    > image { background-color: $titlebutton-close; }
-
-    &:active > image {
-      background-color: mix(black, $titlebutton-close, 25%);
-    }
-  }
-}
-
-$window-space: if($mac_style == 'true', $space-size * 1.5, $space-size);
-
 headerbar windowcontrols {
   border-spacing: $space-size;
-
-  @if $mac_style == 'true' {
-    padding: 0 $space-size;
-  }
 
   &.start:dir(ltr),
   &.end:dir(rtl) {
@@ -1605,25 +1528,13 @@ headerbar windowcontrols {
   button:not(.suggested-action):not(.destructive-action) {
     @extend %circular-button;
 
-    @if $mac_style == 'true' {
-      @extend %mac_window_button;
-
-      > image {
-        border-radius: 100%;
-        padding: 0;
-        border: none;
-        outline: none;
-        box-shadow: none;
-      }
-    } @else {
-      > image {
-        padding: 0;
-        border: none;
-        outline: none;
-        box-shadow: none;
-        background-color: transparent;
-        background-image: none;
-      }
+    > image {
+      padding: 0;
+      border: none;
+      outline: none;
+      box-shadow: none;
+      background-color: transparent;
+      background-image: none;
     }
   }
 }
@@ -4153,14 +4064,8 @@ window.about {
       box-shadow: inset 0 1px highlight($titlebar);
     }
 
-    @if $mac_style == 'true' {
-      button:not(.suggested-action):not(.destructive-action):not(.close):not(.maximize):not(.minimize) {
-        @extend %titlebar-button-reset;
-      }
-    } @else {
-      button:not(.suggested-action):not(.destructive-action) {
-        @extend %titlebar-button-reset;
-      }
+    button:not(.suggested-action):not(.destructive-action) {
+      @extend %titlebar-button-reset;
     }
   }
 }

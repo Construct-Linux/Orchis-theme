@@ -1,7 +1,7 @@
 // When color definition differs for dark and light variant,
 // it gets @if ed depending on $variant
 
-@import 'tweaks-temp';
+@import 'color-palette-default';
 
 @function gtkalpha($c, $a) {
   @return unquote("alpha(#{$c}, #{$a})");
@@ -97,7 +97,7 @@ $system:                                background(f); // for gnome-shell keyboa
 $popover:                               if($variant == 'light', background(a), background(e));
 
 $panel-solid:                           if($topbar == 'dark', background(e), background(c)); // for Unity panel which doesn't allow translucent colors
-$panel:                                 if($opacity == 'default', rgba($panel-solid, 0.65), $panel-solid);
+$panel:                                 rgba($panel-solid, 0.65);
 $shell:                                 if($topbar == 'dark', rgba(black, 0.65), background(c)); // for gnome-shell
 
 $button:                                gtkalpha(currentColor, 0.05);
@@ -117,7 +117,7 @@ $success:                               if($variant == 'light', $construct-succe
 $suggested:                             $primary;
 $destructive:                           $error;
 
-$check_radio_primary:                   if($check_radio == 'default', $success, $primary);
+$check_radio_primary:                   $success;
 
 $frame:                                 if($variant == 'light', rgba(black, 0.1), rgba(black, 0.25)); // instead of shadows
 $border:                                if($variant == 'light', rgba(black, 0.12), rgba(white, 0.12));

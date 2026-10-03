@@ -1,5 +1,3 @@
-@import 'tweaks-temp';
-
 // Function to convert px values to em
 @function to_em($input, $base: 16px) {
   // multiplied and divided by 1000 to make up for round() shortcoming
@@ -39,6 +37,7 @@ $large-scalable-icon-size: $scalable-icon-size * 2;
 // Radiuses
 //
 
+$default_corner: 12px;
 $window-radius: $default_corner + $space-size;
 $corner-radius: if($compact == 'false', $default_corner, max(0, $default_corner - 2px));
 $material-radius: $default_corner / 2 + 4px;

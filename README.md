@@ -25,12 +25,8 @@ Requires `bash`, coreutils and `sassc`.
 ```sh
 ./install.sh -d /usr/share/themes        # both themes, system-wide
 ./install.sh -c dark                     # one of them, into ~/.local/share/themes
-./install.sh -l                          # also link the light theme's gtk-4.0 for libadwaita
 ./install.sh -r                          # uninstall
 ```
-
-`./install.sh --help` lists the tweaks (`--tweaks solid compact primary macos submenu`,
-`--round`).
 
 ## License
 

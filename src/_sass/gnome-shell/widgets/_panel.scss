@@ -2,7 +2,7 @@
 // a.k.a. the panel
 
 $panel_transition_duration: 250ms; // same as the overview transition duration
-$panel_height: if($panel_style == 'compact', $medium-size - 2px, $medium-size + 2px);
+$panel_height: $medium-size + 2px;
 $panel_button_hpadding: ($panel_height - $base-icon-size) / 2;
 
 #panel {
@@ -14,19 +14,9 @@ $panel_button_hpadding: ($panel_height - $base-icon-size) / 2;
   border: none;
   box-shadow: none;
 
-  @if $opacity == 'solid' {
-    background-color: $panel-solid;
-  } @else {
-    background-color: $shell;
-  }
-
-  @if $panel_style == 'compact' {
-    margin: 0;
-    border-radius: 0;
-  } @else {
-    margin: $space-size / 2;
-    border-radius: if($corner_style == 'circular', $circular-radius, $material-radius + $space-size / 2);
-  }
+  background-color: $shell;
+  margin: $space-size / 2;
+  border-radius: $circular-radius;
 
   // transparent panel on lock & login screens
   &.unlock-screen,
@@ -67,7 +57,7 @@ $panel_button_hpadding: ($panel_height - $base-icon-size) / 2;
     -minimum-hpadding: $panel_button_hpadding;
     transition-duration: 150ms;
     border: $space-size / 2 solid transparent;
-    border-radius: if($corner_style == 'circular', $circular-radius, $material-radius + $space-size / 2);
+    border-radius: $circular-radius;
     margin: 0;
 
     &.clock-display {
@@ -81,7 +71,7 @@ $panel_button_hpadding: ($panel_height - $base-icon-size) / 2;
       }
 
       .clock {
-        border-radius: if($corner_style == 'circular', $circular-radius, $material-radius + $space-size / 2);
+        border-radius: $circular-radius;
         padding: 0 $space-size * 2 !important;
       }
     }

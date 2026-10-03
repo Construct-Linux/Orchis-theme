@@ -1,6 +1,5 @@
 .DS_store
 .sass-cache
-*-temp.scss
 .vscode
 src/gnome-shell/*/*.css
 src/gtk/*/*.css

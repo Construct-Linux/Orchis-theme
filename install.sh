@@ -26,41 +26,13 @@ Usage: $0 [OPTION]...
 
 OPTIONS:
   -d, --dest DIR          Destination directory (Default: $DEST_DIR)
-  -n, --name NAME         Theme name (Default: $THEME_NAME)
   -c, --color VARIANT     Color variant(s) [light|dark] (Default: both)
 
-  -l, --libadwaita        Link the installed gtk-4.0 theme into ~/.config/gtk-4.0, where
-                          libadwaita apps read it (the first -c variant, Default: light,
-                          which carries the dark styles for a dark session)
-
-  --tweaks TWEAK...       [solid|compact|primary|macos|submenu] (Options can mix)
-                          1. solid              No transparency panel variant
-                          2. compact            No floating panel variant
-                          3. primary            Change radio icon checked color to primary theme color (Default is Green)
-                          4. macos              Change window buttons to macOS style
-                          5. submenu            Set normal submenus color contrast (dark submenu style on dark version)
-
-  --round PX              Change theme round corner border-radius (Suggested: 2px < value < 16px)
-
   -r, --remove,
-  -u, --uninstall         Uninstall the themes (with -l, only the ~/.config/gtk-4.0 links)
+  -u, --uninstall         Uninstall the themes
 
   -h, --help              Show help
 EOF
-}
-
-# Every tweak edits a copy of _tweaks.scss, which _colors.scss and _variables.scss import.
-theme_tweaks() {
-  local tweaks="$SRC_DIR/_sass/_tweaks-temp.scss"
-
-  cp -f "$SRC_DIR/_sass/_tweaks.scss" "$tweaks"
-  [[ "$panel" == "compact" ]] && sed -i "/\$panel_style:/s/float/compact/" "$tweaks"
-  [[ "$opacity" == "solid" ]] && sed -i "/\$opacity:/s/default/solid/" "$tweaks"
-  [[ "$primary" == "true" ]] && sed -i "/\$check_radio:/s/default/primary/" "$tweaks"
-  [[ -n "$corner" ]] && sed -i "/\$default_corner:/s/12px/${corner}/" "$tweaks"
-  [[ "$macstyle" == "true" ]] && sed -i "/\$mac_style:/s/false/true/" "$tweaks"
-  [[ "$submenu" == "true" ]] && sed -i "/\$submenu_style:/s/false/true/" "$tweaks"
-  return 0
 }
 
 install() {
@@ -96,10 +68,6 @@ EOF
   cp -r "$SRC_DIR/gnome-shell/common-assets"                                  "$THEME_DIR/gnome-shell/assets"
   cp -r "$SRC_DIR/gnome-shell/assets$ELSE_DARK/"*.svg                         "$THEME_DIR/gnome-shell/assets"
 
-  if [[ "$primary" == 'true' ]]; then
-    cp -r "$SRC_DIR/gnome-shell/theme/checkbox$ELSE_DARK.svg"                 "$THEME_DIR/gnome-shell/assets/checkbox.svg"
-  fi
-
   cp -r "$SRC_DIR/gnome-shell/theme/toggle-on$ELSE_DARK.svg"                  "$THEME_DIR/gnome-shell/assets/toggle-on.svg"
   cp -r "$SRC_DIR/gnome-shell/activities/construct.svg"                       "$THEME_DIR/gnome-shell/assets/activities.svg"
 
@@ -123,19 +91,6 @@ EOF
   fi
 }
 
-link_libadwaita() {
-  local THEME_DIR="$1/$2$3"
-  local config="$HOME/.config/gtk-4.0"
-
-  echo -e "\nLink '$THEME_DIR/gtk-4.0' to '$config' for libadwaita..."
-
-  mkdir -p "$config"
-  rm -rf "$config/"{assets,gtk.css,gtk-dark.css}
-  ln -sf "$THEME_DIR/gtk-4.0/assets"                                          "$config/assets"
-  ln -sf "$THEME_DIR/gtk-4.0/gtk.css"                                         "$config/gtk.css"
-  ln -sf "$THEME_DIR/gtk-4.0/gtk-dark.css"                                    "$config/gtk-dark.css"
-}
-
 colors=()
 
 while [[ "$#" -gt 0 ]]; do
@@ -145,62 +100,9 @@ while [[ "$#" -gt 0 ]]; do
       mkdir -p "$dest"
       shift 2
       ;;
-    -n|--name)
-      _name="$2"
-      shift 2
-      ;;
     -r|--remove|-u|--uninstall)
       remove="true"
       shift
-      ;;
-    -l|--libadwaita)
-      libadwaita="true"
-      shift
-      ;;
-    --round)
-      corner="$2"
-      echo -e "Change round corner ${corner} value ..."
-      shift 2
-      ;;
-    --tweaks)
-      shift
-      for variant in "$@"; do
-        case "$variant" in
-          solid)
-            opacity="solid"
-            echo -e "Install solid version ..."
-            shift
-            ;;
-          compact)
-            panel="compact"
-            echo -e "Install compact panel version ..."
-            shift
-            ;;
-          primary)
-            primary="true"
-            echo "Change radio and check assets color ..."
-            shift
-            ;;
-          macos)
-            macstyle="true"
-            echo -e "Install macOS style window button version ..."
-            shift
-            ;;
-          submenu)
-            submenu="true"
-            echo -e "Install with themed sub-menus ..."
-            shift
-            ;;
-          -*)
-            break
-            ;;
-          *)
-            echo "ERROR: Unrecognized tweaks variant '$1'."
-            echo "Try '$0 --help' for more information."
-            exit 1
-            ;;
-        esac
-      done
       ;;
     -c|--color)
       shift
@@ -242,40 +144,24 @@ if [[ "${#colors[@]}" -eq 0 ]] ; then
 fi
 
 dest="${dest:-$DEST_DIR}"
-name="${_name:-$THEME_NAME}"
+name="$THEME_NAME"
 
 if [[ "$remove" == 'true' ]]; then
-  if [[ "$libadwaita" == 'true' ]]; then
-    rm -rf "$HOME/.config/gtk-4.0/"{assets,gtk.css,gtk-dark.css}
-    echo -e "\nRemoving $HOME/.config/gtk-4.0 links..."
-  else
-    for color in "${COLOR_VARIANTS[@]}"; do
-      if [[ -d "$dest/$name$color" ]]; then
-        rm -rf "$dest/$name$color"
-        echo -e "Uninstalling $dest/$name$color ..."
-      fi
-    done
-  fi
+  for color in "${COLOR_VARIANTS[@]}"; do
+    if [[ -d "$dest/$name$color" ]]; then
+      rm -rf "$dest/$name$color"
+      echo -e "Uninstalling $dest/$name$color ..."
+    fi
+  done
 else
-  if [[ "$libadwaita" == 'true' && "$UID" -eq 0 ]]; then
-    echo -e "Do not run -l with sudo, that will link libadwaita theme to root folder !"
-    exit 1
-  fi
-
   if ! command -v sassc > /dev/null; then
     echo "ERROR: 'sassc' needs to be installed to generate the CSS."
     exit 1
   fi
 
-  theme_tweaks
-
   for color in "${colors[@]}"; do
     install "$dest" "$name" "$color"
   done
-
-  if [[ "$libadwaita" == 'true' ]]; then
-    link_libadwaita "$dest" "$name" "${colors[0]}"
-  fi
 fi
 
 echo

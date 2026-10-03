@@ -3,7 +3,7 @@
 $mdborder_color: if($variant == 'light', rgba(black, 0.15), rgba(black, 0.75));
 
 .modal-dialog {
-  border-radius: if($corner_style == 'circular', 20px + $space-size, $material-radius + $space-size);
+  border-radius: 20px + $space-size;
   color: $text;
   background-color: $base;
   border: 0 none $mdborder_color;

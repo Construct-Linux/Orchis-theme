@@ -111,39 +111,19 @@
           @extend %titlebar-entry;
         }
 
-        @if $mac_style =='true' {
-          button:not(.suggested-action):not(.destructive-action):not(.close):not(.maximize):not(.minimize) {
-            @extend %titlebar-button;
-          }
-        }
-
-        @else {
-          button:not(.suggested-action):not(.destructive-action) {
-            @extend %titlebar-button;
-          }
+        button:not(.suggested-action):not(.destructive-action) {
+          @extend %titlebar-button;
         }
 
         popover.background {
 
           // reset
           > contents {
-            @if $mac_style =='true' {
-              button:not(.suggested-action):not(.destructive-action):not(.close):not(.maximize):not(.minimize) {
-                @extend %button-basic;
+            button:not(.suggested-action):not(.destructive-action) {
+              @extend %button-basic;
 
-                &.flat {
-                  @extend %button-flat;
-                }
-              }
-            }
-
-            @else {
-              button:not(.suggested-action):not(.destructive-action) {
-                @extend %button-basic;
-
-                &.flat {
-                  @extend %button-flat;
-                }
+              &.flat {
+                @extend %button-flat;
               }
             }
           }
