@@ -5,8 +5,10 @@ $panel_transition_duration: 250ms; // same as the overview transition duration
 $panel_height: $medium-size + 2px;
 $panel_button_hpadding: ($panel_height - $base-icon-size) / 2;
 
+// Regular weight: upstream sets the whole bar bold, clock, indicators and extensions' text
+// (Vitals) alike, which reads heavy on a dark bar; the brand's type is regular (THEMING.md).
 #panel {
-  font-weight: bold;
+  font-weight: normal;
   font-feature-settings: "tnum";
   padding: 0 !important;
   transition-duration: $panel_transition_duration;
@@ -26,8 +28,9 @@ $panel_button_hpadding: ($panel_height - $base-icon-size) / 2;
   }
 
   %icon_activities {
+    // No background-position: St takes only lengths there (it warned of "center center" at
+    // every restyle) and centres a background image by itself.
     background-image: url("assets/activities.svg");
-    background-position: center center;
     background-repeat: no-repeat;
     background-size: 24px 24px;
     width: 24px;
@@ -51,7 +54,7 @@ $panel_button_hpadding: ($panel_height - $base-icon-size) / 2;
 
   // panel menus
   .panel-button {
-    font-weight: bold;
+    font-weight: normal;
     color: on($panel-solid);
     -natural-hpadding: $panel_button_hpadding;
     -minimum-hpadding: $panel_button_hpadding;
