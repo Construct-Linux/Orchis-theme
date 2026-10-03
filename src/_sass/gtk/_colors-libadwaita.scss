@@ -155,7 +155,7 @@ $dark_5: #000000;
 @define-color accent_bg_color #{$primary};
 @define-color accent_fg_color #{on($primary)};
 
-@define-color accent_color #{$primary};
+@define-color accent_color #{$accent-text};
 
 // destructive-action buttons
 @define-color destructive_bg_color #{$destructive};
@@ -209,9 +209,9 @@ $dark_5: #000000;
 
 :root {
   // Construct is the accent whichever one GNOME's Settings pick: libadwaita's own styles read
-  // these, and its accent_color stands alone as text, so it is the accent itself, which the
-  // palette keeps readable on each variant's surfaces.
-  --accent-color: #{$primary};
+  // these. Its accent_color stands alone as text, so it is the palette's accent_text, which reads
+  // on each variant's surfaces and on the accent's own tints; accent_bg is the accent itself.
+  --accent-color: #{$accent-text};
   --accent-bg-color: #{$primary};
   --accent-fg-color: #{on($primary)};
 }

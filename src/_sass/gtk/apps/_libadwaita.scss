@@ -92,10 +92,32 @@ button {
   &.suggested-action {
     @extend %opaque-button;
 
-    color: on($suggested);
+    @if $variant == 'dark' {
+      // Dark: the accent's tint in its three steps with the accent as text (see the buttons in
+      // _common-4.0.scss); the opaque button's image overlays would shift the steps.
+      color: $accent-text;
+      background-color: color-mix(in srgb, $primary #{$tint * 100%}, transparent);
 
-    &, &:checked {
-      background-color: $suggested;
+      &:hover {
+        background-image: none;
+        background-color: color-mix(in srgb, $primary #{$tint-hover * 100%}, transparent);
+      }
+
+      &.keyboard-activating, &:active, &:checked, &:checked:hover {
+        background-image: none;
+        background-color: color-mix(in srgb, $primary #{$tint-active * 100%}, transparent);
+      }
+
+      &:disabled {
+        color: $text-disabled;
+        background-color: color-mix(in srgb, $primary 8%, transparent);
+      }
+    } @else {
+      color: on($suggested);
+
+      &, &:checked {
+        background-color: $suggested;
+      }
     }
   }
 
@@ -149,8 +171,8 @@ menubutton {
   &.pill > button { @extend %pill-button; }
 
   &.suggested-action {
-    background-color: $suggested;
-    color: on($suggested);
+    background-color: if($variant == 'dark', color-mix(in srgb, $primary #{$tint * 100%}, transparent), $suggested);
+    color: if($variant == 'dark', $accent-text, on($suggested));
   }
 
   &.destructive-action {
@@ -296,8 +318,8 @@ splitbutton {
   }
 
   &.suggested-action {
-    background-color: $suggested;
-    color: on($suggested);
+    background-color: if($variant == 'dark', color-mix(in srgb, $primary #{$tint * 100%}, transparent), $suggested);
+    color: if($variant == 'dark', $accent-text, on($suggested));
   }
 
   &.destructive-action {
@@ -425,7 +447,7 @@ statuspage {
 
 // Cards
 .card, %card {
-  border-radius: $corner-radius;
+  border-radius: $boxed-radius;
   box-shadow: none;
   border: 1px solid $divider;
   background-clip: padding-box;
@@ -1328,8 +1350,16 @@ floating-sheet {
   }
 
   > sheet.background {
-    box-shadow: $shadow-z16;
+    // Dark: the ring, as on a window; libadwaita's dialog_bg stays, so its g boxed lists do
+    // not sit in an h dialog.
+    box-shadow: if($variant == 'dark', (0 0 0 1px $popover-border, $shadow-z16), $shadow-z16);
     border-radius: $window-radius;
     outline: none;
   }
+}
+
+// libadwaita rounds its alert dialogs one step more than other dialogs; the sheet rule above
+// would flatten them to the window radius.
+dialog-host > dialog.alert sheet {
+  border-radius: $radius-control * 2;
 }

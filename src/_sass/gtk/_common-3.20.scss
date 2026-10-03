@@ -40,9 +40,19 @@
   background-color: mix($text, $base, 10%);
 }
 
+// A selected row or item is an area: the accent's tint, with the accent as text.
 %selected_items_color {
-  color: $primary;
-  background-color: rgba($primary, 0.2);
+  color: $accent-text;
+  background-color: rgba($primary, $tint);
+
+  &:hover { background-color: rgba($primary, $tint-hover); }
+}
+
+// Selected text: one selection alpha for GTK, the shell, Ghostty and VS Code; the text keeps
+// its colour.
+%text_selection {
+  color: $text;
+  background-color: rgba($primary, $selection-alpha);
 }
 
 %selected_items_primary {
@@ -159,7 +169,7 @@
 textview {
   text {
     background-color: $base;
-    selection { &:focus, & { @extend %selected_items_primary; }}
+    selection { &:focus, & { @extend %text_selection; }}
   }
 
   border {
@@ -202,7 +212,7 @@ label {
     color: $text-secondary;
   }
 
-  selection { @extend %selected_items_primary; }
+  selection { @extend %text_selection; }
 
   &:disabled {
     color: $text-disabled;
@@ -321,7 +331,7 @@ entry {
       &.right { @include undershoot(right); }
     }
 
-    selection { @extend %selected_items_primary; }
+    selection { @extend %text_selection; }
 
     // entry error and warning style
     @each $e_type, $e_color in (error, $error),
@@ -651,6 +661,36 @@ button {
         &:disabled { @include button(flat-disabled); }
 
         &:checked { background-color: rgba($b_color, 0.3); }
+      }
+    }
+  }
+
+  // Dark: a suggested action is an area, so the accent's tint with the accent as text, as the
+  // shell's default button; a filled cyan button glares on ink. Light keeps the filled accent
+  // with white text (5.09:1).
+  @if $variant == 'dark' {
+    &.suggested-action {
+      background-color: rgba($primary, $tint);
+      color: $accent-text;
+
+      &:hover { background-color: rgba($primary, $tint-hover); box-shadow: none; }
+
+      &:active, &:checked { background-color: rgba($primary, $tint-active); }
+
+      &:checked:hover { box-shadow: none; }
+
+      &:focus { box-shadow: inset 0 0 0 2px $primary; }
+
+      &:disabled {
+        color: $text-disabled;
+        background-color: rgba($primary, 0.08);
+      }
+
+      &.flat {
+        background-color: transparent;
+        color: $accent-text;
+
+        &:checked { background-color: rgba($primary, $tint-active); }
       }
     }
   }
@@ -1781,6 +1821,12 @@ popover.background {
     border-width: 0;
     border-color: rgba(0, 0, 0, 0.1) rgba(0, 0, 0, 0.0) rgba(0, 0, 0, 0.0);
     border-radius: $menu-radius;
+
+    // Dark: the ring makes the edge, a black shadow does not show on ink.
+    @if $variant == 'dark' {
+      border-width: 1px;
+      border-color: $popover-border;
+    }
   }
 
   &.combo {
@@ -3366,8 +3412,8 @@ stacksidebar.sidebar {
     border-radius: $bar-size;
 
     &:selected {
-      background-color: $overlay-checked;
-      color: $primary;
+      background-color: rgba($primary, $tint);
+      color: $accent-text;
       font-weight: 500;
     }
 
@@ -3416,11 +3462,11 @@ placessidebar.sidebar {
     > revealer { padding: 0 8px 0 16px; }
 
     &:selected {
-      background-color: $overlay-checked;
-      color: $primary;
+      background-color: rgba($primary, $tint);
+      color: $accent-text;
       font-weight: 500;
 
-      image { color: $primary; }
+      image { color: $accent-text; }
     }
 
     &:disabled { color: $text-disabled; }
@@ -3619,9 +3665,10 @@ infobar {
  ************/
 tooltip {
   &.background, &.background.csd {
-    border-radius: $corner-radius;
+    border-radius: $radius-control;
     background-color: $tooltip;
-    color: white;
+    color: on($tooltip);
+    border: if($variant == 'dark', 1px solid $popover-border, none);
   }
 
   border-radius: $corner-radius / 2;
@@ -3762,9 +3809,13 @@ colorchooser .popover.osd {
 /**********************
  * Window Decorations *
  **********************/
+// Dark: a 1px ring outside the window makes its edge, as the shell's chrome; a black shadow
+// does not show on ink. Tiled windows keep it, maximized and fullscreen ones drop it.
+$decoration-ring: if($variant == 'dark', (0 0 0 1px $popover-border,), ());
+
 decoration {
   border-radius: $window-radius;
-  box-shadow: $shadow-z16, 0 16px 16px 2px transparent, 0 6px 18px 5px transparent;
+  box-shadow: join($decoration-ring, ($shadow-z16, 0 16px 16px 2px transparent, 0 6px 18px 5px transparent), comma);
   border: none;
 
   // FIXME rationalize shadows
@@ -3777,7 +3828,7 @@ decoration {
     // change when we go to backdrop, to prevent jumping windows.
     // The biggest shadow should be in the same order then in the active state
     // or the jumping will happen during the transition.
-    box-shadow: $shadow-z4, 0 16px 16px 2px transparent, 0 6px 18px 5px transparent;
+    box-shadow: join($decoration-ring, ($shadow-z4, 0 16px 16px 2px transparent, 0 6px 18px 5px transparent), comma);
     transition: $transition-shadow;
   }
 

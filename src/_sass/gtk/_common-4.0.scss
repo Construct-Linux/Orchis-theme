@@ -54,7 +54,7 @@ textview {
 
   text {
     background-color: $base;
-    selection { &:focus, & { @extend %selected_items_primary; }}
+    selection { &:focus, & { @extend %text_selection; }}
   }
 
   border {
@@ -121,7 +121,7 @@ label {
     color: $text-secondary;
   }
 
-  > selection { @extend %selected_items_primary; }
+  > selection { @extend %text_selection; }
 
   &:disabled {
     opacity: 1;
@@ -331,7 +331,7 @@ entry {
     &.right { @include undershoot(right); }
   }
 
-  > text > selection { @extend %selected_items_primary; }
+  > text > selection { @extend %text_selection; }
 
   // entry error and warning style
   @each $e_type, $e_color in (error, $error),
@@ -630,6 +630,45 @@ button {
     }
   }
 
+  // Dark: a suggested action is an area, so the accent's tint with the accent as text, as the
+  // shell's default button; a filled cyan button glares on ink. Light keeps the filled accent
+  // with white text (5.09:1).
+  @if $variant == 'dark' {
+    &.suggested-action {
+      background-color: color-mix(in srgb, $primary #{$tint * 100%}, transparent);
+      color: $accent-text;
+
+      &:hover {
+        color: $accent-text;
+        background-color: color-mix(in srgb, $primary #{$tint-hover * 100%}, transparent);
+      }
+
+      &:active, &:checked {
+        color: $accent-text;
+        background-color: color-mix(in srgb, $primary #{$tint-active * 100%}, transparent);
+      }
+
+      &:focus { box-shadow: none; }
+
+      &:focus-visible {
+        outline: 2px solid $primary;
+        outline-offset: -2px;
+      }
+
+      &:disabled {
+        color: $text-disabled;
+        background-color: color-mix(in srgb, $primary 8%, transparent);
+      }
+
+      &.flat {
+        background-color: transparent;
+        color: $accent-text;
+
+        &:checked { background-color: color-mix(in srgb, $primary #{$tint-active * 100%}, transparent); }
+      }
+    }
+  }
+
   stackswitcher > & {
     // to position the needs attention dot, padding is added to the button
     // child, a label needs just lateral padding while an icon needs vertical
@@ -749,6 +788,13 @@ list > row button.image-button:not(.flat) {
     &.#{$b_type} { // allow colored buttons in lists #3643
       background-color: $b_color;
       color: on($b_color);
+    }
+  }
+
+  @if $variant == 'dark' {
+    &.suggested-action {
+      background-color: color-mix(in srgb, $primary #{$tint * 100%}, transparent);
+      color: $accent-text;
     }
   }
 }
@@ -1853,7 +1899,8 @@ popover.background {
     padding: $space-size;
     box-shadow: $shadow-z6; // TODO: this should really have a highlight
     background-color: $surface;
-    border: none;
+    // Dark: the ring makes the edge, a black shadow does not show on ink.
+    border: if($variant == 'dark', 1px solid $popover-border, none);
     border-radius: $menu-radius;
     color: $text;
   }
@@ -1863,6 +1910,12 @@ popover.background {
     > contents {
       box-shadow: $shadow-z2;
     }
+  }
+
+  // A popover opened from a popover lies over its parent: a deeper shadow keeps the two apart.
+  popover.background > arrow,
+  popover.background > contents {
+    box-shadow: $shadow-z8;
   }
 
   > contents {
@@ -3357,8 +3410,7 @@ columnview {
     }
 
     &.editing text selection {
-      color: $primary-text;
-      background-color: $primary;
+      @extend %text_selection;
     }
   }
 }
@@ -3586,7 +3638,8 @@ row.combo {
   }
 }
 
-$boxed-radius: $corner-radius - 1px;
+// libadwaita's own radius for cards and boxed lists, a step between controls and windows.
+$boxed-radius: 12px;
 
 %boxed_list_row {
   transition: 200ms $ease-out;
@@ -3674,7 +3727,7 @@ row.button {
   }
 
   &.suggested-action {
-    color: $primary;
+    color: $accent-text;
   }
 
   &.destructive-action {
@@ -4182,18 +4235,20 @@ separator.sidebar {
       background-color: $overlay-hover;
     }
 
+    // The accent's tint with the accent as text, as every selection; focus is the ring.
     &:selected {
-      background-color: $overlay-checked;
-      color: $primary;
+      background-color: color-mix(in srgb, $primary #{$tint * 100%}, transparent);
+      color: $accent-text;
 
       &:hover {
-        background-color: $overlay-focus-hover;
+        background-color: color-mix(in srgb, $primary #{$tint-hover * 100%}, transparent);
       }
 
       &:focus-visible:focus-within {
-        outline: none;
-        background-color: $overlay-focus;
-        &:hover { background-color: $overlay-focus-hover; }
+        outline: 2px solid $primary;
+        outline-offset: -2px;
+        background-color: color-mix(in srgb, $primary #{$tint * 100%}, transparent);
+        &:hover { background-color: color-mix(in srgb, $primary #{$tint-hover * 100%}, transparent); }
       }
     }
 
@@ -4225,9 +4280,11 @@ placessidebar {
       > revealer { padding: 0 8px 0 16px; }
 
       &:selected {
-        background-color: $overlay-checked;
-        color: $primary;
+        background-color: color-mix(in srgb, $primary #{$tint * 100%}, transparent);
+        color: $accent-text;
         font-weight: 500;
+
+        &:hover { background-color: color-mix(in srgb, $primary #{$tint-hover * 100%}, transparent); }
       }
 
       &:disabled { color: $text-disabled; }
@@ -4465,11 +4522,12 @@ tooltip {
     // background-color needs to be set this way otherwise it gets drawn twice
     // see https://bugzilla.gnome.org/show_bug.cgi?id=736155 for details.
     background-color: $tooltip;
+    // The body text in dark; light keeps its dark tooltip, so the text comes from its colour.
     color: on($tooltip);
     box-shadow: $shadow-z4;
-    border-radius: $corner-radius / 2;
+    border-radius: $radius-control;
     margin: 2px 6px 8px 6px;
-    border: none;
+    border: if($variant == 'dark', 1px solid $popover-border, none);
   }
 
   padding: $space-size $space-size * 2;
@@ -4604,8 +4662,12 @@ window {
     transition: none;
     border-radius: $window-radius;
 
+    // Dark: a 1px ring outside the window makes its edge, as the shell's chrome; a black shadow
+    // does not show on ink. Tiled windows keep it, maximized and fullscreen ones drop it.
     @if $variant == 'light' and $topbar == 'dark' {
       box-shadow: $shadow-z16, 0 16px 16px 2px transparent, 0 6px 18px 5px transparent, inset 0 1px $titlebar;
+    } @else if $variant == 'dark' {
+      box-shadow: 0 0 0 1px $popover-border, $shadow-z16, 0 16px 16px 2px transparent, 0 6px 18px 5px transparent;
     } @else {
       box-shadow: $shadow-z16, 0 16px 16px 2px transparent, 0 6px 18px 5px transparent;
     }
@@ -4619,6 +4681,8 @@ window {
 
       @if $variant == 'light' and $topbar == 'dark' {
         box-shadow: $shadow-z4, 0 16px 16px 2px transparent, 0 6px 18px 5px transparent, inset 0 1px $titlebar-backdrop;
+      } @else if $variant == 'dark' {
+        box-shadow: 0 0 0 1px $popover-border, $shadow-z4, 0 16px 16px 2px transparent, 0 6px 18px 5px transparent;
       } @else {
         box-shadow: $shadow-z4, 0 16px 16px 2px transparent, 0 6px 18px 5px transparent;
       }
@@ -4681,9 +4745,24 @@ window {
   background-color: $overlay-selected;
 }
 
+// A selected row or item is an area: the accent's tint, with the accent as text.
 %selected_items_color {
-  color: $primary;
-  background-color: color-mix(in srgb, $primary 20%, transparent);
+  color: $accent-text;
+  background-color: color-mix(in srgb, $primary #{$tint * 100%}, transparent);
+
+  &:hover { background-color: color-mix(in srgb, $primary #{$tint-hover * 100%}, transparent); }
+
+  &:focus-visible {
+    outline: 2px solid $primary;
+    outline-offset: -2px;
+  }
+}
+
+// Selected text: one selection alpha for GTK, the shell, Ghostty and VS Code; the text keeps
+// its colour.
+%text_selection {
+  color: $text;
+  background-color: color-mix(in srgb, $primary #{$selection-alpha * 100%}, transparent);
 }
 
 %selected_items_primary {

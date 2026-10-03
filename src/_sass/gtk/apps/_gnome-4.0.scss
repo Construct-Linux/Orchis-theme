@@ -1427,88 +1427,88 @@ screenshot-carousel box.frame.view {
 
 /* Styling for specific category buttons. */
 .category-tile.category-create {
-  background: linear-gradient(180deg, #ce8cd7 0%, #2861c6 100%);
+  background: linear-gradient(180deg, $software-create-top 0%, $software-create-bottom 100%);
   color: white;
 
   &:hover {
-    background: linear-gradient(180deg, shade(#ce8cd7, 1.07) 0%, shade(#2861c6, 1.1) 100%);
+    background: linear-gradient(180deg, shade($software-create-top, 1.07) 0%, shade($software-create-bottom, 1.1) 100%);
   }
 
   &:active {
-    background: linear-gradient(180deg, shade(#ce8cd7, .95) 0%, shade(#2861c6, .95) 100%);
+    background: linear-gradient(180deg, shade($software-create-top, .95) 0%, shade($software-create-bottom, .95) 100%);
   }
 }
 
 .category-tile.category-develop {
-  background: #5e5c64;
+  background: $software-develop;
   color: white;
 
   &:hover {
-    background: shade(#5e5c64, 1.2);
+    background: shade($software-develop, 1.2);
   }
 
   &:active {
-    background-color: shade(#5e5c64, .95);
+    background-color: shade($software-develop, .95);
   }
 }
 
 .category-tile.category-learn {
-  background: linear-gradient(180deg, #2ec27e 30%, #27a66c 100%);
+  background: linear-gradient(180deg, $software-learn-top 30%, $software-learn-bottom 100%);
   color: white;
 
   &:hover {
-    background: linear-gradient(180deg, shade(#2ec27e, 1.06) 30%, shade(#27a66c, 1.06) 100%);
+    background: linear-gradient(180deg, shade($software-learn-top, 1.06) 30%, shade($software-learn-bottom, 1.06) 100%);
   }
 
   &:active {
-    background: linear-gradient(180deg, shade(#2ec27e, .95) 30%, shade(#27a66c, .95) 100%);
+    background: linear-gradient(180deg, shade($software-learn-top, .95) 30%, shade($software-learn-bottom, .95) 100%);
   }
 }
 
 .category-tile.category-play {
-  background: linear-gradient(75deg, #f9e2a7 0%, #eb5ec3 50%, #6d53e0 100%);
-  color: #393484;
+  background: linear-gradient(75deg, $software-play-start 0%, $software-play-middle 50%, $software-play-end 100%);
+  color: $software-play-text;
 
   &:hover {
-    background: linear-gradient(75deg, shade(#f9e2a7, 1.07) 0%, shade(#eb5ec3, 1.07) 50%, shade(#6d53e0, 1.07) 100%);
+    background: linear-gradient(75deg, shade($software-play-start, 1.07) 0%, shade($software-play-middle, 1.07) 50%, shade($software-play-end, 1.07) 100%);
   }
 
   &:active {
-    background: linear-gradient(75deg, shade(#f9e2a7, .97) 0%, shade(#eb5ec3, .95) 50%, shade(#6d53e0, 1.07) 100%);
+    background: linear-gradient(75deg, shade($software-play-start, .97) 0%, shade($software-play-middle, .95) 50%, shade($software-play-end, 1.07) 100%);
   }
 }
 
 .category-tile.category-socialize {
-  background: linear-gradient(90deg, #ef4e9b 0%, #f77466 100%);
+  background: linear-gradient(90deg, $software-socialize-start 0%, $software-socialize-end 100%);
   color: $text-secondary;
 
   &:hover {
-    background: linear-gradient(90deg, shade(#ef4e9b, 1.08) 0%, shade(#f77466, 1.08) 100%);
+    background: linear-gradient(90deg, shade($software-socialize-start, 1.08) 0%, shade($software-socialize-end, 1.08) 100%);
   }
 
   &:active {
-    background: linear-gradient(90deg, shade(#ef4e9b, .95) 0%, shade(#f77466, .95) 100%);
+    background: linear-gradient(90deg, shade($software-socialize-start, .95) 0%, shade($software-socialize-end, .95) 100%);
   }
 }
 
 .category-tile.category-work {
   padding: 1px;
   /* FIXME: work around https://gitlab.gnome.org/GNOME/gtk/-/issues/4324 */
-  color: #1c71d8;
-  background-color: #fdf8d7;
+  color: $software-work-text;
+  background-color: $software-work;
   background-image: linear-gradient($border 1px, transparent 1px),
     linear-gradient(90deg, $border 1px, transparent 1px);
   background-size: 10px 10px, 10px 10px;
   background-position: -1px -4px, center -1px;
 
   &:hover {
-    background-color: lighten(#fdf8d7, 5%);
+    background-color: lighten($software-work, 5%);
     background-image: linear-gradient($border 1px, transparent 1px),
       linear-gradient(90deg, $border 1px, transparent 1px);
   }
 
   &:active {
-    background-color: darken(#fdf8d7, 5%);
+    background-color: darken($software-work, 5%);
     background-image: linear-gradient($border 1px, transparent 1px),
       linear-gradient(90deg, $border 1px, transparent 1px);
   }
@@ -1839,8 +1839,8 @@ button.colorpad {
   padding: 0px;
   margin: 0px;
   background-blend-mode: screen;
-  background-image: linear-gradient(45deg, #0f0f0f55 25%, transparent 25%, transparent 75%, #0f0f0f55 75%, #0f0f0f55),
-    linear-gradient(45deg, #0f0f0f55 25%, transparent 25%, transparent 75%, #0f0f0f55 75%, #0f0f0f55);
+  background-image: linear-gradient(45deg, rgba($grey-900, 0.333) 25%, transparent 25%, transparent 75%, rgba($grey-900, 0.333) 75%, rgba($grey-900, 0.333)),
+    linear-gradient(45deg, rgba($grey-900, 0.333) 25%, transparent 25%, transparent 75%, rgba($grey-900, 0.333) 75%, rgba($grey-900, 0.333));
   background-color: gtkcolor(colorpad_color);
   color: gtkcolor(colorpad_fg_color);
   background-size: 18px 18px;
@@ -1886,15 +1886,15 @@ panelthemeselector {
     }
 
     &.follow {
-      background-image: linear-gradient(to bottom right, #ffffff 50%, #202020 50%);
+      background-image: linear-gradient(to bottom right, background(c) 50%, background(e) 50%);
     }
 
     &.light {
-      background-color: #ffffff;
+      background-color: background(c);
     }
 
     &.dark {
-      background-color: #202020;
+      background-color: background(e);
     }
 
     &.theme-selector radio {
@@ -1971,17 +1971,17 @@ themeswitcher {
     }
 
     &.system {
-      background: linear-gradient(-45deg, #1e1e1e 50%, white 50%);
+      background: linear-gradient(-45deg, background(e) 50%, background(c) 50%);
     }
 
     &.light {
       color: gtkalpha(black, .8);
-      background-color: white;
+      background-color: background(c);
     }
 
     &.dark {
       color: white;
-      background-color: #1e1e1e;
+      background-color: background(e);
     }
   }
 }
@@ -2186,7 +2186,7 @@ styleselector {
 
   &.style-charcoal {
     &, .text-view.view, .text-view.view > text, headerbar {
-      background-color: #333333;
+      background-color: $note-charcoal;
       color: white;
     }
 
@@ -2195,14 +2195,14 @@ styleselector {
     }
 
     .text-view.view > text > selection {
-      background-color: on(#333333, track);
+      background-color: on($note-charcoal, track);
     }
 
     popover {
 
       > arrow,
       > contents {
-        background-color: #444444;
+        background-color: $note-charcoal-popover;
         color: white;
       }
     }
