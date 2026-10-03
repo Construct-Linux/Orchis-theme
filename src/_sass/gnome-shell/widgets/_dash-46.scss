@@ -25,7 +25,6 @@ $dash_border_radius: if($corner_style == 'circular', $circular-radius, $material
   // items on the dash
   .dash-item-container {
     .placeholder {
-      // background-image: url("resource:///org/gnome/shell/theme/dash-placeholder.svg");
       background-image: none;
       background-size: contain;
       height: $dash_placeholder_size;
