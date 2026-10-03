@@ -41,7 +41,7 @@ install() {
   local color="$3"
   local THEME_DIR="$dest/$name$color"
 
-  [ -d "$THEME_DIR" ]] && rm -rf "$THEME_DIR"
+  [[ -d "$THEME_DIR" ]] && rm -rf "$THEME_DIR"
 
   echo "Installing '$THEME_DIR'..."
 
