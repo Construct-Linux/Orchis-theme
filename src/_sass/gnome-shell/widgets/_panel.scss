@@ -33,20 +33,6 @@ $panel_button_hpadding: ($panel_height - $base-icon-size) / 2;
   &.login-screen,
   &:overview {
     background-color: transparent;
-
-    .panel-corner {
-      -panel-corner-opacity: 0;
-    }
-  }
-
-  // the rounded outset corners
-  .panel-corner {
-    -panel-corner-radius: $panel-corner-radius;
-    -panel-corner-background-color: $panel;
-    -panel-corner-border-width: 0;
-    -panel-corner-border-color: transparent;
-    -panel-corner-opacity: 1;
-    transition-duration: $panel_transition_duration;
   }
 
   %icon_activities {
@@ -188,61 +174,6 @@ $panel_button_hpadding: ($panel_height - $base-icon-size) / 2;
     &#panelActivities { @extend %icon_activities; }
   }
 
-  // Gjs_ui_panel_AggregateMenu.panel-button,
-  Gjs_arcmenu_arcmenu_com_menuButton_Arc_Menu_MenuButton.panel-button,
-  Gjs_arcmenu_arcmenu_com_menuButton_ArcMenu_MenuButton.panel-button,
-  Gjs_arcmenu_arcmenu_com_menuButton_ArcMenuMenuButton.panel-button {
-    border: 0 none transparent !important;
-    margin: 0 !important;
-    padding: 0 !important;
-    -natural-hpadding: $space-size / 2 !important;
-    -minimum-hpadding: $space-size / 2 !important;
-
-    .panel-status-menu-box {
-      spacing: 0;
-      padding: 0;
-      margin: 0;
-    }
-  }
-
-  Gjs_arcmenu_arcmenu_com_menuButton_Arc_Menu_MenuButton.panel-button,
-  Gjs_arcmenu_arcmenu_com_menuButton_ArcMenu_MenuButton.panel-button {
-    .arc-menu-icon {
-      border-radius: if($corner_style == 'circular', $circular-radius, $material-radius);
-      width: $panel_height - $space-size + 1px;
-      margin: $space-size / 2 0;
-
-      &:hover {
-        background-color: on(dark, divider);
-        box-shadow: none;
-      }
-
-      &:active, &:overview, &:focus, &:checked {
-        background-color: on(dark, track);
-        box-shadow: none;
-      }
-    }
-  }
-
-  Gjs_arcmenu_arcmenu_com_menuButton_ArcMenuMenuButton.panel-button {
-    .arcmenu-menu-button {
-      border-radius: if($corner_style == 'circular', $circular-radius, $material-radius);
-      // width: $panel_height - $space-size + 1px;
-      margin: $space-size / 2 0;
-      padding: 0 ($panel_height - 16px - $space-size) / 2;
-
-      &:hover {
-        background-color: on(dark, divider);
-        box-shadow: none;
-      }
-
-      &:active, &:overview, &:focus, &:checked {
-        background-color: on(dark, track);
-        box-shadow: none;
-      }
-    }
-  }
-
   // Gjs_ui_panel_AggregateMenu.panel-button { }
 
   // Input indicators
@@ -258,18 +189,19 @@ $panel_button_hpadding: ($panel_height - $base-icon-size) / 2;
   //   -minimum-hpadding: 3px !important;
   // }
 
-  // indicator for active
-  .screencast-indicator,
-  .remote-access-indicator { color: $warning; }
-}
+  // camera, microphone and remote access in use (js/ui/status/camera.js, volume.js, remoteAccess.js)
+  .privacy-indicator { color: $warning; }
 
-// App Menu
-#appMenu {
-  spacing: $space-size;
-  .label-shadow { color: transparent; }
-}
+  // screen being recorded or shared (js/ui/status/remoteAccess.js)
+  .panel-button {
+    &.screen-recording-indicator {
+      color: on($error);
+      background-color: $error;
+    }
 
-#appMenu .panel-status-menu-box {
-  padding: 0 $space-size;
-  spacing: $space-size;
+    &.screen-sharing-indicator {
+      color: on($warning);
+      background-color: $warning;
+    }
+  }
 }
