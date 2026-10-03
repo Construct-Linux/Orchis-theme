@@ -1,37 +1,28 @@
 /* Workspace Switcher */
-.workspace-switcher-group {
-  padding: $space-size * 2;
-}
 
-.workspace-switcher-container {
-  @extend %osd_panel;
-  border-radius: $window-radius;
-}
+// Shell 51 draws the switcher as a row of dots: workspaceSwitcherPopup.js builds one
+// .workspace-switcher box with a .ws-switcher-indicator per workspace, :active on the current one.
+$ws_indicator_height: 32px;
+$ws_dot_active: $ws_indicator_height / 3;
+$ws_dot_inactive: $ws_indicator_height / 6;
 
 .workspace-switcher {
-  background: transparent;
-  border: none;
-  border-radius: 0;
-  padding: 0;
+  @extend %osd_panel;
+  margin-bottom: 4em;
   spacing: $space-size * 2;
+  padding: $space-size * 2 $space-size * 3;
+  border-radius: $circular-radius;
 }
 
-.ws-switcher-box {
-  height: 50px;
-  background-size: 32px;
-  border: none;
-  background: $secondary-fill;
-  border-radius: $material-radius;
-}
+.ws-switcher-indicator {
+  background-color: rgba(on($popover), 0.5);
+  padding: $ws_dot_inactive / 2;
+  margin: ($ws_indicator_height - $ws_dot_inactive) / 2;
+  border-radius: $ws_indicator_height;
 
-// active workspace in the switcher
-.ws-switcher-active-up,
-.ws-switcher-active-down,
-.ws-switcher-active-left,
-.ws-switcher-active-right {
-  height: 52px;
-  background-color: $primary;
-  border: none;
-  border-radius: $material-radius + $space-size / 2;
-  color: on($primary);
+  &:active {
+    background-color: $primary;
+    padding: $ws_dot_active / 2;
+    margin: ($ws_indicator_height - $ws_dot_active) / 2;
+  }
 }
