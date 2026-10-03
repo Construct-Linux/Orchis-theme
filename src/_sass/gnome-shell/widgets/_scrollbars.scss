@@ -23,7 +23,6 @@ StScrollBar {
     border-radius: $circular-radius;
     background-color: $text-disabled;
     border: 4px solid transparent; //would be nice to margin or at least to transparent
-    transition: 500ms all ease;
 
     &:hover { background-color: $text-secondary; }
     &:active { background-color: $text; }
