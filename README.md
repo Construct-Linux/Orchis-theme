@@ -5,13 +5,14 @@
 based on nana-4's [materia-theme](https://github.com/nana-4/materia-theme), trimmed to the one
 desktop it themes and drawn in CONSTRUCT's colours.
 
-It builds two themes, `Orchis-Construct-Light` and `Orchis-Construct-Dark`, each with:
+It builds two themes, `Orchis-Construct-Light` and `Orchis-Construct-Dark`, with:
 
 - `gtk-3.0` for GTK 3 apps;
 - `gtk-4.0` for GTK 4 and libadwaita apps, which read it from `~/.config/gtk-4.0`. The light
   theme's `gtk.css` carries the dark styles under `@media (prefers-color-scheme: dark)`, so one
   copy follows Settings' light/dark switch (GTK >= 4.16);
-- `gnome-shell` for GNOME Shell 51, and only 51.
+- `gnome-shell` for GNOME Shell 51, and only 51: in the dark theme only, the one the
+  user-theme extension loads.
 
 The accent, the surfaces and the success, warning and error colours come from the brand
 repository's `palette.toml`, through its generated `palette/construct.scss`, copied here as

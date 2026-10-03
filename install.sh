@@ -40,10 +40,8 @@ install() {
   local name="$2"
   local color="$3"
   local THEME_DIR="$dest/$name$color"
-  local ELSE_DARK=
 
-  [[ "$color" == '-Dark' ]] && ELSE_DARK="$color"
-  [[ -d "$THEME_DIR" ]] && rm -rf "$THEME_DIR"
+  [ -d "$THEME_DIR" ]] && rm -rf "$THEME_DIR"
 
   echo "Installing '$THEME_DIR'..."
 
@@ -62,14 +60,14 @@ GtkTheme=$name$color
 ButtonLayout=close,minimize,maximize:menu
 EOF
 
-  mkdir -p                                                                    "$THEME_DIR/gnome-shell"
-  sassc "${SASSC_OPT[@]}" "$SRC_DIR/gnome-shell/shell-51-0/gnome-shell$ELSE_DARK.scss" "$THEME_DIR/gnome-shell/gnome-shell.css"
-
-  cp -r "$SRC_DIR/gnome-shell/common-assets"                                  "$THEME_DIR/gnome-shell/assets"
-  cp -r "$SRC_DIR/gnome-shell/assets$ELSE_DARK/"*.svg                         "$THEME_DIR/gnome-shell/assets"
-
-  cp -r "$SRC_DIR/gnome-shell/theme/toggle-on$ELSE_DARK.svg"                  "$THEME_DIR/gnome-shell/assets/toggle-on.svg"
-  cp -r "$SRC_DIR/gnome-shell/activities/construct.svg"                       "$THEME_DIR/gnome-shell/assets/activities.svg"
+  # The shell takes the dark variant only: the user-theme extension loads Orchis-Construct-Dark,
+  # whatever Settings' light/dark switch says.
+  if [[ "$color" == '-Dark' ]]; then
+    mkdir -p                                                                  "$THEME_DIR/gnome-shell"
+    sassc "${SASSC_OPT[@]}" "$SRC_DIR/gnome-shell/shell-51-0/gnome-shell.scss" "$THEME_DIR/gnome-shell/gnome-shell.css"
+    cp -r "$SRC_DIR/gnome-shell/assets"                                       "$THEME_DIR/gnome-shell/assets"
+    cp -r "$SRC_DIR/gnome-shell/activities/construct.svg"                     "$THEME_DIR/gnome-shell/assets/activities.svg"
+  fi
 
   mkdir -p                                                                    "$THEME_DIR/gtk-3.0"
   cp -r "$SRC_DIR/gtk/assets"                                                 "$THEME_DIR/gtk-3.0/assets"
