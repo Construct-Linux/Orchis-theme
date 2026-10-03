@@ -10,85 +10,73 @@
   @return ($size / $root-font-size) + em;
 }
 
-// provide font size in rem, with px fallback
-@mixin fontsize($size: 24, $base: 16) {
-  font-size: round($size) + pt;
-  //font-size: ($size / $base) * 1rem;
+// Font sizes in em of the interface font (font-name, 'Adwaita Sans 11'), so the shell follows
+// that setting and text-scaling-factor; $size is in points at 11pt.
+@function em-of-11pt($size) {
+  @return round($size / 11 * 1000) / 1000 * 1em;
 }
 
-// Typography
-// based on:
-// https://material.io/guidelines/style/typography.html#typography-styles
+@mixin fontsize($size: 24, $base: 16) {
+  font-size: em-of-11pt($size);
+}
+
+// Typography: GNOME's scale in em of the interface font. Two weights only: 700 for titles and
+// the labels of controls you act on, 400 for everything else.
 
 @mixin font($size) {
   @if $size == display-4 {
-    // font-family: $large-font-family;
-    font-size: 112px;
-    font-weight: 300;
-    // line-height: 1;
+    font-size: em-of-11pt(84);
+    font-weight: 400;
   }
 
   @if $size == display-3 {
-    // font-family: $large-font-family;
-    font-size: 56px;
+    font-size: em-of-11pt(42);
     font-weight: 400;
-    // line-height: 1;
   }
 
   @if $size == display-2 {
-    // font-family: $large-font-family;
-    font-size: 45px;
+    font-size: em-of-11pt(33.75);
     font-weight: 400;
-    // line-height: 48px;
   }
 
   @if $size == display-1 {
-    // font-family: $large-font-family;
-    font-size: 34px;
+    font-size: em-of-11pt(25.5);
     font-weight: 400;
-    // line-height: 40px;
   }
 
   @if $size == headline {
-    font-size: pt(24px);
+    font-size: em-of-11pt(18);
     font-weight: 400;
-    // line-height: 32px;
   }
 
   @if $size == title {
-    font-size: pt(20px);
-    font-weight: 500;
-    // line-height: 1;
+    font-size: em-of-11pt(15);
+    font-weight: 700;
   }
 
   @if $size == subheading {
-    font-size: pt($subheading-size);
+    font-size: em-of-11pt(12);
     font-weight: 400;
-    // line-height: 24px;
   }
 
   @if $size == body-2 {
-    font-size: pt($root-font-size);
-    font-weight: 500;
-    // line-height: 24px;
+    font-size: 1em;
+    font-weight: 700;
   }
 
   @if $size == body-1 {
-    font-size: pt($root-font-size);
+    font-size: 1em;
     font-weight: 400;
-    // line-height: 20px;
   }
 
   @if $size == caption {
-    font-size: pt(12px);
+    font-size: em-of-11pt(9);
     font-weight: 400;
-    // line-height: 1;
   }
 
   @if $size == button {
-    font-size: pt($root-font-size);
-    font-weight: 500;
-    // line-height: 20px;
+    font-size: 1em;
+    font-weight: 700;
   }
 }
 
@@ -135,30 +123,31 @@
 // $fc: focus color
 //
 
+  // The raised surface and its ring on the overview's black ground, as the result cards below
+  // it: a light pill would be the brightest thing on the screen.
   @if $t == normal {
-    caret-color: rgba(black, 0.75);
-    color: rgba(black, 0.75);
-    background-color: rgba(white, 0.75);
-    border-color: transparent !important;
+    caret-color: $fc;
+    color: $text;
+    background-color: $popover;
+    border: 1px solid $popover-border !important;
     box-shadow: none !important;
   }
 
   @if $t == focus {
-    color: rgba(black, 0.85);
-    border-color: transparent;
-    background-color: rgba(white, 0.95);
-    border: none !important;
-    box-shadow: none !important;
+    color: $text;
+    background-color: $popover;
+    border: 1px solid $popover-border !important;
+    box-shadow: inset 0 0 0 2px $fc !important;
   }
 
   @if $t == hover {
-    color: rgba(black, 0.75);
-    background-color: rgba(white, 0.85);
+    color: $text;
+    background-color: mix(white, $popover, 6%);
     box-shadow: none !important;
   }
 
   @if $t == insensitive {
-    color: rgba(black, 0.35);
+    color: $text-disabled;
     box-shadow: none !important;
   }
 }
@@ -181,15 +170,16 @@
     icon-shadow: none;
   }
 
+  // Keyboard focus is the accent ring inside the control: St draws one box-shadow, with the
+  // radius, and an outline only square.
   @if $t == focus {
-    color: $primary;
+    color: $text;
     text-shadow: none;
     icon-shadow: none;
-    box-shadow: none !important;
-    outline: none !important;
+    box-shadow: inset 0 0 0 2px $primary !important;
 
     &:active {
-      color: white;
+      color: $text;
     }
   }
 
@@ -242,8 +232,7 @@
     color: if($tc != on(dark), $text, on(dark));
     text-shadow: none;
     icon-shadow: none;
-    box-shadow: none !important;
-    outline: none !important;
+    box-shadow: inset 0 0 0 2px $primary !important;
   }
 
   @if $t == flat-hover {

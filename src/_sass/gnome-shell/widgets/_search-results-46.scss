@@ -23,13 +23,14 @@
 }
 
 // content
+// A raised card on the overview's black ground; concentric with its results' radius.
 .search-section-content {
-  background-color: on(dark, divider);
-  border-radius: $material-radius + $space-size * 2;
-  border: none;
+  background-color: $popover;
+  border-radius: $radius-control + $space-size * 2;
+  border: 1px solid $popover-border;
   box-shadow: none;
   text-shadow: none;
-  color: on(dark);
+  color: $text;
   padding: $space-size * 2;
   margin:0 $margin-size * 3;
 }

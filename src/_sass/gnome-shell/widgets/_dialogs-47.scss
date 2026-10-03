@@ -2,19 +2,20 @@
 
 $mdborder_color: if($variant == 'light', rgba(black, 0.15), rgba(black, 0.75));
 
+// Level 3: the raised surface and its ring, with the deepest shadow.
 .modal-dialog {
-  border-radius: 20px + $space-size;
+  border-radius: $radius-sheet;
   color: $text;
-  background-color: $base;
+  background-color: $popover;
   border: 1px solid $popover-border;
-  box-shadow: 0 3px 8px rgba(black, 0.2);
+  box-shadow: $elevation-3;
   padding: $space-size * 2;
 
   .modal-dialog-content-box {
     margin: $margin-size * 4 40px $margin-size * 8;
     spacing: 32px;
     max-width: 28em;
-    background-color: $base;
+    background-color: $popover;
   }
 
   .modal-dialog-button-box {
@@ -26,6 +27,8 @@ $mdborder_color: if($variant == 'light', rgba(black, 0.15), rgba(black, 0.75));
     padding: 0 16px;
     spacing: 0;
     @extend %dialog_button;
+    // Concentric with the dialog: its radius less its padding.
+    border-radius: $radius-sheet - $space-size * 2;
   }
 }
 
@@ -61,12 +64,12 @@ $mdborder_color: if($variant == 'light', rgba(black, 0.15), rgba(black, 0.75));
 
   .message-dialog-title {
     text-align: center;
-    font-size: 18pt;
-    font-weight: 800;
+    font-size: em-of-11pt(18);
+    font-weight: bold;
 
     &.lightweight {
-      font-size: 13pt;
-      font-weight: 800;
+      font-size: em-of-11pt(15);
+      font-weight: bold;
     }
   }
   .message-dialog-description { text-align: center; }
@@ -120,34 +123,35 @@ $mdborder_color: if($variant == 'light', rgba(black, 0.15), rgba(black, 0.75));
     color: $destructive;
 
     &:active {
-      color: white !important;
+      color: on($destructive) !important;
       background-color: $destructive;
     }
   }
 
+  // The dialog's default action: a tint, as every default button in the shell.
   .modal-dialog-button:last-child {
-    color: on($suggested) !important;
-    background-color: $suggested;
+    color: $accent-text !important;
+    background-color: rgba($suggested, $tint);
 
     &:hover {
-      color: on($suggested) !important;
-      background-color: lighten($suggested, 9%);
+      color: $accent-text !important;
+      background-color: rgba($suggested, $tint-hover);
     }
 
     &:active {
-      color: on($suggested) !important;
-      background-color: darken($suggested, 5%);
+      color: $accent-text !important;
+      background-color: rgba($suggested, $tint-active);
     }
 
     &:insensitive {
-      color: rgba($suggested, 0.5) !important;
-      background-color: rgba($suggested, 0.15);
+      color: $text-disabled !important;
+      background-color: rgba($suggested, 0.08);
     }
   }
 
   .modal-dialog-content-box {
     margin-bottom: 24px;
-    background-color: $base;
+    background-color: $popover;
   }
 }
 
@@ -203,7 +207,9 @@ $mdborder_color: if($variant == 'light', rgba(black, 0.15), rgba(black, 0.75));
 .audio-selection-device {
   border: 1px solid $border;
   border-radius: $material-radius;
-  &:active,&:hover,&:focus { background-color: $primary; color: on($primary); }
+  &:hover { background-color: rgba($primary, $tint); color: $accent-text; }
+  &:focus { background-color: rgba($primary, $tint-hover); color: $accent-text; }
+  &:active { background-color: rgba($primary, $tint-active); color: $accent-text; }
 }
 
 .audio-selection-device-box {

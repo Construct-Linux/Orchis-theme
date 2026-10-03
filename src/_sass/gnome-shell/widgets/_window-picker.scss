@@ -13,12 +13,12 @@ $window_close_button_padding: 3px;
 
 // Window titles
 .window-caption {
-  color: on(dark);
-  background-color: $tooltip;
+  color: $text;
+  background-color: $popover;
   border-radius: $circular-radius;
   padding: $space-size $space-size * 2;
   box-shadow: none;
-  border: none;
+  border: 1px solid $popover-border;
 }
 
 // Close button
@@ -47,6 +47,7 @@ $window_close_button_padding: 3px;
 .workspace-background {
   // keep in sync with BACKGROUND_CORNER_RADIUS_PIXELS in workspace.js
   border-radius: 30px;
-  background-color: $system;
+  // The desktop's own ink, a step above the black ground.
+  background-color: $construct-ink;
   box-shadow: 0 4px 16px 4px rgba(black, 0.15);
 }

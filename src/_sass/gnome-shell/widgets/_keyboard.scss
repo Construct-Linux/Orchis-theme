@@ -30,7 +30,7 @@ $keyboard_active_bg_color: if($variant == 'light', darken($keyboard, 20%), light
 .keyboard-key {
   min-height: 2em;
   min-width: 2em;
-  font-size: 14pt;
+  font-size: em-of-11pt(14);
   font-weight: bold;
   border-radius: $material-radius;
   border: none;
@@ -45,7 +45,7 @@ $keyboard_active_bg_color: if($variant == 'light', darken($keyboard, 20%), light
     background-color: $keyboard-alt;
     box-shadow: 0 1px rgba($black, 0.2);
     &:focus, &:hover { color: $text-secondary; background-color: $keyboard; }
-    &:checked, &:active { color: $text-secondary; background-color: darken($keyboard, 6%); }
+    &:checked, &:active { color: $text-secondary; background-color: rgba(white, 0.12); }
   }
 
   StIcon { icon-size: 1.125em; }
@@ -82,7 +82,7 @@ $keyboard_active_bg_color: if($variant == 'light', darken($keyboard, 20%), light
 
 // suggestions
 .word-suggestions {
-  font-size: 14pt;
+  font-size: em-of-11pt(14);
   spacing: 12px;
   min-height: 20pt;
 }

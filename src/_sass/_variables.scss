@@ -1,3 +1,6 @@
+// The radius and inset tokens come from the palette.
+@import 'construct-palette';
+
 // Function to convert px values to em
 @function to_em($input, $base: 16px) {
   // multiplied and divided by 1000 to make up for round() shortcoming
@@ -37,13 +40,18 @@ $large-scalable-icon-size: $scalable-icon-size * 2;
 // Radiuses
 //
 
-$default_corner: 12px;
-$window-radius: $default_corner + $space-size;
-$corner-radius: if($compact == 'false', $default_corner, max(0, $default_corner - 2px));
-$material-radius: $default_corner / 2 + 4px;
-$menu-radius: $default_corner / 4 + $space-size + 2px;
-$popup-radius: $default_corner + $space-size * 2 - 4px;
-$menuitem-radius: $default_corner / 4 + 2px;
+// libadwaita's steps, so the shell and the GTK 4 apps that cover most of the screen round
+// alike; a container takes its child's radius plus its padding.
+$radius-control: $construct-radius-control;
+$radius-surface: $construct-radius-surface;
+$radius-sheet: $construct-radius-sheet;
+
+$window-radius: $radius-surface;
+$corner-radius: $radius-control;
+$material-radius: $radius-control;
+$menu-radius: $radius-surface;
+$popup-radius: $radius-surface;
+$menuitem-radius: $radius-control;
 $circular-radius: 9999px;
 
 // font families
@@ -144,6 +152,11 @@ $icon-shadow-z4:
   0 2px 2px rgba(black, 0.2),
   0 4px 4px rgba(black, 0.14),
   0 1px 6px rgba(black, 0.12);
+
+// The shell's elevation levels 2 (menus, notifications) and 3 (modal dialogs, OSDs): a black
+// shadow only adds depth on ink, the ring makes the edge, and St draws a single box-shadow.
+$elevation-2: 0 4px 12px rgba(black, 0.35);
+$elevation-3: 0 12px 28px rgba(black, 0.45);
 
 // workaround for Gnome-shell
 $shell-shadow-z1: 0 1px 2px rgba(black, 0.25);

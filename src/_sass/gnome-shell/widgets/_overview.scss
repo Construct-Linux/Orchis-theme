@@ -4,8 +4,10 @@
   spacing: $space-size * 2;
 }
 
+// The boot's black ground, under the workspace cards: an f ground would sit lighter than the e
+// cards on it, and black continues firmware and Plymouth.
 #overviewGroup {
-  background-color: $system;
+  background-color: $construct-boot;
 
   @extend %scrollbar_on_dark;
 }

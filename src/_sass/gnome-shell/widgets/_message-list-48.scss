@@ -13,7 +13,8 @@
 
   .message-list-placeholder {
     @extend %title_2;
-    color: $text-secondary-disabled;
+    // Secondary: anything fainter fails on the menu (white at 30% is 2.65:1 on h).
+    color: $text-secondary;
 
     // icon size and color
     > StIcon {
@@ -60,17 +61,17 @@
   // close button
   .message-collapse-button {
     @extend .icon-button;
-    color: rgba($primary-text, 0.8);
-    background-color: rgba($primary, 0.8);
+    color: $accent-text;
+    background-color: rgba($primary, $tint);
     padding: 4px !important;
     border: 4px transparent solid;
     &:hover {
-      color: $primary-text;
-      background-color: rgba($primary, 0.7);
+      color: $accent-text;
+      background-color: rgba($primary, $tint-hover);
     }
     &:active {
-      color: rgba($primary-text, 0.8);
-      background-color: rgba($primary, 0.8);
+      color: $accent-text;
+      background-color: rgba($primary, $tint-active);
     }
   }
 }

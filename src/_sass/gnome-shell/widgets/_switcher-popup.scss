@@ -8,7 +8,8 @@
 // switcher onscreen panel
 .switcher-list {
   @extend %osd_panel;
-  border-radius: $material-radius + $space-size * 2;
+  // Concentric with its items: their radius plus the padding.
+  border-radius: $radius-control + 12px;
 
   .item-box {
     padding: 8px;
@@ -59,7 +60,7 @@
 
 // Input Source Switcher
 .input-source-switcher-symbol {
-  font-size: 34pt;
+  font-size: em-of-11pt(34);
   width: 96px;
   height: 96px;
 }

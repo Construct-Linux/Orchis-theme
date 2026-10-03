@@ -39,8 +39,12 @@
     @if ($state == 'secondary-fill') { @return rgba(black, 0.08); }
     @if ($state == 'fill') { @return rgba(black, 0.04); }
   } @else {
-    @if ($state == 'primary') { @return white; }
-    @if ($state == 'secondary') { @return rgba(white, 0.7); }
+    // On the dark surfaces, the palette's text and muted: a white body glares on ink, and 70%
+    // white loses the hue. A coloured fill (the light accent, the semantic colours) keeps white:
+    // the palette's text reads 4.32:1 on #007A85, white 5.09.
+    $is-fill: saturation($color) >= 50%;
+    @if ($state == 'primary') { @return if($is-fill, white, $construct-text-light); }
+    @if ($state == 'secondary') { @return if($is-fill, rgba(white, 0.7), $construct-muted-light); }
     @if ($state == 'disabled') { @return rgba(white, 0.5); }
     @if ($state == 'secondary-disabled') { @return rgba(white, 0.3); }
     @if ($state == 'track') { @return rgba(white, 0.3); }
@@ -77,13 +81,25 @@
 // The one accent: the logo's cyan on dark surfaces, and the same hue darkened until text in it
 // reads on white on light ones.
 $primary:                               if($variant == 'light', $construct-dark, $construct-light);
+// The accent standing alone as text, on a surface or on its own tint: the light accent reads
+// only 4.25:1 on a 10% tint over b, so text in the light variant takes a darker step.
+$accent-text:                           if($variant == 'light', $construct-accent-text-dark, $construct-accent-text-light);
+// Larger accent areas are the accent at an alpha over the surface (rest, hover, active), with
+// $accent-text on them; full accent is kept for marks.
+$tints:                                 if($variant == 'light', $construct-tint-dark, $construct-tint-light);
+$tint:                                  nth($tints, 1);
+$tint-hover:                            nth($tints, 2);
+$tint-active:                           nth($tints, 3);
+$selection-alpha:                       if($variant == 'light', $construct-selection-dark, $construct-selection-light);
 $drop_target_color:                     $orange-dark;
-$background:                            if($variant == 'light', background(c), background(e));
+// A window is never the desktop's ink: e is the wallpaper's own colour, so a dark window body
+// one step up keeps its edge.
+$background:                            if($variant == 'light', background(c), background(f));
 $surface:                               if($variant == 'light', background(a), background(h));
 $base:                                  if($variant == 'light', background(a), background(g));
 $base-alt:                              if($variant == 'light', background(b), background(f));
 
-$tooltip:                               if($variant == 'dark', rgba(darken(background(e), 3%), 0.9), rgba(darken(background(h), 3%), 0.9));
+$tooltip:                               if($variant == 'dark', background(h), rgba(darken(background(h), 3%), 0.9));
 $osd:                                   background(e);
 $scrim:                                 background(f);
 $scrim-alt:                             background(g);
@@ -102,7 +118,10 @@ $popover-border:                        if($variant == 'light', $construct-borde
 
 $panel-solid:                           if($topbar == 'dark', background(e), background(c)); // for Unity panel which doesn't allow translucent colors
 $panel:                                 rgba($panel-solid, 0.65);
-$shell:                                 if($topbar == 'dark', rgba(black, 0.65), background(c)); // for gnome-shell
+// The shell's bars: black glass over ink is 1.07:1 and over paper turns grey, so they are the
+// opaque g step, ringed. dash-to-panel paints the dock with this colour too, read from an St.Bin
+// named 'panel'.
+$shell:                                 if($topbar == 'dark', background(g), background(c)); // for gnome-shell
 
 $button:                                gtkalpha(currentColor, 0.05);
 $entry:                                 gtkalpha(currentColor, 0.05);
@@ -111,7 +130,7 @@ $entry:                                 gtkalpha(currentColor, 0.05);
 // Misc colors
 //
 
-$link:                                  $primary;
+$link:                                  $accent-text;
 $link-visited:                          if($variant == 'light', $purple-dark, $purple-light);
 
 $warning:                               if($variant == 'light', $construct-warning-dark, $construct-warning-light);

@@ -87,13 +87,14 @@ $dash_border_radius: $circular-radius;
 
 // OSD Tooltip
 .dash-label {
-  border-radius: $circular-radius;
+  // A tooltip: the raised surface and its ring, as the menus.
+  border-radius: $radius-control;
   padding: $space-size $space-size * 2;
   margin: $space-size * 1.5;
-  color: on(dark);
-  background-color: rgba(black, 0.75);
-  border: none;
-  box-shadow: $shell-shadow-z2;
+  color: $text;
+  background-color: $popover;
+  border: 1px solid $popover-border;
+  box-shadow: $elevation-2;
   text-align: center;
   -y-offset: 0; // distance from the dash edge
   -x-offset: 0;

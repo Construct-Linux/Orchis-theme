@@ -2,7 +2,7 @@
 // a.k.a. the panel
 
 $panel_transition_duration: 250ms; // same as the overview transition duration
-$panel_height: $medium-size + 2px;
+$panel_height: $medium-size;
 $panel_button_hpadding: ($panel_height - $base-icon-size) / 2;
 
 // Regular weight: upstream sets the whole bar bold, clock, indicators and extensions' text
@@ -12,12 +12,15 @@ $panel_button_hpadding: ($panel_height - $base-icon-size) / 2;
   font-feature-settings: "tnum";
   padding: 0 !important;
   transition-duration: $panel_transition_duration;
-  height: $panel_height;
-  border: none;
+  // St adds the border to the height: the ring is inside the bar's 36 px.
+  height: $panel_height - 2px;
+  // Opaque g, ringed: the bar is persistent chrome one step above the desktop's ink, and the
+  // menus that hang from it stand one step higher again (the brand's THEMING.md, Elevation).
+  border: 1px solid $popover-border;
   box-shadow: none;
 
   background-color: $shell;
-  margin: $space-size / 2;
+  margin: $construct-inset;
   border-radius: $circular-radius;
 
   // transparent panel on lock & login screens
@@ -25,6 +28,7 @@ $panel_button_hpadding: ($panel_height - $base-icon-size) / 2;
   &.login-screen,
   &:overview {
     background-color: transparent;
+    border-color: transparent;
   }
 
   %icon_activities {
@@ -79,9 +83,11 @@ $panel_button_hpadding: ($panel_height - $base-icon-size) / 2;
       }
     }
 
+    // States are white at an alpha over the bar. The fill is an inset shadow so it stays
+    // inside the transparent border, off the bar's ring.
     &:hover {
       background-color: transparent;
-      box-shadow: inset 0 0 0 1000px on($panel-solid, divider);
+      box-shadow: inset 0 0 0 1000px rgba(white, 0.08);
 
       // The clock display needs to have the background on .clock because
       // we want to exclude the do-not-disturb indicator from the background
@@ -90,23 +96,36 @@ $panel_button_hpadding: ($panel_height - $base-icon-size) / 2;
         background-color: transparent;
 
         .clock {
-          box-shadow: inset 0 0 0 1000px on($panel-solid, divider);
+          box-shadow: inset 0 0 0 1000px rgba(white, 0.08);
         }
       }
     }
 
-    &:active, &:overview, &:focus, &:checked {
+    &:active, &:overview, &:checked {
       background-color: transparent;
-      box-shadow: inset 0 0 0 1000px on($panel-solid, track);
+      box-shadow: inset 0 0 0 1000px rgba(white, 0.12);
 
-      // The clock display needs to have the background on .clock because
-      // we want to exclude the do-not-disturb indicator from the background
       &.clock-display {
         box-shadow: none;
         background-color: transparent;
 
         .clock {
-          box-shadow: inset 0 0 0 1000px on($panel-solid, track);
+          box-shadow: inset 0 0 0 1000px rgba(white, 0.12);
+        }
+      }
+    }
+
+    // Keyboard focus is the accent ring, not a fill that reads as an open menu.
+    &:focus {
+      background-color: transparent;
+      box-shadow: inset 0 0 0 2px $primary;
+
+      &.clock-display {
+        box-shadow: none;
+        background-color: transparent;
+
+        .clock {
+          box-shadow: inset 0 0 0 2px $primary;
         }
       }
     }

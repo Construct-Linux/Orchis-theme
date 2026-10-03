@@ -71,8 +71,8 @@
   .actor-link {
     color: on(dark, disabled);
 
-    &:hover { color: lighten(on(dark, disabled), 20%); }
-    &:active { color: darken(on(dark, disabled), 20%); }
+    &:hover { color: on(dark); }
+    &:active { color: on(dark, secondary); }
 
     & StIcon { icon-size: 12px; }
    }

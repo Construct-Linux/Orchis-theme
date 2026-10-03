@@ -9,12 +9,20 @@
   &:insensitive { @include button(flat-insensitive); }
 }
 
+// The default button is an area, so a tint with the accent as text; full accent is for marks.
+// Written out rather than through button(): its states derive their fills from the text colour.
 %default_button {
-  @include button(normal, $c:$primary, $tc:on($primary, secondary));
-  &:focus { @include button(focus, $c:$primary, $tc:on($primary)); }
-  &:hover { @include button(hover, $c:$primary, $tc:on($primary)); }
-  &:insensitive { @include button(insensitive, $c:$primary, $tc:on($primary, secondary-disabled)); }
-  &:active { @include button(active, $c:$primary, $tc:on($primary)); }
+  color: $accent-text;
+  background-color: rgba($primary, $tint);
+  border-color: transparent;
+  box-shadow: none;
+  text-shadow: none;
+  icon-shadow: none;
+
+  &:hover { color: $accent-text; background-color: rgba($primary, $tint-hover); }
+  &:active { color: $accent-text; background-color: rgba($primary, $tint-active); }
+  &:focus { color: $accent-text; box-shadow: inset 0 0 0 2px $primary !important; }
+  &:insensitive { color: $text-disabled; background-color: rgba($primary, 0.08); }
 }
 
 .button {

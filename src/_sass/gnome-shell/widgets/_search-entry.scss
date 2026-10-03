@@ -31,7 +31,6 @@ $search_entry_width: 320px;
   .search-entry {
     margin-top: $space-size * 2;
     margin-bottom: $space-size;
-    border: none !important;
 
     @include search_entry(normal);
 
@@ -41,20 +40,19 @@ $search_entry_width: 320px;
 
     &:focus {
       @include search_entry(focus);
-      selection-background-color: $primary;
-      selected-color: on($primary) !important;
     }
 
-    .search-entry-icon {
-      color: rgba(black, 0.65);
+    // The accent at the selection alpha, as GTK, Ghostty and VS Code select text.
+    selection-background-color: rgba($primary, $selection-alpha);
+    selected-color: $text !important;
+
+    .search-entry-icon,
+    StLabel.hint-text {
+      color: $text-secondary;
     }
 
     &:hover, &:focus {
-      .search-entry-icon { color: rgba(black, 0.75); }
-    }
-
-    StLabel.hint-text {
-      color: rgba(black, 0.35);
+      .search-entry-icon { color: $text; }
     }
   }
 }

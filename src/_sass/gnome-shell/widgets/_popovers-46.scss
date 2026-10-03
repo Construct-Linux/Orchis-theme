@@ -18,9 +18,10 @@
     border-radius: $popup-radius;
     // St draws a border with rounded corners; an outline only square, and one box-shadow.
     border: 1px solid $popover-border;
-    box-shadow: $shell-shadow-z3;
+    box-shadow: $elevation-2;
   }
 
+  // Concentric: the menu's radius less its padding.
   $submenu_item_radius: $popup-radius - $space-size;
 
   // menu items
@@ -40,26 +41,23 @@
       border: none;
       box-shadow: none;
 
-      background-color: if($variant == 'light', rgba(black, 0.10), rgba(white, 0.95)) !important;
-      color: rgba(black, 0.75) !important;
+      // The open submenu's row: a state layer over the menu, its submenu a darker well below
+      // it, so an expanded section does not flash a light slab inside a dark menu.
+      background-color: rgba(white, 0.08) !important;
+      color: $text !important;
 
       &:hover, &:focus, &.selected {
-        background-color: if($variant == 'light', rgba(black, 0.2), #e5e5e5) !important;
-        color: rgba(black, 0.85) !important;
+        background-color: rgba(white, 0.12) !important;
+        color: $text !important;
       }
 
-      &:active {
-        background-color: #dfdfdf !important;
-        color: rgba(black, 0.75) !important;
-      }
-
-      &.selected:active {
-        background-color: if($variant == 'light', rgba(black, 0.15), #e0e0e0) !important;
-        color: rgba(black, 0.75) !important;
+      &:active, &.selected:active {
+        background-color: rgba(white, 0.16) !important;
+        color: $text !important;
       }
 
       &:insensitive {
-        color: rgba(black, 0.35) !important;
+        color: $text-disabled !important;
       }
     }
 
@@ -109,36 +107,32 @@
     box-shadow: none;
     background-image: none;
 
-    color: rgba(black, 0.75) !important;
-    background-color: if($variant == 'light', rgba(black, 0.10), rgba(white, 0.95)) !important;
+    color: $text !important;
+    background-color: background(g) !important;
 
     .popup-menu-item {
       margin: 0;
       border-radius: $submenu_item_radius;
       background-image: none;
 
-      color: rgba(black, 0.75) !important;
+      color: $text !important;
 
       &:hover, &:focus, &.selected {
-        color: rgba(black, 0.85) !important;
-        background-color: rgba(black, 0.15) !important;
+        color: $text !important;
+        background-color: rgba(white, 0.08) !important;
       }
 
-      &:active {
-        color: rgba(black, 0.85) !important;
-        background-color: rgba(black, 0.2) !important;
-      }
-
-      &.selected:active {
-        color: rgba(black, 0.75) !important;
+      &:active, &.selected:active {
+        color: $text !important;
+        background-color: rgba(white, 0.12) !important;
       }
 
       &:insensitive {
-        color: rgba(black, 0.35) !important;
+        color: $text-disabled !important;
       }
     }
 
-    @extend %scrollbar_on_light;
+    @extend %scrollbar_on_dark;
   }
 
   // container for radio and check boxes
@@ -166,7 +160,7 @@
       &:rtl { margin-left: 2.5em; margin-right: 1.5em; }
 
       .popup-separator-menu-item-separator {
-        background-color: rgba(black, 0.10);
+        background-color: $border;
       }
     }
   }

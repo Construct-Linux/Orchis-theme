@@ -10,8 +10,8 @@ stage {
 }
 
 %status_text {
-  @include font(display-2);
-  color: on(dark, disabled);
+  @include font(headline);
+  color: $text-secondary;
 }
 
 $bubble_button_radius: $circular-radius;
@@ -71,24 +71,24 @@ $bubble_button_radius: $circular-radius;
   color: on($popover);
   background-color: $popover;
   border: 1px solid $popover-border;
-  box-shadow: $shell-shadow-z4;
+  box-shadow: $elevation-3;
   padding: $space-size * 2;
 }
 
 /* General Typography */
 
 %large_title {
-  font-weight: 300;
+  font-weight: 400;
   @include fontsize(24);
 }
 
 %title_1 {
-  font-weight: 800;
+  font-weight: 700;
   @include fontsize(20);
 }
 
 %title_2 {
-  font-weight: 800;
+  font-weight: 700;
   @include fontsize(15);
 }
 

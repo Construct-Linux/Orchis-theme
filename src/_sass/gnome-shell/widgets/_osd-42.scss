@@ -5,7 +5,7 @@ $osd_levelbar_height: 4px;
 .osd-window {
   @extend %osd_panel;
   text-align: center;
-  font-weight: bold;
+  font-weight: normal;
   spacing: $space-size * 2;
   padding: $space-size * 2 $space-size * 3;
   margin-bottom: 8em;
@@ -45,7 +45,7 @@ $osd_levelbar_height: 4px;
 // Monitor number label
 .osd-monitor-label {
   @extend %osd_panel;
-  border-radius: $window-radius;
+  border-radius: $radius-surface;
   font-size: 3em;
   font-weight: bold;
   margin: $margin-size * 3;

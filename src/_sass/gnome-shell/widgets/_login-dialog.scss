@@ -29,12 +29,11 @@
     &:hover,&:focus { @include button(flat-hover, $tc: on(dark)); }
     &:active { @include button(flat-active, $tc: on(dark)); }
     &:insensitive { @include button(flat-insensitive, $tc: on(dark)); }
+    &:focus { box-shadow: inset 0 0 0 2px $primary; }
 
+    // The default action is a tint, as every default button in the shell.
     &:default {
-      @include button(normal, $c: $suggested, $tc: on(dark));
-      &:hover,&:focus { @include button(hover, $c: $suggested, $tc: on(dark)); }
-      &:active { @include button(active, $c: $suggested, $tc: on(dark)); }
-      &:insensitive { @include button(insensitive, $c: on(dark, divider), $tc: on(dark, disabled)); }
+      @extend %default_button;
     }
   }
 
@@ -215,7 +214,7 @@
 }
 
 .login-dialog-auth-list-item-title { color: on(dark); }
-.login-dialog-auth-list-item-subtitle { color: on(dark, secondary); font-weight: 500; }
+.login-dialog-auth-list-item-subtitle { color: on(dark, secondary); font-weight: normal; }
 
 .login-dialog-item-icon {
   width: 1.3em;

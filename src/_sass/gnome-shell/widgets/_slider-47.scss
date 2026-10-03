@@ -1,7 +1,8 @@
 /* Slider */
 
 $slider_size: if($compact == 'false', 22px, 20px);
-$slider_color: if($variant == 'light', $primary, white);
+// The knob in the palette's text colour: darkening or lightening white gives a hue-less grey.
+$slider_color: if($variant == 'light', $primary, $text);
 
 .slider {
 
@@ -17,6 +18,6 @@ $slider_color: if($variant == 'light', $primary, white);
   -slider-handle-radius: $slider_size / 2 - 4px; // half the size of the size
 
   color: $slider_color;
-  &:hover { color: lighten($slider_color, 5%); }
-  &:active { color: darken($slider_color, 5%); }
+  &:hover { color: if($variant == 'light', lighten($slider_color, 5%), white); }
+  &:active { color: if($variant == 'light', darken($slider_color, 5%), background(d)); }
 }

@@ -1,8 +1,9 @@
 $toggle-height: $space-size * 4 + $margin-size + $base-icon-size;
 
+// Concentric: the toggles' pill radius plus the padding around them.
 .quick-settings {
   padding: $space-size * 3 !important;
-  border-radius: 8px + $space-size * 5 !important;
+  border-radius: $toggle-height / 2 + $space-size * 3 !important;
   margin-top: $space-size / 2 !important;
 
   .icon-button, .button {
@@ -28,29 +29,39 @@ $toggle-height: $space-size * 4 + $margin-size + $base-icon-size;
 }
 
 .quick-toggle {
-  background-color: rgba($text, 0.06) !important;
+  background-color: rgba(white, 0.06) !important;
 
   &:hover {
-    background-color: rgba($text, 0.12) !important;
+    background-color: rgba(white, 0.12) !important;
   }
 
   &:active {
-    background-color: rgba($text, 0.24) !important;
+    background-color: rgba(white, 0.24) !important;
   }
 
+  // On is a tint with the accent as text: a grid of filled cyan pills glares (9.5-12.3:1).
   &:checked {
-    background-color: $primary !important;
-    color: on($primary) !important;
+    background-color: rgba($primary, $tint) !important;
+    color: $accent-text !important;
 
     &:hover {
-      background-color: mix(on($primary), $primary, 10%) !important;
-      color: on($primary) !important;
+      background-color: rgba($primary, $tint-hover) !important;
+      color: $accent-text !important;
     }
 
     &:active {
-      background-color: mix(on($primary), $primary, 20%) !important;
-      color: on($primary) !important;
+      background-color: rgba($primary, $tint-active) !important;
+      color: $accent-text !important;
     }
+
+    // Muted text fails on a tint (3.96:1 at 22% over h); the subtitle takes the body colour.
+    .quick-toggle-subtitle {
+      color: $text !important;
+    }
+  }
+
+  &:focus {
+    box-shadow: inset 0 0 0 2px $primary;
   }
 
   & > StBoxLayout {
@@ -68,11 +79,11 @@ $toggle-height: $space-size * 4 + $margin-size + $base-icon-size;
   }
 
   &:ltr > StBoxLayout {
-    padding-left: $space-size * 2.5;
+    padding-left: $space-size * 2;
   }
 
   &:rtl > StBoxLayout {
-    padding-right: $space-size * 2.5;
+    padding-right: $space-size * 2;
   }
 
   .quick-toggle-title {
@@ -81,7 +92,7 @@ $toggle-height: $space-size * 4 + $margin-size + $base-icon-size;
 
   & StBoxLayout > .quick-toggle-subtitle {
     font-weight: normal;
-    font-size: 12px;
+    font-size: 0.818em;
   }
 
   .quick-toggle-icon {
@@ -120,30 +131,26 @@ $toggle-height: $space-size * 4 + $margin-size + $base-icon-size;
   }
 
   .quick-toggle-menu-button {
-    background-color: rgba($text, 0.09) !important;
+    background-color: rgba(white, 0.09) !important;
     padding: $space-size $space-size * 1.75;
     border: none !important;
 
     &:hover {
-      background-color: rgba($text, 0.16) !important;
+      background-color: rgba(white, 0.16) !important;
     }
 
     &:active {
-      background-color: rgba($text, 0.26) !important;
+      background-color: rgba(white, 0.26) !important;
     }
 
+    // The arrow segment one tint step above its toggle, so the two halves stay apart.
     &:checked {
-      background-color: mix(on($primary), $primary, 5%) !important;
-      color: on($primary) !important;
+      background-color: rgba($primary, $tint-hover) !important;
+      color: $accent-text !important;
 
-      &:hover {
-        background-color: mix(on($primary), $primary, 15%) !important;
-        color: on($primary) !important;
-      }
-
-      &:active {
-        background-color: mix(on($primary), $primary, 25%) !important;
-        color: on($primary) !important;
+      &:hover, &:active {
+        background-color: rgba($primary, $tint-active) !important;
+        color: $accent-text !important;
       }
     }
 
@@ -187,45 +194,46 @@ $toggle-height: $space-size * 4 + $margin-size + $base-icon-size;
   }
 }
 
+// An expanded submenu: a g well inside the h menu (the brand's level 2a), not a white slab.
 .quick-toggle-menu {
-  border-radius: $space-size * 5 !important;
+  border-radius: $radius-sheet !important;
   padding: $space-size * 2;
   margin-top: $space-size * 2;
   margin-bottom: 0;
 
-  background-color: white !important;
-  color: rgba(black, 0.65) !important;
+  background-color: background(g) !important;
+  color: $text !important;
 
   &:insensitive {
 
     // override insensitive style on submenu
-    background-color: white !important;
-    color: rgba(black, 0.65) !important;
+    background-color: background(g) !important;
+    color: $text !important;
   }
 
   .popup-menu-item {
     padding: $space-size + 2px !important;
     border-radius: $circular-radius !important;
 
-    color: rgba(black, 0.65) !important;
+    color: $text !important;
 
     StLabel {
       // FIXME: How to set color of network menu item on right
-      color: rgba(black, 0.65);
+      color: $text;
     }
 
     &:focus, &:hover, &.selected {
-      color: rgba(black, 0.75) !important;
-      background-color: rgba(black, 0.1) !important;
+      color: $text !important;
+      background-color: rgba(white, 0.08) !important;
     }
 
     &:active {
-      color: rgba(black, 0.75) !important;
-      background-color: rgba(black, 0.2) !important;
+      color: $text !important;
+      background-color: rgba(white, 0.12) !important;
     }
 
     &:insensitive {
-      color: rgba(black, 0.25) !important;
+      color: $text-disabled !important;
     }
 
     > StIcon {
@@ -247,7 +255,7 @@ $toggle-height: $space-size * 4 + $margin-size + $base-icon-size;
       margin: $space-size $space-size * 3 $space-size 0 !important;
       padding: 0 !important;
 
-      background-color: rgba(black, 0.1) !important;
+      background-color: $border !important;
     }
   }
 
@@ -260,11 +268,11 @@ $toggle-height: $space-size * 4 + $margin-size + $base-icon-size;
       icon-size: 24px; // a non-standard symbolic size but ok
       border-radius: $circular-radius;
       padding: 1.5 * $space-size;
-      background-color: rgba(black, 0.08) !important;
+      background-color: rgba(white, 0.08) !important;
 
       &.active {
-        background-color: $primary !important;
-        color: on($primary) !important;
+        background-color: rgba($primary, $tint) !important;
+        color: $accent-text !important;
       }
     }
 
@@ -284,14 +292,14 @@ $toggle-height: $space-size * 4 + $margin-size + $base-icon-size;
   }
 
   .icon-button {
-    background-color: rgba($text, 0.06);
+    background-color: rgba(white, 0.06);
 
     &:hover {
-      background-color: rgba($text, 0.12);
+      background-color: rgba(white, 0.12);
     }
 
     &:active {
-      background-color: rgba($text, 0.24);
+      background-color: rgba(white, 0.24);
     }
 
     > StIcon {
@@ -371,20 +379,20 @@ $toggle-height: $space-size * 4 + $margin-size + $base-icon-size;
   & .icon-button {
     padding: $space-size;
 
-    color: rgba(black, 0.65) !important;
+    color: $text-secondary !important;
 
     &:focus, &:hover {
-      color: rgba(black, 0.75) !important;
-      background-color: rgba(black, 0.1) !important;
+      color: $text !important;
+      background-color: rgba(white, 0.08) !important;
     }
 
     &:active {
-      color: rgba(black, 0.75) !important;
-      background-color: rgba(black, 0.2) !important;
+      color: $text !important;
+      background-color: rgba(white, 0.12) !important;
     }
 
     &:insensitive {
-      color: rgba(black, 0.25) !important;
+      color: $text-disabled !important;
     }
   }
 

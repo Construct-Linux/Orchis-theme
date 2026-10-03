@@ -2,15 +2,25 @@
 // Dash to Panel
 //
 
-$dash_to_panel_item_radius: 5px;
+$dash_to_panel_item_radius: $radius-control;
+
+// The dock: dash-to-panel paints this actor with #panel's colour (transparency.js reads it from
+// an St.Bin named 'panel'), so it is the top bar's opaque g; the ring makes its edge on ink.
+#uiGroup .dashtopanelPanel.dock {
+  border: 1px solid $popover-border !important;
+  border-radius: $radius-surface !important;
+}
 
 .dashtopanelMainPanel {
   border-radius: 0 !important;
   padding: 0 !important;
   margin: 0 !important;
+  // The inner actor is named 'panel' too and would take #panel's ring a second time.
+  border: none !important;
 
+  // The dock's colour comes from #panel, on the actor around this one.
   .dash-background {
-    background-color: $panel;
+    background-color: transparent;
     margin-bottom: 0 !important;
     padding: 0 !important;
     border-radius: 0 !important;
@@ -33,17 +43,17 @@ $dash_to_panel_item_radius: 5px;
     border-radius: 0 !important;
 
     &:hover {
-      background: on($panel, divider) !important;
+      background: rgba(white, 0.08) !important;
     }
 
     &:active {
-      background: on($panel, track) !important;
+      background: rgba(white, 0.12) !important;
     }
   }
 
   .panel-button {
     &, &.clock-display .clock {
-      border-radius: $dash_to_panel_item_radius + $space-size / 2 !important;
+      border-radius: $dash_to_panel_item_radius !important;
       margin: 0 !important;
     }
   }
@@ -55,11 +65,11 @@ $dash_to_panel_item_radius: 5px;
   }
 }
 
-$dash_to_panel_menu_radius: 12px;
+$dash_to_panel_menu_radius: $radius-surface;
 
 #preview-menu {
   margin: $space-size !important;
-  box-shadow: 0 3px 8px rgba(black, 0.2) !important;
+  box-shadow: $elevation-2 !important;
   border-radius: $dash_to_panel_menu_radius !important;
   padding: 0 !important;
 }
@@ -67,6 +77,7 @@ $dash_to_panel_menu_radius: 12px;
 #dashtopanelPreviewScrollview {
   padding: $dash_to_panel_menu_radius 0 !important;
   border-radius: $dash_to_panel_menu_radius !important;
-  background: #0c0c0c !important;
+  background: $popover !important;
+  border: 1px solid $popover-border !important;
 }
 

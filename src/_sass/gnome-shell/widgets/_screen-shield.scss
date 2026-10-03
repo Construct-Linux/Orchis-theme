@@ -2,20 +2,23 @@
 
 .unlock-dialog-clock {
   color: white;
-  font-weight: 300;
+  font-weight: normal;
   text-align: center;
   spacing: 24px;
   padding-bottom: 2.5em;
 }
 
+// In em of the interface font, so the clock follows font-name and text-scaling-factor; the
+// regular weight with tabular figures, so the minutes do not shift as they change.
 .unlock-dialog-clock-time {
-  font-size: 64pt;
+  font-size: 6.5em;
+  font-weight: normal;
   padding-top: 42px;
   font-feature-settings: "tnum";
 }
 
 .unlock-dialog-clock-date {
-  font-size: 16pt;
+  font-size: 1.364em;
   font-weight: normal;
 }
 
@@ -68,8 +71,9 @@
   box-shadow: 0px 2px 4px rgba(0,0,0,0.6);
 }
 
+// The boot's black ground, as under the overview.
 #lockDialogGroup {
-  background-color: $system;
+  background-color: $construct-boot;
 }
 
 #unlockDialogNotifications {

@@ -16,7 +16,7 @@
 }
 
 .datemenu-popover {
-  border-radius: $material-radius + $space-size * 3 !important;
+  border-radius: $radius-sheet !important;
 }
 
 // Calendar menu side column
@@ -87,7 +87,7 @@
 .calendar-month-label {
   height: $menuitem-size - 4px * 2;
   margin: 2px;
-  padding: 6px 16px;
+  padding: 6px 12px;
   border-radius: $material-radius;
   color: $text-secondary !important;
   background-color: transparent !important;
@@ -115,6 +115,8 @@
     background-color: $secondary-fill;
     box-shadow: none !important;
   }
+
+  &:focus { box-shadow: inset 0 0 0 2px $primary !important; }
 
   &:active { color: $text; background-color: $track; }
 }
@@ -147,7 +149,8 @@
   padding: 0 !important;
   margin: 2px !important;
   border-radius: $circular-radius;
-  color: $text-secondary !important;
+  // The month's days in the body colour, so the other months' days (secondary) stay apart.
+  color: $text !important;
   border: none !important;
   font-feature-settings: "tnum";
   text-shadow: none;
@@ -155,27 +158,39 @@
 
   // before the states below, so hover, active and selected still win on a weekend
   &.calendar-weekend {
-    color: $text-disabled !important;
+    color: $text-secondary !important;
   }
 
-  &:hover, &:focus {
+  &:hover {
     color: $text !important;
     background-color: $secondary-fill !important;
     box-shadow: none;
   }
 
+  // On a day the accent ring means today, so focus and selection are a tint; muted text fails
+  // on a tint, so the label takes the body colour.
+  &:focus {
+    color: $text !important;
+    background-color: rgba($primary, $tint) !important;
+    box-shadow: none;
+  }
+
   &:active {
     color: $text !important;
-    background-color: $track !important;
+    background-color: rgba($primary, $tint-active) !important;
     border: none !important; //avoid jumparound due to today
   }
 
   &:selected {
     color: $text !important;
-    background-color: $track !important;
+    background-color: rgba($primary, $tint) !important;
     border: none !important; //avoid jumparound due to today
     box-shadow: none !important;
     outline: none !important;
+
+    &:hover {
+      background-color: rgba($primary, $tint-hover) !important;
+    }
   }
 }
 
@@ -188,7 +203,6 @@
   background-color: transparent !important;
   color: $text-disabled !important;
   @include font(caption);
-  font-weight: bold;
   text-align: center;
 }
 
@@ -198,29 +212,34 @@
 
 .calendar-day-top { border-top-width: 0; }
 .calendar-day-left { border-left-width: 0; }
+// Today is a mark, the accent ring, not a filled disc: an inset shadow keeps the radius and,
+// unlike a border, does not grow the cell against calendar.js's border-collapse classes.
 .calendar-today {
   font-weight: bold !important;
-  color: on($primary) !important;
-  background-color: $primary !important;
+  color: $accent-text !important;
+  background-color: transparent !important;
+  box-shadow: inset 0 0 0 2px $primary !important;
   border: none;
 
   // .calendar-day.calendar-weekend outranks .calendar-today alone
   &.calendar-weekend {
-    color: on($primary) !important;
+    color: $accent-text !important;
   }
 
   &:hover, &:focus {
-    background-color: lighten($primary, 3%) !important;
-    color: on($primary) !important;
+    background-color: rgba($primary, $tint-hover) !important;
+    color: $accent-text !important;
   }
 
+  // .calendar-day:selected drops every shadow; today keeps its ring.
   &:active, &:selected {
-    background-color: $primary !important;
-    color: on($primary) !important;
+    background-color: rgba($primary, $tint) !important;
+    color: $accent-text !important;
+    box-shadow: inset 0 0 0 2px $primary !important;
 
     &:hover, &:focus {
-      background-color: lighten($primary, 3%) !important;
-      color: on($primary) !important;
+      background-color: rgba($primary, $tint-hover) !important;
+      color: $accent-text !important;
     }
   }
 }
@@ -232,16 +251,16 @@
 
   &.calendar-weekday {
     color: $text-disabled;
-    font-weight: bold;
   }
 }
 
+// Secondary: anything fainter fails on the menu (white at 30% is 2.65:1 on h).
 .calendar-other-month {
-  color: $text-secondary-disabled !important;
+  color: $text-secondary !important;
   font-weight: normal;
 
   &.calendar-weekend {
-    color: $text-secondary-disabled !important;
+    color: $text-secondary !important;
   }
 }
 
@@ -251,8 +270,7 @@
   border-radius: $circular-radius;
   background-color: if($variant == 'light', rgba(black, 0.04), rgba(white, 0.03));
   color: $text-disabled;
-  font-size: pt(11px);
-  font-weight: bold;
+  font-size: 0.818em;
   text-align: center;
   text-shadow: none;
   font-feature-settings: "tnum";
@@ -263,7 +281,7 @@
 .weather-button,
 .events-button {
   padding: $space-size $space-size * 2;
-  border-radius: $material-radius;
+  border-radius: $radius-control;
   border: none;
   box-shadow: none;
   text-shadow: none;
