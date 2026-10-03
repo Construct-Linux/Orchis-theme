@@ -9,8 +9,9 @@ It builds two themes, `Orchis-Construct-Light` and `Orchis-Construct-Dark`, with
 
 - `gtk-3.0` for GTK 3 apps;
 - `gtk-4.0` for GTK 4 and libadwaita apps, which read it from `~/.config/gtk-4.0`. The light
-  theme's `gtk.css` carries the dark styles under `@media (prefers-color-scheme: dark)`, so one
-  copy follows Settings' light/dark switch (GTK >= 4.16);
+  theme's `gtk.css` holds both schemes: the rules they share once, the ones they differ in under
+  `@media (prefers-color-scheme: light|dark)` (`src/gtk/color-schemes.awk`), so one copy
+  follows Settings' light/dark switch (GTK >= 4.16);
 - `gnome-shell` for GNOME Shell 51, and only 51: in the dark theme only, the one the
   user-theme extension loads.
 

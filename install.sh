@@ -84,10 +84,14 @@ EOF
   sassc "${SASSC_OPT[@]}" "$SRC_DIR/gtk/4.0/gtk-Dark.scss"                    "$THEME_DIR/gtk-4.0/gtk-dark.css"
 
   # libadwaita apps read only ~/.config/gtk-4.0/gtk.css: GTK 4 never loads gtk-dark.css. A light
-  # variant's gtk.css carries the dark styles under the colour-scheme media query (GTK >= 4.16),
-  # so the apps follow Settings' light/dark switch instead of staying light in a dark session.
+  # variant's gtk.css holds both schemes, the rules they differ in under the colour-scheme media
+  # query (GTK >= 4.16), so the apps follow Settings' light/dark switch instead of staying light
+  # in a dark session.
   if [[ "$color" != '-Dark' ]]; then
-    { echo '@media (prefers-color-scheme: dark) {'; cat "$THEME_DIR/gtk-4.0/gtk-dark.css"; echo '}'; } >> "$THEME_DIR/gtk-4.0/gtk.css"
+    mv "$THEME_DIR/gtk-4.0/gtk.css" "$THEME_DIR/gtk-4.0/gtk-light.css"
+    awk -f "$SRC_DIR/gtk/color-schemes.awk" "$THEME_DIR/gtk-4.0/gtk-light.css" \
+      "$THEME_DIR/gtk-4.0/gtk-dark.css" > "$THEME_DIR/gtk-4.0/gtk.css"
+    rm "$THEME_DIR/gtk-4.0/gtk-light.css"
   fi
 }
 
