@@ -28,9 +28,17 @@
   // Calculate color brightness according to https://www.w3.org/TR/AERT/#color-contrast
   $brightness: (red($color) * 299 + green($color) * 587 + blue($color) * 114) / 1000;
 
+  // A label on the solid accent is the palette's on_accent, which palette.py holds to WCAG: on
+  // the bright dark-variant accent, black at 87% is a hue the palette does not name.
+  @if ($color == $construct-light and $state == 'primary') { @return $construct-on-accent-light; }
+  @if ($color == $construct-dark and $state == 'primary') { @return $construct-on-accent-dark; }
+
   @if ($brightness >= 156) {
-    @if ($state == 'primary') { @return rgba(black, 0.87); }
-    @if ($state == 'secondary') { @return rgba(black, 0.6); }
+    // On the light surfaces, the palette's text and muted, which carry the ink's hue; black at
+    // 87% and 60% is a hue-less #202020 and #666. A bright coloured fill keeps black.
+    $is-fill: saturation($color) >= 50%;
+    @if ($state == 'primary') { @return if($is-fill, rgba(black, 0.87), $construct-text-dark); }
+    @if ($state == 'secondary') { @return if($is-fill, rgba(black, 0.6), $construct-muted-dark); }
     @if ($state == 'disabled') { @return rgba(black, 0.38); }
     @if ($state == 'secondary-disabled') { @return rgba(black, 0.26); }
     @if ($state == 'track') { @return rgba(black, 0.26); }
@@ -91,6 +99,10 @@ $tint:                                  nth($tints, 1);
 $tint-hover:                            nth($tints, 2);
 $tint-active:                           nth($tints, 3);
 $selection-alpha:                       if($variant == 'light', $construct-selection-dark, $construct-selection-light);
+// Transient overlays only (the rubberband, the tile preview, a drop target), always with a 1px
+// accent edge; never a resting surface. A switch's track; its knob is the full accent.
+$tint-decoration:                       if($variant == 'light', $construct-tint-decoration-dark, $construct-tint-decoration-light);
+$tint-track:                            if($variant == 'light', $construct-tint-track-dark, $construct-tint-track-light);
 $drop_target_color:                     $orange-dark;
 // A window is never the desktop's ink: e is the wallpaper's own colour, so a dark window body
 // one step up keeps its edge.
