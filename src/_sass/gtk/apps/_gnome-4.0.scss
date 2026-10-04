@@ -194,7 +194,7 @@
     > scrolledwindow {
       margin: 0 0 $space-size * 2 $space-size * 2;
       border-radius: $window-radius - $space-size;
-      background-color: if($topbar =='dark' and $variant =='light', transparent, rgba($primary, 0.08));
+      background-color: transparent;
 
       > overshoot, > undershoot {
         &.top {
@@ -278,31 +278,32 @@
 
             &:hover {
               image, label {
-                color: $primary;
+                color: $titlebar-text;
               }
             }
 
+            // The selected place is the tab its view hangs from; its icon is the accent, a mark,
+            // and in light its label the text at 700, the sheet's.
             &:selected {
               background-color: transparent;
               font-weight: 700;
-              // font-size: larger;
 
               image {
-                color: $primary;
+                color: $accent-text;
               }
 
-              image, label {
-                color: $primary;
+              label {
+                color: if($variant == 'light', $text, $accent-text);
               }
 
               button.sidebar-button {
-                color: $primary;
+                color: $accent-text;
 
                 @extend %button-flat-simple;
               }
 
               > revealer > box {
-                color: $primary;
+                color: if($variant == 'light', $text, $accent-text);
                 background-color: $base;
                 border: none;
                 border-image-width: 16px 9px 16px 46px;
@@ -317,7 +318,7 @@
               }
 
               button.sidebar-button {
-                color: $primary;
+                color: $accent-text;
 
                 @extend %button-flat-simple;
               }
@@ -762,7 +763,7 @@ window > widget {
 
 .running-stopwatch .seconds-label,
 .running-stopwatch .miliseconds-label {
-  color: $primary;
+  color: $accent-text;
 }
 
 .stopped-stopwatch .miliseconds-label,
@@ -884,7 +885,7 @@ label {
   }
 
   &.primary-label, &.month-name {
-    color: $primary;
+    color: $accent-text;
   }
 
   &.secondary-label {
@@ -896,7 +897,7 @@ calendar-view {
   font-size: 10pt;
 
   &:selected {
-    color: $primary;
+    color: $accent-text;
     font-weight: bold;
   }
 }
@@ -908,9 +909,11 @@ label.header {
   color: $text-disabled;
 }
 
+// The current period behind the grid: decoration, the faintest tint, so it never reads as the
+// selected day.
 calendar-view.current,
 weekgrid.current {
-  background-color: gtkalpha($primary, 0.3);
+  background-color: gtkalpha($primary, $tint-decoration);
 }
 
 popover.events {
@@ -1091,22 +1094,20 @@ datechooser {
       min-width: $space-size / 2;
     }
 
-    &:selected, &.today:selected {
-      background-color: $primary;
-      color: $primary-text;
-      font-weight: bold;
-
-      dot {
-        background-color: $primary-text;
-      }
-    }
-
+    // Selected is the tint; today its label, the accent at 700, and the accent's dot.
     &.today {
-      color: $primary;
+      color: $accent-text;
+      font-weight: bold;
 
       dot {
         background-color: $primary;
       }
+    }
+
+    &:selected, &.today:selected {
+      background-color: color-mix(in srgb, $primary #{$tint * 100%}, transparent);
+      color: $accent-text;
+      font-weight: bold;
     }
 
     &.other-month {
@@ -1158,8 +1159,9 @@ weekhourbar > label {
   color: $border;
 }
 
+// Now is an indicator: the full accent, mark-sized.
 weekgrid > widget.now-strip {
-  background-color: gtkalpha($primary, 0.8);
+  background-color: $primary;
   margin: 0 0 0 1px;
   min-height: 3px;
 }
@@ -1167,7 +1169,7 @@ weekgrid > widget.now-strip {
 weekgrid,
 .week-header {
   &:selected, &.dnd {
-    background-color: gtkalpha($primary, 0.25);
+    background-color: gtkalpha($primary, $tint);
   }
 }
 
@@ -1178,17 +1180,17 @@ monthcell {
   background-color: transparent;
   transition: background-color 200ms;
 
-  &:hover:not(.out-of-month):not(.today) {
+  &:hover:not(.out-of-month) {
     background-color: $base-alt;
     transition: background-color 200ms;
     color: $text;
   }
 
   &:selected {
-    background-color: gtkalpha($primary, 0.1);
+    background-color: gtkalpha($primary, $tint);
 
     &:hover {
-      background-color: gtkalpha($primary, 0.2);
+      background-color: gtkalpha($primary, $tint-hover);
     }
 
     label.day-label {
@@ -1200,21 +1202,10 @@ monthcell {
     border-left-width: 0;
   }
 
-  &.today {
-    background-color: gtkalpha($primary, 0.2);
-
-    &:hover {
-      background-color: gtkalpha($primary, 0.3);
-      color: $primary;
-    }
-
-    &:selected {
-      background-color: gtkalpha($primary, 0.25);
-
-      &:hover {
-        background-color: gtkalpha($primary, 0.35);
-      }
-    }
+  // Today is its label, the accent at 700, with no tint: the tint is the selected day.
+  &.today label.day-label {
+    color: $accent-text;
+    font-weight: bold;
   }
 
   label {
@@ -1654,8 +1645,8 @@ image.circular {
     background: none;
 
     > row.activatable:selected {
-      background-color: $primary;
-      color: $primary-text;
+      background-color: color-mix(in srgb, $primary #{$tint * 100%}, transparent);
+      color: $accent-text;
     }
   }
 
@@ -1775,10 +1766,11 @@ panelstatusbar {
       box-shadow: none;
     }
 
+    // Selected on imagery is a 2px frame in the text colour: an accent ring means focus alone.
     > stylevariantpreview > .wallpaper {
       border-radius: $corner-radius;
       outline-color: transparent;
-      outline-width: 3px;
+      outline-width: 2px;
       outline-offset: $space-size / 2;
       outline-style: solid;
       box-shadow: none;
@@ -1793,7 +1785,7 @@ panelstatusbar {
     }
 
     &:checked > stylevariantpreview > .wallpaper {
-      outline-color: $primary;
+      outline-color: $text;
     }
   }
 }
@@ -1882,7 +1874,7 @@ panelthemeselector {
     &.follow:checked,
     &.light:checked,
     &.dark:checked {
-      box-shadow: inset 0 0 0 2px $primary;
+      box-shadow: inset 0 0 0 2px $text;
     }
 
     &.follow {
@@ -1955,7 +1947,7 @@ themeswitcher {
     box-shadow: inset 0 0 0 1px $border;
 
     &:checked {
-      box-shadow: inset 0 0 0 2px $primary;
+      box-shadow: inset 0 0 0 2px $text;
     }
 
     radio {
@@ -2002,7 +1994,7 @@ styleselector {
     }
 
     &:checked {
-      box-shadow: inset 0 0 0 2px $primary;
+      box-shadow: inset 0 0 0 2px $text;
     }
 
     > radio {

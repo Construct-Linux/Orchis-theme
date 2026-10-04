@@ -89,35 +89,16 @@ button {
     }
   }
 
+  // The primary, solid in both variants. Its states are the fills _common-4.0.scss mixes from its
+  // label; the opaque button's image overlays would add to them.
   &.suggested-action {
     @extend %opaque-button;
 
-    @if $variant == 'dark' {
-      // Dark: the accent's tint in its three steps with the accent as text (see the buttons in
-      // _common-4.0.scss); the opaque button's image overlays would shift the steps.
-      color: $accent-text;
-      background-color: color-mix(in srgb, $primary #{$tint * 100%}, transparent);
+    color: on($suggested);
+    background-color: $suggested;
 
-      &:hover {
-        background-image: none;
-        background-color: color-mix(in srgb, $primary #{$tint-hover * 100%}, transparent);
-      }
-
-      &.keyboard-activating, &:active, &:checked, &:checked:hover {
-        background-image: none;
-        background-color: color-mix(in srgb, $primary #{$tint-active * 100%}, transparent);
-      }
-
-      &:disabled {
-        color: $text-disabled;
-        background-color: color-mix(in srgb, $primary 8%, transparent);
-      }
-    } @else {
-      color: on($suggested);
-
-      &, &:checked {
-        background-color: $suggested;
-      }
+    &:hover, &.keyboard-activating, &:active, &:checked, &:checked:hover {
+      background-image: none;
     }
   }
 
@@ -171,8 +152,8 @@ menubutton {
   &.pill > button { @extend %pill-button; }
 
   &.suggested-action {
-    background-color: if($variant == 'dark', color-mix(in srgb, $primary #{$tint * 100%}, transparent), $suggested);
-    color: if($variant == 'dark', $accent-text, on($suggested));
+    background-color: $suggested;
+    color: on($suggested);
   }
 
   &.destructive-action {
@@ -318,8 +299,8 @@ splitbutton {
   }
 
   &.suggested-action {
-    background-color: if($variant == 'dark', color-mix(in srgb, $primary #{$tint * 100%}, transparent), $suggested);
-    color: if($variant == 'dark', $accent-text, on($suggested));
+    background-color: $suggested;
+    color: on($suggested);
   }
 
   &.destructive-action {
@@ -474,12 +455,13 @@ preferencesgroup > box {
     min-height: $medium-size;
   }
 
+  // Selected on imagery is a 2px frame in the text colour: an accent ring means focus alone.
   button.background-preview-button.toggle {
     padding: 0;
     background: none;
     box-shadow: none;
     outline-color: transparent;
-    outline-width: 3px;
+    outline-width: 2px;
     outline-offset: $space-size / 2;
     outline-style: solid;
 
@@ -496,7 +478,7 @@ preferencesgroup > box {
     }
 
     &:checked {
-      outline-color: $primary;
+      outline-color: $text;
     }
   }
 
@@ -519,7 +501,7 @@ preferencesgroup > box {
     }
 
     &:selected {
-      outline-color: $primary;
+      outline-color: $text;
       background-color: transparent;
     }
   }
@@ -589,15 +571,17 @@ preferencesgroup > box {
 // AdwBanner
 //
 
+// A banner is information, not a state: the raised neutral surface with the rule under it, and
+// its one button the view's primary.
 banner > revealer > widget {
-  /* There are 2 more instances in _sidebars.css, keep in sync with that */
-  background-color: gtkmix($primary, $base, 30%);
+  background-color: $surface;
+  box-shadow: inset 0 -1px $border;
   color: $text;
   padding: $space-size;
 
-  &:backdrop {
-    background-color: gtkmix($primary, $base, 15%);
+  > button { @include solid-action(suggested-action, $suggested); }
 
+  &:backdrop {
     > label, > button {
       filter: opacity(.5);
     }
@@ -628,16 +612,12 @@ viewswitcher {
     border-radius: $circular-radius;
     background-color: $titlebar-fill;
 
+    // The page shown is selected: the tint, not a solid tab.
     button.toggle:checked, button.toggle.flat:checked {
-      background-color: $primary;
-      color: $primary-text;
+      background-color: color-mix(in srgb, $primary #{$tint * 100%}, transparent);
+      color: $accent-text;
 
-      &:backdrop { color: $primary-text-disabled; }
-
-      indicatorbin.needs-attention > indicator {
-        > label { color: $primary; }
-        background-color: $primary-text;
-      }
+      &:hover { background-color: color-mix(in srgb, $primary #{$tint-hover * 100%}, transparent); }
     }
   }
 
@@ -781,7 +761,7 @@ tabbar {
       min-width: 2px;
       border-radius: 2px;
       margin: $space-size * 1.5 $space-size;
-      background: gtkalpha($primary, 0.5);
+      background: $primary;
     }
   }
 
@@ -853,7 +833,7 @@ dnd {
     indicator {
       min-height: 2px;
       border-radius: 2px;
-      background: gtkalpha($primary, 0.5);
+      background: $primary;
     }
   }
 }
@@ -907,14 +887,6 @@ $sidebar-backdrop: if($variant == 'light' and $topbar == 'dark', $titlebar-backd
     @include transition-shadows($frame);
   }
 
-  banner > revealer > widget {
-    background-color: gtkmix($primary, $sidebar, 30%);
-    color: on($sidebar);
-
-    &:backdrop {
-      background-color: gtkmix($primary, $sidebar, 30%);
-    }
-  }
 
   &:dir(ltr), &.end:dir(rtl) {
     &, banner > revealer > widget {
