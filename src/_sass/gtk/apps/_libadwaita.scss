@@ -382,26 +382,35 @@ toast {
 // AdwStatusPage
 //
 
+// The icon in muted, 18px, the title, 6px, the description in muted, 24px, the button (TY6).
 statuspage {
   > scrolledwindow > viewport > box {
     margin: $space-size * 6 $space-size * 2;
-    border-spacing: 36px;
+    border-spacing: $space-size * 4;
 
     > clamp > box {
-      border-spacing: $space-size * 2;
+      border-spacing: 0;
 
       > .icon {
         -gtk-icon-size: 128px;
 
-        color: gtkalpha(currentColor, 0.45);
+        color: $text-secondary;
 
         &:disabled {
           opacity: 0.45;
         }
 
         &:not(:last-child) {
-          margin-bottom: $space-size * 4;
+          margin-bottom: $space-size * 3;
         }
+      }
+
+      > .title:not(:last-child) {
+        margin-bottom: $space-size;
+      }
+
+      > .body {
+        color: $text-secondary;
       }
     }
   }
@@ -444,13 +453,24 @@ preferencespage > scrolledwindow > viewport > clamp > box {
   border-spacing: $space-size * 4;
 }
 
+// A group's title is the heading in the text colour, its description 9pt muted 3px under it,
+// and the list 12px below the header; groups are 24px apart (TY4).
 preferencesgroup > box {
-  &, .labels {
-    border-spacing: $space-size;
+  border-spacing: $space-size;
+
+  .labels {
+    border-spacing: $space-size / 2;
   }
 
-  > box.header:not(.single-line) {
+  > box.header {
     margin-bottom: $space-size;
+
+    .labels > .heading { color: $text; }
+
+    .labels > label:not(.heading) {
+      font-size: 9pt;
+      color: $text-secondary;
+    }
   }
 
   > box.single-line {

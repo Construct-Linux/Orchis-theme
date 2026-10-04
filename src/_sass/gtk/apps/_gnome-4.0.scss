@@ -702,10 +702,12 @@ window > widget {
   padding: $space-size;
 }
 
+// Numbers that change are tabular, so they do not shift as they count (TY7).
 // alarms
 .alarm-time {
   font-size: 2.5em;
-  font-weight: 300;
+  font-weight: 400;
+  font-feature-settings: "tnum";
 }
 
 .clocks-ampm-toggle-button,
@@ -716,7 +718,8 @@ window > widget {
 .clocks-standalone-label,
 .clocks-ringing-label {
   font-size: 6em;
-  font-weight: 300;
+  font-weight: 400;
+  font-feature-settings: "tnum";
 }
 
 .clocks-ringing-title {
@@ -732,33 +735,37 @@ window > widget {
 .clocks-timer-label,
 .clocks-spinbutton {
   font-size: 48pt;
+  font-feature-settings: "tnum";
 }
 
 // disguise insensitive spinbuttons as normal labels
 .timer-panel .timer-header {
   font-size: 20pt;
-  font-weight: 300;
+  font-weight: 400;
 }
 
 .timer-countdown {
   font-size: 40pt;
-  font-weight: 300;
+  font-weight: 400;
+  font-feature-settings: "tnum";
 }
 
 /* Stopwatch Panel */
 .lap-time {
   font-weight: bold;
+  font-feature-settings: "tnum";
 }
 
 .stopped-stopwatch label,
 .running-stopwatch label,
 .paused-stopwatch label {
   font-size: 70px;
-  font-weight: lighter;
+  font-weight: 400;
+  font-feature-settings: "tnum";
 }
 
 .stopped-stopwatch .seconds-label {
-  font-weight: 300;
+  font-weight: 400;
 }
 
 .running-stopwatch .seconds-label,
@@ -774,12 +781,12 @@ window > widget {
 
 .running-stopwatch .seconds-label,
 .paused-stopwatch .seconds-label {
-  font-weight: 300;
+  font-weight: 400;
 }
 
 // World
 .clock-location {
-  font-weight: bolder;
+  font-weight: 700;
 }
 
 .hidden {
@@ -1527,7 +1534,8 @@ $weather_forecast_color: darken($warning, 10%);
 
 #temperature-label {
   font-size: 32pt;
-  font-weight: 900;
+  font-weight: 400;
+  font-feature-settings: "tnum";
   margin-left: 9px;
 }
 

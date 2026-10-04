@@ -232,7 +232,6 @@ assistant {
     min-height: $medium-size;
     padding: 0 12px;
     color: $text-disabled;
-    font-weight: 500;
 
     &.highlight { color: $text; }
   }
@@ -492,7 +491,7 @@ button {
   min-width: 16px;
   padding: ($medium-size - 24px) / 2 ($medium-size - 16px) / 2;
   border-radius: $corner-radius;
-  // font-weight: 500;
+  font-weight: 700;
   @extend %button-basic;
 
   &:drop(active) { @include button(hover); }
@@ -1823,7 +1822,7 @@ popover.background {
   outline: none;
   background-clip: padding-box;
   color: $text-secondary;
-  // font-weight: 500;
+  font-weight: 700;
 
   &:hover {
     background-color: $fill;
@@ -3165,7 +3164,6 @@ calendar {
 
   &.highlight {
     color: $text-secondary;
-    font-weight: 500;
   }
 
   &:indeterminate { color: $text-secondary-disabled; }
@@ -3335,7 +3333,7 @@ stacksidebar.sidebar {
     &:selected {
       background-color: rgba($primary, $tint);
       color: $accent-text;
-      font-weight: 500;
+      font-weight: 700;
     }
 
     + row { margin-top: 4px; }
@@ -3385,7 +3383,7 @@ placessidebar.sidebar {
     &:selected {
       background-color: rgba($primary, $tint);
       color: $accent-text;
-      font-weight: 500;
+      font-weight: 700;
 
       image { color: $accent-text; }
     }
