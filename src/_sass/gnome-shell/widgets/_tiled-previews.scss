@@ -1,8 +1,9 @@
 
 /* Tiled window previews */
 $tile_corner_radius: $material-radius + 1px;
+// A transient overlay: the decoration tint with its edge.
 .tile-preview {
-  background-color: rgba($primary, 0.3);
+  background-color: rgba($primary, $tint-decoration);
   border: 1px solid $primary;
 }
 

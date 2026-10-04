@@ -31,7 +31,8 @@ $osd_levelbar_height: 4px;
     &:first-child { margin-bottom: 0px; }
 
     -barlevel-height: $osd_levelbar_height;
-    -barlevel-background-color: rgba($primary, 0.3);
+    // The slider's trough: one trough for every level bar.
+    -barlevel-background-color: $track;
     -barlevel-active-background-color: $primary;
     -barlevel-overdrive-color: $destructive;
     -barlevel-overdrive-separator-width: 3px;

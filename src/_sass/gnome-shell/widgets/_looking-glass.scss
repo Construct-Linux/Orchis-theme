@@ -56,8 +56,8 @@
 
 .lg-dialog {
   StEntry {
-    selection-background-color: $primary;
-    selected-color: on($primary);
+    selection-background-color: rgba($primary, $selection-alpha);
+    selected-color: on(dark);
     background-color: on(dark, divider);
     color: on(dark);
   }

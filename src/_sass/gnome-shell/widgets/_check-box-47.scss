@@ -32,11 +32,11 @@
   }
 
   &:hover:checked StBin {
-    background-color: rgba($primary, 0.3 / 2);
+    background-color: rgba($primary, $tint);
   }
 
   &:active:checked StBin {
-    background-color: rgba($primary, 0.3);
+    background-color: rgba($primary, $tint-hover);
   }
 
   StIcon {

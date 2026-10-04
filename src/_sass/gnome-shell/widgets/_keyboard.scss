@@ -74,9 +74,10 @@ $keyboard_active_bg_color: if($variant == 'light', darken($keyboard, 20%), light
 }
 
 .emoji-panel {
+  // A latched key is on: selected, so the tint.
   .keyboard-key:latched {
-    border-color: lighten($primary, 5%);
-    background-color: $primary;
+    color: $accent-text;
+    background-color: rgba($primary, $tint);
   }
 }
 

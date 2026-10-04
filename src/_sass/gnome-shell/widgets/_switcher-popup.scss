@@ -23,9 +23,10 @@
       color: $text;
     }
 
+    // Selected, so the tint: a filled accent item is the largest solid cyan the shell could show.
     &:selected {
-      background-color: $primary;
-      color: on($primary);
+      background-color: rgba($primary, $tint);
+      color: $accent-text;
     }
   }
 
@@ -54,7 +55,7 @@
   color: on(dark, secondary);
 
   &:highlighted {
-    color: on($primary);
+    color: $accent-text;
   }
 }
 

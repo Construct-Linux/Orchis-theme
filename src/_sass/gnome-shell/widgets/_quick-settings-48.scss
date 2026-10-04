@@ -58,6 +58,13 @@ $toggle-height: $space-size * 4 + $margin-size + $base-icon-size;
     .quick-toggle-subtitle {
       color: $text !important;
     }
+
+    // On against off is 1.18:1 at 30% backlight and the label a hue step protans barely see, so
+    // the icon sits on an accent disc, a mark (6.16:1 on the tint).
+    .quick-toggle-icon {
+      color: on($primary);
+      background-color: $primary;
+    }
   }
 
   &:focus {
@@ -95,8 +102,11 @@ $toggle-height: $space-size * 4 + $margin-size + $base-icon-size;
     font-size: 0.818em;
   }
 
+  // The disc's room is kept when off too, so turning a toggle on does not move its label.
   .quick-toggle-icon {
     icon-size: $base-icon-size;
+    padding: ($medium-icon-size - $base-icon-size) / 2;
+    border-radius: $circular-radius;
   }
 }
 
@@ -345,10 +355,6 @@ $toggle-height: $space-size * 4 + $margin-size + $base-icon-size;
   spacing: $space-size;
   background-color: $surface !important;
   color: $text-secondary !important;
-
-  .button:checked {
-    @extend %default_button;
-  }
 }
 
 // background apps

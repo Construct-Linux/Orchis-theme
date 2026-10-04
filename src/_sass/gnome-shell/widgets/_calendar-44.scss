@@ -167,29 +167,29 @@
     box-shadow: none;
   }
 
-  // On a day the accent ring means today, so focus and selection are a tint; muted text fails
-  // on a tint, so the label takes the body colour.
+  // Focus is the accent ring on a day as on every control: today is told by its label, so the
+  // ring means focus alone, and a focused day stays apart from the selected one, a tint.
   &:focus {
     color: $text !important;
-    background-color: rgba($primary, $tint) !important;
-    box-shadow: none;
+    box-shadow: inset 0 0 0 2px $primary !important;
   }
 
   &:active {
-    color: $text !important;
+    color: $accent-text !important;
     background-color: rgba($primary, $tint-active) !important;
-    border: none !important; //avoid jumparound due to today
   }
 
   &:selected {
-    color: $text !important;
+    color: $accent-text !important;
     background-color: rgba($primary, $tint) !important;
-    border: none !important; //avoid jumparound due to today
     box-shadow: none !important;
-    outline: none !important;
 
     &:hover {
       background-color: rgba($primary, $tint-hover) !important;
+    }
+
+    &:focus {
+      box-shadow: inset 0 0 0 2px $primary !important;
     }
   }
 }
@@ -212,35 +212,16 @@
 
 .calendar-day-top { border-top-width: 0; }
 .calendar-day-left { border-left-width: 0; }
-// Today is a mark, the accent ring, not a filled disc: an inset shadow keeps the radius and,
-// unlike a border, does not grow the cell against calendar.js's border-collapse classes.
+// Today is its label, the accent as text at 700, with no ring and no fill: the ring is focus
+// and the tint selection, so today, focused and selected each read on their own. The day's
+// states draw the fill and the ring.
 .calendar-today {
   font-weight: bold !important;
   color: $accent-text !important;
-  background-color: transparent !important;
-  box-shadow: inset 0 0 0 2px $primary !important;
-  border: none;
 
-  // .calendar-day.calendar-weekend outranks .calendar-today alone
-  &.calendar-weekend {
+  // .calendar-day's weekend and states outrank .calendar-today alone
+  &.calendar-weekend, &:hover, &:focus, &:active, &:selected {
     color: $accent-text !important;
-  }
-
-  &:hover, &:focus {
-    background-color: rgba($primary, $tint-hover) !important;
-    color: $accent-text !important;
-  }
-
-  // .calendar-day:selected drops every shadow; today keeps its ring.
-  &:active, &:selected {
-    background-color: rgba($primary, $tint) !important;
-    color: $accent-text !important;
-    box-shadow: inset 0 0 0 2px $primary !important;
-
-    &:hover, &:focus {
-      background-color: rgba($primary, $tint-hover) !important;
-      color: $accent-text !important;
-    }
   }
 }
 

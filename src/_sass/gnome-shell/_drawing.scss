@@ -201,13 +201,18 @@
     icon-shadow: none;
   }
 
+  // Checked is selected: the accent's tint with the accent as text. The solid accent is the
+  // primary action's alone.
   @if $t == checked {
-    color: on($primary);
-    background-color: $primary;
+    color: $accent-text;
+    background-color: rgba($primary, $tint);
     border-color: transparent;
     box-shadow: none;
     text-shadow: none;
     icon-shadow: none;
+
+    &:hover { background-color: rgba($primary, $tint-hover); }
+    &:active { background-color: rgba($primary, $tint-active); }
   }
 
   @if $t == insensitive {
@@ -254,12 +259,15 @@
   }
 
   @if $t == flat-checked {
-    color: if($tc != on(dark), $text, on($primary));
-    background-color: if($tc != on(dark), $track, $primary);
+    color: $accent-text;
+    background-color: rgba($primary, $tint);
     border-color: transparent;
     box-shadow: none;
     text-shadow: none;
     icon-shadow: none;
+
+    &:hover { background-color: rgba($primary, $tint-hover); }
+    &:active { background-color: rgba($primary, $tint-active); }
   }
 
   @if $t == flat-insensitive {

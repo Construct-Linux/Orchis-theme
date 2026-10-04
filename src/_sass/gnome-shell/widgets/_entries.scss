@@ -5,8 +5,9 @@ StEntry {
   padding: 0 8px;
   border-radius: $circular-radius;
   border-width: 0;
-  selection-background-color: rgba($primary, 0.35) !important;
-  selected-color: $primary !important;
+  // The one selection alpha, as GTK, Ghostty and VS Code select text; the text keeps its colour.
+  selection-background-color: rgba($primary, $selection-alpha) !important;
+  selected-color: $text !important;
   @include font(subheading);
   @include entry(normal);
   &:hover { @include entry(hover); }

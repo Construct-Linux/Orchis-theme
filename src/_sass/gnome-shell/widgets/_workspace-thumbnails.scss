@@ -26,9 +26,9 @@
 }
 
 // selected indicator
+// Selected on imagery is a frame in the text colour: an accent ring means focus alone.
 .workspace-thumbnail-indicator {
-  border: 3px solid $primary;
+  border: 2px solid $text;
   border-radius: 3px;
   padding: 0px;
-  // background-color: transparentize(rgba($primary, 0.2), 0.9);
 }

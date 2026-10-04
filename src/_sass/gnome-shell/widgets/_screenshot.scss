@@ -151,7 +151,7 @@ $screenshot_ui_button_red: $error;
 .screenshot-ui-window-selector-window-border {
   transition-duration: 200ms;
   border-radius: $material-radius;
-  border: 6px transparent;
+  border: 2px transparent;
 }
 
 .screenshot-ui-window-selector-check {
@@ -162,16 +162,17 @@ $screenshot_ui_button_red: $error;
   icon-size: 24px;
 }
 
+// Selected on imagery is a frame in the text colour plus the accent's check: an accent ring
+// means focus alone, and a tint over a window would recolour it.
 .screenshot-ui-window-selector-window {
   &:hover {
     .screenshot-ui-window-selector-window-border {
-      border-color: darken($primary, 15%);
+      border-color: $text-disabled;
     }
   }
   &:checked {
     .screenshot-ui-window-selector-window-border {
-      border-color: $primary;
-      background-color: transparentize($primary, 0.8);
+      border-color: $text;
     }
 
     .screenshot-ui-window-selector-check {

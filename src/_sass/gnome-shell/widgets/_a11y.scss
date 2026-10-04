@@ -3,8 +3,9 @@
   width: 48px;
   height: 48px;
   border-radius: 24px; // radius equals the size of the box to give us the curve
-  background-color: lighten(transparentize($primary, 0.7), 30%);
-  box-shadow: 0 0 2px 2px lighten($primary, 20%);
+  // A transient overlay, as the hot corner's ripple, with the accent's edge to find it by.
+  background-color: rgba($primary, $tint);
+  border: 1px solid $primary;
 }
 
 // Pointer accessibility notifications
@@ -13,7 +14,7 @@
   height: 60px;
   -pie-border-width: 3px;
   -pie-border-color: $primary;
-  -pie-background-color: lighten(transparentize($primary, 0.7), 40%);
+  -pie-background-color: rgba($primary, $tint-track);
 }
 
 // Screen zoom/Magnifier

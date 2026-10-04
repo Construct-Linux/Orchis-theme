@@ -7,8 +7,8 @@ $search_entry_width: 320px;
   padding: $space-size $space-size * 1;
   width: $search_entry_width;
   border-radius: $circular-radius;
-  selection-background-color: $primary;
-  selected-color: on($primary) !important;
+  selection-background-color: rgba($primary, $selection-alpha);
+  selected-color: $text !important;
   @include entry(normal);
 
   &:hover { @include entry(hover); }

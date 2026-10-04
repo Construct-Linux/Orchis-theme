@@ -80,7 +80,7 @@
   .vhandle, .hhandle {
     background-color: transparentize($tooltip, 0.7);
     &:hover, &:focus { background-color: transparentize($tooltip,0.5); }
-    &:active { background-color: transparentize($primary,0.5); }
+    &:active { background-color: $tooltip; }
   }
 }
 

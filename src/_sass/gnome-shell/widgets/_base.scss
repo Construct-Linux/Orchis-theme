@@ -1,15 +1,17 @@
 // Links
+// A link is the accent as text, underlined: the underline, not the colour alone, says link.
 .shell-link {
   border-radius: $material-radius;
   color: $link;
+  text-decoration: underline;
   background-color: transparent;
   &:hover {
     color: $link;
-    background-color: rgba($link, 0.3 / 2);
+    background-color: rgba($primary, $tint);
   }
   &:active {
     color: $link;
-    background-color: rgba($link, 0.3);
+    background-color: rgba($primary, $tint-hover);
   }
 }
 

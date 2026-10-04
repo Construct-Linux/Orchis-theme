@@ -1,6 +1,7 @@
 // Rubberband for select-area screenshots
+// A transient overlay: the decoration tint with its edge.
 .select-area-rubberband {
-  background-color: transparentize($primary,0.7);
+  background-color: rgba($primary, $tint-decoration);
   border: 1px solid $primary;
 }
 

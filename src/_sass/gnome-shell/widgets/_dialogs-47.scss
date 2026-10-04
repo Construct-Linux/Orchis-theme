@@ -128,25 +128,9 @@ $mdborder_color: if($variant == 'light', rgba(black, 0.15), rgba(black, 0.75));
     }
   }
 
-  // The dialog's default action: a tint, as every default button in the shell.
+  // The dialog's default action (Authenticate, Unlock) is its primary.
   .modal-dialog-button:last-child {
-    color: $accent-text !important;
-    background-color: rgba($suggested, $tint);
-
-    &:hover {
-      color: $accent-text !important;
-      background-color: rgba($suggested, $tint-hover);
-    }
-
-    &:active {
-      color: $accent-text !important;
-      background-color: rgba($suggested, $tint-active);
-    }
-
-    &:insensitive {
-      color: $text-disabled !important;
-      background-color: rgba($suggested, 0.08);
-    }
+    @extend %default_button;
   }
 
   .modal-dialog-content-box {
@@ -204,12 +188,14 @@ $mdborder_color: if($variant == 'light', rgba(black, 0.15), rgba(black, 0.75));
   .audio-selection-box { spacing: 20px; }
 }
 
+// A device is a choice that closes the dialog, never a selected state: hover and press are
+// neutral, and focus the ring.
 .audio-selection-device {
   border: 1px solid $border;
   border-radius: $material-radius;
-  &:hover { background-color: rgba($primary, $tint); color: $accent-text; }
-  &:focus { background-color: rgba($primary, $tint-hover); color: $accent-text; }
-  &:active { background-color: rgba($primary, $tint-active); color: $accent-text; }
+  &:hover { background-color: $secondary-fill; color: $text; }
+  &:active { background-color: $track; color: $text; }
+  &:focus { box-shadow: inset 0 0 0 2px $primary; }
 }
 
 .audio-selection-device-box {

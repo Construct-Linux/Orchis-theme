@@ -58,21 +58,16 @@
     }
   }
 
-  // close button
+  // A secondary control, neutral as the message's own expand and close buttons: the accent
+  // would make it read as on.
   .message-collapse-button {
     @extend .icon-button;
-    color: $accent-text;
-    background-color: rgba($primary, $tint);
+    color: $text;
+    background-color: $fill;
     padding: 4px !important;
     border: 4px transparent solid;
-    &:hover {
-      color: $accent-text;
-      background-color: rgba($primary, $tint-hover);
-    }
-    &:active {
-      color: $accent-text;
-      background-color: rgba($primary, $tint-active);
-    }
+    &:hover { background-color: $divider; }
+    &:active { background-color: $track; }
   }
 }
 

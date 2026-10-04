@@ -12,8 +12,8 @@
   background-color: transparent;
 
   StEntry {
-    selection-background-color: $primary;
-    selected-color: on($primary) !important;
+    selection-background-color: rgba($primary, $selection-alpha);
+    selected-color: $text !important;
     @include entry(normal, $fc:on(dark, track));
     &:focus { @include entry(focus, $fc:on(dark)); }
     &:insensitive {
@@ -31,7 +31,7 @@
     &:insensitive { @include button(flat-insensitive, $tc: on(dark)); }
     &:focus { box-shadow: inset 0 0 0 2px $primary; }
 
-    // The default action is a tint, as every default button in the shell.
+    // The default action (Next, Unlock, Sign In) is the primary.
     &:default {
       @extend %default_button;
     }
