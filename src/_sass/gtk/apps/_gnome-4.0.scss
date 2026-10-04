@@ -2291,3 +2291,9 @@ scrollbar.overlay-indicator {
   color: var(--accent-fg-color);
   padding: 32px;
 }
+// GtkSourceView's style scheme chooser (Text Editor's preferences). Its own stylesheet rings the
+// selected scheme in the accent, which is focus's alone (brand THEMING.md, C8): selection on
+// imagery is a frame in the text colour, with the check badge.
+GtkSourceStyleSchemePreview.selected {
+  box-shadow: 0 0 0 2px $text;
+}

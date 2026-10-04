@@ -2,6 +2,12 @@
 /***************
  * Base States *
  ***************/
+// Keyboard focus is a 2px full-accent ring (brand THEMING.md, level 5, F2). Orchis set none, and
+// libadwaita's own showed: the accent at 50%, #087E8F on a dark window.
+:focus-visible {
+  outline-color: $primary;
+}
+
 .background {
   background-color: $background;
   color: $text;
