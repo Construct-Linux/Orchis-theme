@@ -3,7 +3,9 @@
 
 $panel_transition_duration: 250ms; // same as the overview transition duration
 $panel_height: $medium-size;
-$panel_button_hpadding: ($panel_height - $base-icon-size) / 2;
+// Six px a side, the spacing scale's step: half the bar's height less an icon (10 px a side) set
+// the indicators and the clock too far apart for a bar this low.
+$panel_button_hpadding: $space-size;
 
 // Regular weight: upstream sets the whole bar bold, clock, indicators and extensions' text
 // (Vitals) alike, which reads heavy on a dark bar; the brand's type is regular (THEMING.md).

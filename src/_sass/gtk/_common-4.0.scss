@@ -3347,7 +3347,9 @@ row {
   > box.header {
     margin-left: $space-size * 2;
     margin-right: $space-size * 2;
-    min-height: $large-size;
+    // 44 px: with the title's margins the large size (48) made a 52 px row, a step looser than
+    // libadwaita's own 50 and than the rest of the theme's density.
+    min-height: $large-size - 4px;
 
     > .icon:disabled {
       filter: opacity(0.35);

@@ -156,9 +156,11 @@
   text-shadow: none;
   background-color: transparent !important;
 
-  // before the states below, so hover, active and selected still win on a weekend
+  // A weekend is a day of the month like any other: muted is the other months' days, and the
+  // month's edge (Sep 30 beside Oct 1) read as four Sundays when weekends were muted too.
+  // Before the states below, so hover, active and selected still win on a weekend.
   &.calendar-weekend {
-    color: $text-secondary !important;
+    color: $text !important;
   }
 
   &:hover {
@@ -235,7 +237,8 @@
   }
 }
 
-// Secondary: anything fainter fails on the menu (white at 30% is 2.65:1 on h).
+// The other months' days alone are secondary, so the month's edge reads at a glance; anything
+// fainter fails on the menu (white at 30% is 2.65:1 on h).
 .calendar-other-month {
   color: $text-secondary !important;
   font-weight: normal;
