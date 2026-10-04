@@ -22,5 +22,3 @@ scale-vert-marks-before-slider-dark
 scale-vert-marks-before-slider-disabled-dark
 scale-vert-marks-after-slider-dark
 scale-vert-marks-after-slider-disabled-dark
-row-selected-light
-row-selected-dark

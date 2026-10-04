@@ -219,7 +219,7 @@
           > row.activatable {
             border-radius: 0;
             padding: 0;
-            margin: -8px 0 -8px 0;
+            margin: 0 $space-size 0 0;
             animation: none;
 
             > revealer.sidebar-revealer {
@@ -248,7 +248,7 @@
 
             label {
               color: inherit;
-              min-height: 54px;
+              min-height: $medium-size;
               padding-left: $space-size;
             }
 
@@ -282,8 +282,10 @@
               }
             }
 
-            // The selected place is the tab its view hangs from; its icon is the accent, a mark,
-            // and in light its label the text at 700, the sheet's.
+            // The selected place is selected as every sidebar's row is: the accent's tint as a pill
+            // against the pane's edge, its icon the accent; in light the raised surface with its line
+            // and the label in the text at 700. A tab cut out of a tint, in the view's colour, read as
+            // a square with a hole: the pane and the view are one colour here.
             &:selected {
               background-color: transparent;
               font-weight: 700;
@@ -304,17 +306,9 @@
 
               > revealer > box {
                 color: if($variant == 'light', $text, $accent-text);
-                background-color: $base;
-                border: none;
-                border-image-width: 16px 9px 16px 46px;
-                border-image-slice: 16 9 16 46;
-                border-image-repeat: stretch;
-                border-image-source: -gtk-scaled(url("assets/row-selected#{$theme-asset-suffix}.png"),
-                  url("assets/row-selected#{$theme-asset-suffix}@2.png"));
-              }
-
-              label {
-                margin-left: $space-size + 4px;
+                background-color: if($variant == 'light', $construct-bg-a, color-mix(in srgb, $primary #{$tint * 100%}, transparent));
+                box-shadow: $state-line;
+                border-radius: 0 $circular-radius $circular-radius 0;
               }
 
               button.sidebar-button {
