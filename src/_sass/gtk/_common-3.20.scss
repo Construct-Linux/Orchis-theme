@@ -40,10 +40,12 @@
   background-color: mix($text, $base, 10%);
 }
 
-// A selected row or item is an area: the accent's tint, with the accent as text.
+// A selected row or item is an area: the accent's tint, with the accent as text; in light the
+// border line inside it holds the state.
 %selected_items_color {
   color: $accent-text;
   background-color: rgba($primary, $tint);
+  @if $variant == 'light' { box-shadow: $state-line; }
 
   &:hover { background-color: rgba($primary, $tint-hover); }
 }
@@ -53,11 +55,6 @@
 %text_selection {
   color: $text;
   background-color: rgba($primary, $selection-alpha);
-}
-
-%selected_items_primary {
-  color: on($primary);
-  background-color: $primary;
 }
 
 %linked {
@@ -134,8 +131,8 @@
   }
 
   &:selected {
-    background-color: $primary;
-    color: on($primary);
+    background-color: rgba($primary, $tint);
+    color: $accent-text;
   }
 }
 
@@ -149,22 +146,11 @@
 
   // &:hover, &:selected { border-radius: $corner-radius; }
 
+  // The tint in every window, not only client-decorated ones: Firefox and Chrome draw their own.
   &:selected {
-    @extend %selected_items_primary;
-
-    &:hover { box-shadow: none; }
+    @extend %selected_items_color;
   }
-
-  .background.csd &:selected { @extend %selected_items_color; }
 }
-
-// widget.view {
-//   border-radius: $corner-radius;
-
-//   &:selected {
-//     @extend %selected_items_primary;
-//   }
-// }
 
 textview {
   text {
@@ -185,7 +171,7 @@ iconview {
 .rubberband,
 rubberband {
   border: 1px solid $primary;
-  background-color: rgba($primary, 0.3);
+  background-color: rgba($primary, $tint-decoration);
 }
 
 flowbox {
@@ -626,7 +612,11 @@ button {
   // overlay / OSD style
   // .osd & { }
 
-  // Suggested and Destructive Action buttons
+  // Suggested and destructive actions are solid; the suggested action is the view's one
+  // primary, solid in dark too, so it never reads as a selected item. Hover and press are its
+  // label at 8% and 16% over the fill (shadows are black, never the accent's glow), disabled the
+  // whole button at half opacity, and focus the one 2px ring, in its label's colour inside the
+  // fill, where the accent would not show.
   @each $b_type, $b_color in (suggested-action, $suggested),
                              (destructive-action, $destructive) {
     &.#{$b_type} {
@@ -634,63 +624,27 @@ button {
       color: on($b_color);
       box-shadow: none;
 
-      &:disabled { @include button(disabled); }
-
-      &:hover {
-        box-shadow: inset 0 0 0 9999px transparent,
-                    0 2px (4px * .6) -1px rgba($b_color, 0.2),
-                    0 4px (5px * .6) 0 rgba($b_color, 0.14),
-                    0 1px (10px * .6) 0 rgba($b_color, 0.12);
+      &:disabled {
+        background-color: $b_color;
+        color: on($b_color);
+        opacity: 0.5;
       }
 
-      &:checked { background-color: mix(on($b_color), $b_color, percentage(0.3)); }
+      &:hover { box-shadow: inset 0 0 0 9999px gtkalpha(currentColor, 0.08); }
 
-      &:checked:hover {
-        box-shadow: inset 0 0 0 9999px transparent,
-                    0 3px 3px -3px rgba($b_color, 0.3),
-                    0 2px 3px -1px rgba($b_color, 0.24),
-                    0 2px 5px 0 rgba($b_color, 0.12);
-      }
+      &:active, &:checked { box-shadow: inset 0 0 0 9999px gtkalpha(currentColor, 0.16); }
 
-      &:focus { box-shadow: 0 0 0 2px rgba($b_color, 0.35); }
+      &:focus { box-shadow: inset 0 0 0 2px on($b_color); }
+
+      &:focus:hover { box-shadow: inset 0 0 0 2px on($b_color), inset 0 0 0 9999px gtkalpha(currentColor, 0.08); }
 
       &.flat {
         background-color: transparent;
-        color: $b_color;
+        color: if($b_type == suggested-action, $accent-text, $b_color);
 
         &:disabled { @include button(flat-disabled); }
 
-        &:checked { background-color: rgba($b_color, 0.3); }
-      }
-    }
-  }
-
-  // Dark: a suggested action is an area, so the accent's tint with the accent as text, as the
-  // shell's default button; a filled cyan button glares on ink. Light keeps the filled accent
-  // with white text (5.09:1).
-  @if $variant == 'dark' {
-    &.suggested-action {
-      background-color: rgba($primary, $tint);
-      color: $accent-text;
-
-      &:hover { background-color: rgba($primary, $tint-hover); box-shadow: none; }
-
-      &:active, &:checked { background-color: rgba($primary, $tint-active); }
-
-      &:checked:hover { box-shadow: none; }
-
-      &:focus { box-shadow: inset 0 0 0 2px $primary; }
-
-      &:disabled {
-        color: $text-disabled;
-        background-color: rgba($primary, 0.08);
-      }
-
-      &.flat {
-        background-color: transparent;
-        color: $accent-text;
-
-        &:checked { background-color: rgba($primary, $tint-active); }
+        &:checked { background-color: rgba($b_color, $tint); }
       }
     }
   }
@@ -1239,11 +1193,6 @@ searchbar > revealer > box {
     .linked:not(.vertical) > & {
       border-radius: $corner-radius;
     }
-
-    &:disabled {
-      background-color: $titlebar-fill;
-      color: $titlebar-text-disabled;
-    }
   }
 
   button.toggle { border-radius: $circular-radius; }
@@ -1273,52 +1222,12 @@ searchbar > revealer > box {
     &:disabled { color: $titlebar-text-secondary-disabled; }
   }
 
+  // Selection mode is the view's state, so the headerbar is selected: the tint over the bar, with
+  // the accent as text.
   &.selection-mode {
-    // 0.1ms was a workaround for https://gitlab.gnome.org/GNOME/gtk/issues/698
-    // but let's keep it for backwards compatibility.
-    transition: background-color 0.1ms $ripple-fade-in-duration, color $duration $ease-out;
-    animation: ripple-on-headerbar $ripple-fade-in-duration $ease-out;
-    box-shadow: inset 0 1px highlight($primary);
-    background-color: $primary;
-    color: on($primary);
-
-    &:backdrop {
-      color: on($primary, secondary);
-    }
-
-    .subtitle:link { color: on($primary); }
-
-    button:not(.suggested-action):not(.destructive-action) {
-      border-image: radial-gradient(circle closest-corner at center calc(100% - 1px),
-                                    currentColor 0%,
-                                    transparent 0%)
-                                    0 0 0 / 0 0 0px;
-      color: on($primary);
-
-      &:disabled { color: on($primary, disabled); }
-
-      &:checked {
-        border-image: radial-gradient(circle closest-corner at center calc(100% - 1px),
-                                      currentColor 100%,
-                                      transparent 0%)
-                                      0 0 2 / 0 0 2px;
-        color: on($primary);
-
-        &:disabled { color: on($primary, disabled); }
-      }
-
-      &:backdrop {
-        color: on($primary, secondary);
-
-        &:disabled { color: on($primary, secondary-disabled); }
-
-        &:checked {
-          color: on($primary, secondary);
-
-          &:disabled { color: on($primary, secondary-disabled); }
-        }
-      }
-    }
+    background-color: $titlebar;
+    background-image: image(rgba($primary, $tint));
+    color: $accent-text;
 
     .selection-menu {
       padding-left: 16px;
@@ -1331,8 +1240,8 @@ searchbar > revealer > box {
   }
 
   .selection-mode {
-    box-shadow: inset 0 1px highlight($primary); // Avoid double shadows
-    background-color: $primary;
+    background-color: $titlebar;
+    background-image: image(rgba($primary, $tint));
   }
 
   // squared corners when the window is maximized, tiled, or fullscreen
@@ -1637,10 +1546,14 @@ treeview.view {
     box-shadow: none;
     background-color: $base;
     background-clip: border-box;
-    color: $primary;
+    color: $accent-text;
   }
 
-  acceleditor > label { background-color: $primary; } // see tests/testaccel to test
+  // An accelerator being edited is selected: the tint (see tests/testaccel).
+  acceleditor > label {
+    background-color: rgba($primary, $tint);
+    color: $accent-text;
+  }
 }
 
 
@@ -2412,7 +2325,7 @@ switch {
   background-clip: padding-box;
   font-size: 0;
 
-  &:checked { background-color: rgba($primary, 0.5); }
+  &:checked { background-color: rgba($primary, $tint-track); }
 
   &:disabled { opacity: 0.5; }
 
@@ -3083,11 +2996,21 @@ separator {
   margin-right: 4px;
   border-radius: 0 $circular-radius $circular-radius 0;
 
+  // Dark: the tint with the accent as text. Light: the sheet, a with the border line inside it,
+  // the label the text at 700 and the icon the accent, as GTK 4's sidebars.
   &:selected {
-    background-color: $overlay-checked;
-    color: $primary;
+    @if $variant == 'light' {
+      background-color: $construct-bg-a;
+      box-shadow: $state-line;
+      font-weight: 700;
 
-    image, label { color: $primary; }
+      label { color: $text; }
+      image { color: $accent-text; }
+    } @else {
+      background-color: rgba($primary, $tint);
+
+      image, label { color: $accent-text; }
+    }
   }
 }
 
@@ -3175,7 +3098,7 @@ row {
   button {
     @extend %button-flat;
 
-    &.text-button:not(:disabled) { color: $primary; }
+    &.text-button:not(:disabled) { color: $accent-text; }
   }
 
   > box > label { padding-left: $space-size * 1.5; }
@@ -3220,7 +3143,7 @@ calendar {
   &:disabled { color: $text-disabled; }
 
   &:selected {
-    @extend %selected_items_primary;
+    @extend %selected_items_color;
 
     border-radius: $menuitem-radius;
   }
@@ -3286,9 +3209,7 @@ messagedialog { // Message Dialog styling
 
         &:not(:last-child) { margin-right: $space-size; }
 
-        &:not(:disabled) { color: $primary; }
-
-        // &.suggested-action:not(:disabled) { color: $suggested; }
+        &:not(:disabled) { color: $accent-text; }
 
         &.destructive-action:not(:disabled) { color: $destructive; }
       }
@@ -3491,9 +3412,9 @@ placessidebar.sidebar {
     &.sidebar-placeholder-row { background-color: $overlay-hover; }
 
     &.sidebar-new-bookmark-row {
-      color: $primary;
+      color: $accent-text;
 
-      image { color: $primary; }
+      image { color: $accent-text; }
     }
 
     &:drop(active) {
@@ -3596,27 +3517,30 @@ infobar {
       background-color: $base;
 
       button {
-        &, &.text-button:not(:disabled) { color: $primary; }
+        &, &.text-button:not(:disabled) { color: $accent-text; }
       }
     }
   }
 
+  // An infobar that asks is information, not a state: the raised neutral surface with the rule
+  // under it; its last response, the affirmative one, is the view's primary.
   &.action,
   &.question {
     & > revealer > box,
+    &:hover > revealer > box,
     &:backdrop > revealer > box {
-      background-color: $primary;
-      color: on($primary);
+      background-color: $surface;
+      box-shadow: inset 0 -1px $border;
+      color: $text;
 
-      button {
-        &, &:hover, &:focus, &:active, &:checked, &.text-button:not(:disabled) { color: on($primary); }
+      button.text-button:last-child {
+        background-color: $suggested;
+        color: on($suggested);
+
+        &:hover { box-shadow: inset 0 0 0 9999px gtkalpha(currentColor, 0.08); }
+
+        &:active { box-shadow: inset 0 0 0 9999px gtkalpha(currentColor, 0.16); }
       }
-
-      *:link { color: on($primary); }
-    }
-
-    &:hover > revealer > box {
-      background-color: if($variant == 'light', lighten($primary, 5%), darken($primary, 5%));
     }
   }
 
@@ -3949,13 +3873,15 @@ stackswitcher {
     &:focus:not(:hover) { box-shadow: inset 0 0 0 2px $overlay-focus; }
 
     &:active {
-      box-shadow: inset 0 0 0 9999px gtkalpha($primary, 0.08);
-      background-image: radial-gradient(circle, gtkalpha($primary, 0.08) 10%, transparent 0%);
+      box-shadow: inset 0 0 0 9999px gtkalpha($primary, $tint);
+      background-image: radial-gradient(circle, gtkalpha($primary, $tint) 10%, transparent 0%);
     }
 
+    // The page shown is selected: the tint.
     &:checked {
-      background-color: $primary;
-      color: on($primary);
+      background-color: rgba($primary, $tint);
+      color: $accent-text;
+      @if $variant == 'light' { box-shadow: $state-line; }
     }
   }
 
@@ -4006,8 +3932,7 @@ button.emoji-section {
   border-radius: $menu-radius - $space-size / 2;
 
   &:checked {
-    // background-color: transparent;
-    color: $primary;
+    color: $accent-text;
   }
 
   &:not(:last-child) { margin-right: 0; }

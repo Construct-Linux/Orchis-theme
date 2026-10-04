@@ -10,17 +10,6 @@
   to { background-size: auto, 1000% 1000%; }
 }
 
-@keyframes ripple-on-headerbar {
-  from {
-    background-image: radial-gradient(circle, $primary 0%, transparent 0%);
-  }
-
-  to {
-    background-image: radial-gradient(circle, $primary 100%, transparent 0%);
-  }
-}
-
-
 @mixin entry($t, $fc: $primary) {
 //
 // entry
@@ -46,9 +35,10 @@
     box-shadow: inset 0 0 0 2px if($fc == $primary, $track, $fc);
   }
 
+  // An open combo is pressed, not focused: an accent ring means focus alone.
   @if $t == checked {
     background-color: $entry;
-    box-shadow: inset 0 0 0 2px if($fc == $primary, $primary, $fc);
+    box-shadow: inset 0 0 0 2px if($fc == $primary, $track, $fc);
   }
 
   @if $t == disabled {
@@ -128,15 +118,17 @@
     color: $text-disabled;
   }
 
+  // A checked toggle is selected: the tint with the accent as text; in light the border line
+  // inside it. The solid accent is the primary action's alone.
   @if $t == checked {
-    box-shadow: none;
-    // box-shadow: inset 0 0 0 9999px transparent, $shadow-z2;
-    background-color: $primary;
-    color: on($primary);
+    box-shadow: if($variant == 'light', $state-line, none);
+    background-color: rgba($primary, $tint);
+    color: $accent-text;
   }
 
   @if $t == checked-hover {
-    box-shadow: inset 0 0 0 9999px transparent;
+    box-shadow: if($variant == 'light', $state-line, inset 0 0 0 9999px transparent);
+    background-color: rgba($primary, $tint-hover);
   }
 
   @if $t == checked-disabled {
@@ -228,9 +220,9 @@
   }
 
   @if $t == solid-checked {
-    box-shadow: none;
-    background-color: $primary;
-    color: on($primary);
+    box-shadow: if($variant == 'light', $state-line, none);
+    background-color: rgba($primary, $tint);
+    color: $accent-text;
   }
 
   @if $t == solid-checked-hover {

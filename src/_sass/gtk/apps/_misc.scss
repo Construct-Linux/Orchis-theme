@@ -13,7 +13,7 @@ window.background.chromium {
   > button { border: 1px solid $solid-border; }
 
   > button {
-    color: $primary;
+    color: $accent-text;
 
     &:disabled { color: $text-secondary-disabled; }
   }
@@ -40,10 +40,10 @@ window.background.chromium {
   // For text field
   textview.view { background-color: transparent; }
 
-  // For prominent button, starred icon, etc.
+  // Selected text and cells: the one selection alpha, the text keeping its colour.
   treeview.view.cell:selected:focus {
-    background-color: $primary;
-    color: on($primary);
+    background-color: rgba($primary, $selection-alpha);
+    color: $text;
   }
 
   // For table header
@@ -67,11 +67,10 @@ tooltip.background.chromium {
     // For popover, entry in toolbar, etc.
     text { background-color: $surface; }
 
-    // For selection, active tab indicator, etc.
+    // Selected text: the one selection alpha, the text keeping its colour.
     text:selected {
-      // Use traditional selection style as workaround
-      background-color: $primary;
-      color: on($primary);
+      background-color: rgba($primary, $selection-alpha);
+      color: $text;
     }
 
     // For separators in bookmark toolbar
@@ -96,6 +95,7 @@ tooltip.background.chromium {
       min-height: 32px - 2px;
       background-color: $base;
 
+      // Focus is the one 2px ring: the accent border and an accent line inside it.
       &:focus {
         border-color: $primary;
         box-shadow: inset 0 0 0 1px $primary;
@@ -307,8 +307,8 @@ window.background:not(.solid-csd):not(.csd) {
 
   treeview.view {
     &:selected, &:hover {
-      background-image: image($primary);
-      &, label { color: on($primary); }
+      background-image: image(rgba($primary, $tint));
+      &, label { color: $accent-text; }
     }
   }
 }
