@@ -79,9 +79,11 @@ $panel_button_hpadding: $space-size;
         spacing: 0;
       }
 
+      // The clock's own padding is its button's: the spacing step, as the other indicators'.
+      // Twice that left a gap on each side of it the rest of the bar does not have.
       .clock {
         border-radius: $circular-radius;
-        padding: 0 $space-size * 2 !important;
+        padding: 0 $space-size !important;
       }
     }
 
