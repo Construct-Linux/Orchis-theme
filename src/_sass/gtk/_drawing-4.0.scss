@@ -123,13 +123,13 @@
   // A checked toggle is selected: the tint with the accent as text. The solid accent is the
   // primary action's alone.
   @if $t == checked {
-    box-shadow: none;
+    box-shadow: if($variant == 'light', $state-line, none);
     background-color: color-mix(in srgb, $primary #{$tint * 100%}, transparent);
     color: $accent-text;
   }
 
   @if $t == checked-hover {
-    box-shadow: inset 0 0 0 2px transparent;
+    box-shadow: if($variant == 'light', $state-line, inset 0 0 0 2px transparent);
     background-color: color-mix(in srgb, $primary #{$tint-hover * 100%}, transparent);
   }
 
@@ -191,6 +191,42 @@
 }
 
 
+// A navigation sidebar's row (Settings, Files' places, stack sidebars). Dark: the selected row
+// is the tint with the accent as text. Light: the sheet - the selected row is a, with the border
+// line inside it, its label the text at 700 and its icon the accent, a mark; hover is white at 50%
+// over the shelf, which is c, and pressed black at 6%. Cyan shrinks from a row-wide tint to a
+// 16px icon, and the weight carries the selection without colour. Focus stays the outline.
+@mixin sidebar-row {
+  @if $variant == 'light' {
+    &:hover, &:focus-visible:focus-within { background-color: rgba(white, 0.5); }
+
+    &:active { background-color: rgba(black, 0.06); }
+
+    &:selected {
+      &, &:hover, &:focus-visible:focus-within { background-color: $construct-bg-a; }
+
+      @if $variant == 'light' { box-shadow: $state-line; }
+      color: $text;
+      font-weight: 700;
+
+      image { color: $accent-text; }
+    }
+  } @else {
+    &:selected {
+      background-color: color-mix(in srgb, $primary #{$tint * 100%}, transparent);
+      color: $accent-text;
+      font-weight: 700;
+
+      &:hover { background-color: color-mix(in srgb, $primary #{$tint-hover * 100%}, transparent); }
+    }
+  }
+
+  &:selected:focus-visible:focus-within {
+    outline: 2px solid $primary;
+    outline-offset: -2px;
+  }
+}
+
 // A solid action: the suggested action, the view's one primary, or a destructive one. The
 // primary is solid in dark too, so it never reads as a selected item, which is the accent's
 // tint. Hover and press are its label at 8% and 16% over the fill; disabled the whole button at
@@ -236,6 +272,7 @@
 
     &:checked {
       background-color: color-mix(in srgb, $b_color #{$tint * 100%}, transparent);
+      @if $variant == 'light' { box-shadow: $state-line; }
     }
   }
 }

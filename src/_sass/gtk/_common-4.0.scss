@@ -1169,7 +1169,7 @@ searchbar > revealer > box {
 
 headerbar {
   transition: background-color $duration $ease-out, color $duration $ease-out;
-  box-shadow: inset 0 -1px $divider, inset 0 1px highlight($titlebar);
+  box-shadow: if($variant == 'light', $title-rule, (inset 0 -1px $divider, inset 0 1px highlight($titlebar)));
   color: $titlebar-text;
   min-height: $large-size;
   padding: 0;
@@ -1199,7 +1199,7 @@ headerbar {
 
     &, &:backdrop {
       background-color: transparent;
-      box-shadow: inset 0 1px highlight($titlebar);
+      box-shadow: $title-rule;
     }
 
     .subtitle,
@@ -1379,6 +1379,7 @@ headerbar {
   &.selection-mode {
     background-color: color-mix(in srgb, $primary #{$tint * 100%}, $titlebar);
     color: $accent-text;
+    box-shadow: $title-rule;
 
     .selection-menu {
       padding-left: 16px;
@@ -1401,7 +1402,7 @@ headerbar {
   .maximized &,
   .fullscreen & {
     border-radius: 0;
-    box-shadow: inset 0 -1px $divider;
+    box-shadow: inset 0 -1px if($variant == 'light', $border, $divider);
   }
 
   &.default-decoration {
@@ -1410,12 +1411,12 @@ headerbar {
     background-image: none;
     background-color: $titlebar;
     border-radius: $window-radius $window-radius 0 0;
-    box-shadow: inset 0 1px highlight($titlebar);
+    box-shadow: $title-rule;
 
     .tiled &,
     .maximized &,
     .fullscreen & {
-      box-shadow: none;
+      box-shadow: if($variant == 'light', $title-rule, none);
       border-radius: 0;
     }
 
@@ -1678,6 +1679,7 @@ treeview.view {
   acceleditor > label {
     color: $accent-text;
     background-color: color-mix(in srgb, $primary #{$tint * 100%}, transparent);
+    @if $variant == 'light' { box-shadow: $state-line; }
   }
 }
 
@@ -1797,10 +1799,11 @@ popover.background {
   > contents {
     transition: $transition-shadow;
     padding: $space-size;
-    box-shadow: $shadow-z6; // TODO: this should really have a highlight
+    // The ring makes the edge: in dark a black shadow does not show on ink, and in light the
+    // popover is a, as the views, so the border line holds it and the shadow is depth (z4).
+    box-shadow: if($variant == 'dark', $shadow-z6, $shadow-z4);
     background-color: $surface;
-    // Dark: the ring makes the edge, a black shadow does not show on ink.
-    border: if($variant == 'dark', 1px solid $popover-border, none);
+    border: 1px solid $popover-border;
     border-radius: $menu-radius;
     color: $text;
   }
@@ -3688,7 +3691,7 @@ list.boxed-list-separate {
       background-color: $overlay-selected;
     }
 
-    border: none;
+    border: if($variant == 'light', 1px solid $border, none);
     margin-bottom: $space-size * 2;
 
     &:last-child {
@@ -4061,7 +4064,7 @@ stacksidebar {
 
   list {
     padding: $space-size;
-    background-color: $base-alt; // This should not be necessary, but the parent stacksidebar ignores background-color.
+    background-color: $shelf; // This should not be necessary, but the parent stacksidebar ignores background-color.
   }
 
   row {
@@ -4069,10 +4072,7 @@ stacksidebar {
     padding: $space-size $space-size * 1.5;
     border-radius: $corner-radius / 2;
 
-    &:selected {
-      @extend %selected_items_color;
-      font-weight: 500;
-    }
+    @include sidebar-row;
 
     + row { margin-top: 4px; }
 
@@ -4132,22 +4132,7 @@ separator.sidebar {
       background-color: $overlay-hover;
     }
 
-    // The accent's tint with the accent as text, as every selection; focus is the ring.
-    &:selected {
-      background-color: color-mix(in srgb, $primary #{$tint * 100%}, transparent);
-      color: $accent-text;
-
-      &:hover {
-        background-color: color-mix(in srgb, $primary #{$tint-hover * 100%}, transparent);
-      }
-
-      &:focus-visible:focus-within {
-        outline: 2px solid $primary;
-        outline-offset: -2px;
-        background-color: color-mix(in srgb, $primary #{$tint * 100%}, transparent);
-        &:hover { background-color: color-mix(in srgb, $primary #{$tint-hover * 100%}, transparent); }
-      }
-    }
+    @include sidebar-row;
 
     &:disabled { color: $text-disabled; }
   }
@@ -4176,13 +4161,7 @@ placessidebar {
       // will make the animation of the new bookmark row jump
       > revealer { padding: 0 8px 0 16px; }
 
-      &:selected {
-        background-color: color-mix(in srgb, $primary #{$tint * 100%}, transparent);
-        color: $accent-text;
-        font-weight: 500;
-
-        &:hover { background-color: color-mix(in srgb, $primary #{$tint-hover * 100%}, transparent); }
-      }
+      @include sidebar-row;
 
       &:disabled { color: $text-disabled; }
 
@@ -4554,14 +4533,16 @@ window {
     transition: none;
     border-radius: $window-radius;
 
-    // Dark: a 1px ring outside the window makes its edge, as the shell's chrome; a black shadow
-    // does not show on ink. Tiled windows keep it, maximized and fullscreen ones drop it.
+    // A 1px ring outside the window makes its edge, as the shell's chrome: in dark a black shadow
+    // does not show on ink, and in light a c window on paper had only the shadow's gradient; on
+    // the desk the ring line is 1.69:1. The shadow is depth. Tiled windows keep the ring,
+    // maximized and fullscreen ones drop it.
     @if $variant == 'light' and $topbar == 'dark' {
       box-shadow: $shadow-z16, 0 16px 16px 2px transparent, 0 6px 18px 5px transparent, inset 0 1px $titlebar;
     } @else if $variant == 'dark' {
       box-shadow: 0 0 0 1px $popover-border, $shadow-z16, 0 16px 16px 2px transparent, 0 6px 18px 5px transparent;
     } @else {
-      box-shadow: $shadow-z16, 0 16px 16px 2px transparent, 0 6px 18px 5px transparent;
+      box-shadow: 0 0 0 1px $line-ring, $shadow-z16, 0 16px 16px 2px transparent, 0 6px 18px 5px transparent;
     }
 
     &:backdrop {
@@ -4576,7 +4557,7 @@ window {
       } @else if $variant == 'dark' {
         box-shadow: 0 0 0 1px $popover-border, $shadow-z4, 0 16px 16px 2px transparent, 0 6px 18px 5px transparent;
       } @else {
-        box-shadow: $shadow-z4, 0 16px 16px 2px transparent, 0 6px 18px 5px transparent;
+        box-shadow: 0 0 0 1px $line-ring, $shadow-z4, 0 16px 16px 2px transparent, 0 6px 18px 5px transparent;
       }
     }
 
@@ -4641,6 +4622,7 @@ window {
 %selected_items_color {
   color: $accent-text;
   background-color: color-mix(in srgb, $primary #{$tint * 100%}, transparent);
+  @if $variant == 'light' { box-shadow: $state-line; }
 
   &:hover { background-color: color-mix(in srgb, $primary #{$tint-hover * 100%}, transparent); }
 
@@ -4727,6 +4709,7 @@ stackswitcher {
     // The page shown is selected: the tint.
     &:checked {
       background-color: color-mix(in srgb, $primary #{$tint * 100%}, transparent);
+      @if $variant == 'light' { box-shadow: $state-line; }
       color: $accent-text;
 
       &:hover { background-color: color-mix(in srgb, $primary #{$tint-hover * 100%}, transparent); }

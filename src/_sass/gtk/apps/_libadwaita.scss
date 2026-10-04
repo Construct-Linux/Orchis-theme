@@ -427,10 +427,12 @@ statuspage {
 }
 
 // Cards
+// Light: a card or a list is a on c, 2.24 ΔE00 apart, so the border line is its edge, with no
+// drop shadow.
 .card, %card {
   border-radius: $boxed-radius;
   box-shadow: none;
-  border: 1px solid $divider;
+  border: 1px solid if($variant == 'light', $border, $divider);
   background-clip: padding-box;
   background-color: $base;
   color: $text-secondary;
@@ -616,6 +618,7 @@ viewswitcher {
     button.toggle:checked, button.toggle.flat:checked {
       background-color: color-mix(in srgb, $primary #{$tint * 100%}, transparent);
       color: $accent-text;
+      @if $variant == 'light' { box-shadow: $state-line; }
 
       &:hover { background-color: color-mix(in srgb, $primary #{$tint-hover * 100%}, transparent); }
     }
@@ -851,12 +854,25 @@ overlay-split-view {
   @include transition-shadows($frame);
 }
 
-toolbarview.undershoot-top scrolledwindow {
-  @include undershoot(top);
-}
+// Light draws the title rule whether or not the view scrolls, so the bars cast no shade.
+@if $variant == 'dark' {
+  toolbarview.undershoot-top scrolledwindow {
+    @include undershoot(top);
+  }
 
-toolbarview.undershoot-bottom scrolledwindow {
-  @include undershoot(bottom);
+  toolbarview.undershoot-bottom scrolledwindow {
+    @include undershoot(bottom);
+  }
+} @else {
+  toolbarview.undershoot-top scrolledwindow > undershoot.top,
+  toolbarview.undershoot-bottom scrolledwindow > undershoot.bottom,
+  .sidebar-pane scrolledwindow > undershoot.top,
+  .sidebar-pane scrolledwindow > undershoot.bottom,
+  .content-pane scrolledwindow > undershoot.top,
+  .content-pane scrolledwindow > undershoot.bottom {
+    background: none;
+    box-shadow: none;
+  }
 }
 
 navigation-view navigation-view-page .medium stack > button { // Nautilus properties
@@ -866,8 +882,10 @@ navigation-view navigation-view-page .medium stack > button { // Nautilus proper
 // Sidebar
 .unfolded stacksidebar.sidebar { border: none; }
 
-$sidebar: if($variant == 'light' and $topbar == 'dark', $titlebar, $base-alt);
-$sidebar-backdrop: if($variant == 'light' and $topbar == 'dark', $titlebar-backdrop, $background);
+// The sidebar's pane is the shelf: libadwaita's sidebar sits a step below the window, and b,
+// lighter than the content, inverted it.
+$sidebar: $shelf;
+$sidebar-backdrop: if($variant == 'light', $shelf, $background);
 
 .sidebar-pane,
 .content-pane .sidebar-pane,
@@ -924,13 +942,13 @@ $sidebar-backdrop: if($variant == 'light' and $topbar == 'dark', $titlebar-backd
 
     &, &:backdrop {
       background-color: transparent;
-      box-shadow: inset 0 1px highlight($titlebar);
+      box-shadow: $title-rule;
     }
   }
 
   window.maximized & headerbar,
   window.tiled & headerbar {
-    box-shadow: none;
+    box-shadow: if($variant == 'light', $title-rule, none);
   }
 
   @if $variant == 'light' and $topbar == 'dark' {
@@ -1073,7 +1091,7 @@ $sidebar-backdrop: if($variant == 'light' and $topbar == 'dark', $titlebar-backd
 
     &, &:backdrop {
       background-color: transparent;
-      box-shadow: inset 0 1px highlight($background);
+      box-shadow: $title-rule;
     }
 
     .subtitle,
@@ -1100,27 +1118,31 @@ $sidebar-backdrop: if($variant == 'light' and $topbar == 'dark', $titlebar-backd
 
   window.maximized & headerbar,
   window.tiled & headerbar {
-    box-shadow: none;
+    box-shadow: if($variant == 'light', $title-rule, none);
   }
 }
 
 .sidebar-pane,
 .content-pane {
-  toolbarview.undershoot-top:not(.view) scrolledwindow {
-    @include undershoot(top, $style: solid);
-  }
-
-  toolbarview.undershoot-bottom:not(.view) scrolledwindow {
-    @include undershoot(bottom, $style: solid);
-  }
-
-  scrolledwindow {
-    &.undershoot-top {
+  @if $variant == 'dark' {
+    toolbarview.undershoot-top:not(.view) scrolledwindow {
       @include undershoot(top, $style: solid);
     }
 
-    &.undershoot-bottom {
+    toolbarview.undershoot-bottom:not(.view) scrolledwindow {
       @include undershoot(bottom, $style: solid);
+    }
+  }
+
+  scrolledwindow {
+    @if $variant == 'dark' {
+      &.undershoot-top {
+        @include undershoot(top, $style: solid);
+      }
+
+      &.undershoot-bottom {
+        @include undershoot(bottom, $style: solid);
+      }
     }
 
     &.undershoot-start {
@@ -1301,6 +1323,7 @@ toolbarview {
   }
 }
 
+// Bars lie flat on their pane. Light mirrors the title rule over a bottom bar.
 .sidebar-pane,
 .content-pane {
   .top-bar,
@@ -1309,6 +1332,13 @@ toolbarview {
   .bottom-bar:backdrop {
     background-color: transparent;
     box-shadow: none;
+  }
+
+  @if $variant == 'light' {
+    .bottom-bar,
+    .bottom-bar:backdrop {
+      box-shadow: inset 0 1px $border;
+    }
   }
 }
 
@@ -1322,9 +1352,9 @@ floating-sheet {
   }
 
   > sheet.background {
-    // Dark: the ring, as on a window; libadwaita's dialog_bg stays, so its g boxed lists do
-    // not sit in an h dialog.
-    box-shadow: if($variant == 'dark', (0 0 0 1px $popover-border, $shadow-z16), $shadow-z16);
+    // The ring, as on a window; libadwaita's dialog_bg stays, so its g boxed lists do not sit in
+    // an h dialog.
+    box-shadow: 0 0 0 1px if($variant == 'dark', $popover-border, $line-ring), $shadow-z16;
     border-radius: $window-radius;
     outline: none;
   }

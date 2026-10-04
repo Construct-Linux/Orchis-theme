@@ -43,7 +43,7 @@
     @if ($state == 'secondary-disabled') { @return rgba(black, 0.26); }
     @if ($state == 'track') { @return rgba(black, 0.26); }
     @if ($state == 'track-disabled') { @return rgba(black, 0.15); }
-    @if ($state == 'divider') { @return rgba(black, 0.12); }
+    @if ($state == 'divider') { @return if($is-fill, rgba(black, 0.12), rgba($construct-muted-dark, nth($construct-lines, 1))); }
     @if ($state == 'secondary-fill') { @return rgba(black, 0.08); }
     @if ($state == 'fill') { @return rgba(black, 0.04); }
   } @else {
@@ -110,6 +110,18 @@ $background:                            if($variant == 'light', background(c), b
 $surface:                               if($variant == 'light', background(a), background(h));
 $base:                                  if($variant == 'light', background(a), background(g));
 $base-alt:                              if($variant == 'light', background(b), background(f));
+// The ground under the windows, and the sidebar's pane: light's desk and shelf, d at 50% and
+// 25% over c, so a window and its sidebar each stand a step apart; in dark e and f.
+$desk:                                  if($variant == 'light', $construct-desk, background(e));
+$shelf:                                 if($variant == 'light', $construct-shelf, $base-alt);
+
+// Light's lines are the muted ink at an alpha, so each keeps the ink's hue on any surface; black
+// at 12% has none and is most of what reads as stock GNOME. Divider: separators inside a card or
+// a list; border: outlines, the title rule, pane separators, popovers; ring: a window's edge on
+// the desk. palette.toml's light.border is the border line's solid twin over a.
+$line-divider:                          rgba($construct-muted-dark, nth($construct-lines, 1));
+$line-border:                           rgba($construct-muted-dark, nth($construct-lines, 2));
+$line-ring:                             rgba($construct-muted-dark, nth($construct-lines, 3));
 
 $tooltip:                               if($variant == 'dark', background(h), rgba(darken(background(h), 3%), 0.9));
 $osd:                                   background(e);
@@ -126,7 +138,7 @@ $system:                                background(f); // for gnome-shell keyboa
 // colour: its desktop is e, the wallpaper's own ink, and a black shadow cannot lift a surface off
 // it (the brand's THEMING.md).
 $popover:                               $surface;
-$popover-border:                        if($variant == 'light', $construct-border-dark, $construct-border-light);
+$popover-border:                        if($variant == 'light', $line-border, $construct-border-light);
 
 $panel-solid:                           if($topbar == 'dark', background(e), background(c)); // for Unity panel which doesn't allow translucent colors
 $panel:                                 rgba($panel-solid, 0.65);
@@ -152,11 +164,19 @@ $success:                               if($variant == 'light', $construct-succe
 $suggested:                             $primary;
 $destructive:                           $error;
 
-$frame:                                 if($variant == 'light', rgba(black, 0.1), rgba(black, 0.25)); // instead of shadows
-$border:                                if($variant == 'light', rgba(black, 0.12), rgba(white, 0.12));
-$solid-border:                          if($variant == 'light', darken($background, 8%), lighten($background, 12%));
+$frame:                                 if($variant == 'light', $line-border, rgba(black, 0.25)); // instead of shadows
+$border:                                if($variant == 'light', $line-border, rgba(white, 0.12));
+$solid-border:                          if($variant == 'light', $construct-border-dark, lighten($background, 12%));
 $border-alt:                            rgba(black, 0.16); // darker border color for Chrome and Firefox
 $titlebar-indicator:                    if($topbar == 'dark', currentColor, $primary);
+
+// The headerbar's edge. Light draws the title rule, the border line under every headerbar, so
+// the rule runs as one line across both panes; on paper a white highlight is no edge. Dark keeps
+// the highlight, its rule being the divider under the bar.
+$title-rule:                            if($variant == 'light', inset 0 -1px $border, inset 0 1px highlight($titlebar));
+// Light: a tint that marks a state also draws the border line inside it, which holds the state
+// for protans (a light tint alone is ΔE00 3.1 from a at worst); neutral, so never focus.
+$state-line:                            if($variant == 'light', inset 0 0 0 1px $border, none);
 
 //
 // Overlay state colors

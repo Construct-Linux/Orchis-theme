@@ -14,7 +14,7 @@
   &:not(.view) {
     headerbar {
       background-color: transparent;
-      box-shadow: inset 0 1px highlight($titlebar);
+      box-shadow: $title-rule;
     }
   }
 
@@ -104,7 +104,7 @@
     .content-pane {
       headerbar {
         &, &:backdrop {
-          box-shadow: inset 0 1px highlight($titlebar);
+          box-shadow: $title-rule;
         }
 
         entry {
@@ -187,7 +187,7 @@
 
   flap.unfolded > placessidebar,
   .sidebar-pane > toolbarview > placessidebar {
-    background-color: if($topbar =='dark' and $variant =='light', $titlebar, $base);
+    background-color: if($variant == 'light', $shelf, $base);
     border-radius: $window-radius;
     color: $titlebar-text-secondary;
 
@@ -1108,6 +1108,7 @@ datechooser {
       background-color: color-mix(in srgb, $primary #{$tint * 100%}, transparent);
       color: $accent-text;
       font-weight: bold;
+      @if $variant == 'light' { box-shadow: $state-line; }
     }
 
     &.other-month {
@@ -1170,6 +1171,7 @@ weekgrid,
 .week-header {
   &:selected, &.dnd {
     background-color: gtkalpha($primary, $tint);
+    @if $variant == 'light' { box-shadow: $state-line; }
   }
 }
 
@@ -1188,6 +1190,7 @@ monthcell {
 
   &:selected {
     background-color: gtkalpha($primary, $tint);
+    @if $variant == 'light' { box-shadow: $state-line; }
 
     &:hover {
       background-color: gtkalpha($primary, $tint-hover);
@@ -1647,6 +1650,7 @@ image.circular {
     > row.activatable:selected {
       background-color: color-mix(in srgb, $primary #{$tint * 100%}, transparent);
       color: $accent-text;
+      @if $variant == 'light' { box-shadow: $state-line; }
     }
   }
 
