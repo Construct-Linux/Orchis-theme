@@ -162,7 +162,9 @@ $error:                                 if($variant == 'light', $construct-error
 $success:                               if($variant == 'light', $construct-success-dark, $construct-success-light);
 
 $suggested:                             $primary;
-$destructive:                           $error;
+// The destructive action's fill (brand palette.toml): the deep red in both schemes, a white label.
+// A destructive label with no fill is $error.
+$destructive:                           if($variant == 'light', $construct-destructive-dark, $construct-destructive-light);
 
 $frame:                                 if($variant == 'light', $line-border, rgba(black, 0.25)); // instead of shadows
 $border:                                if($variant == 'light', $line-border, rgba(white, 0.12));

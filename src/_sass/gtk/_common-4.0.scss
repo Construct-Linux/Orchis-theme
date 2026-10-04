@@ -2468,8 +2468,11 @@ radio {
   @extend %button-flat-simple;
   @extend %circular-button;
 
+  // A checked check or radio is an indicator, the full accent (brand THEMING.md, level 4). Its
+  // image is one SVG under -gtk-recolor: GTK 4.24 does not recolor an image inside -gtk-scaled(),
+  // and drew the check black, and an SVG needs no @2.
   &:checked, &:indeterminate {
-    color: $success;
+    color: $primary;
 
     &:disabled { color: $text-secondary-disabled; }
   }
@@ -2508,34 +2511,28 @@ radio {
 %check,
 check {
   -gtk-icon-size: 24px;
-  -gtk-icon-source: -gtk-scaled(-gtk-recolor(url("assets/scalable/unchecked-symbolic.svg")),
-                                -gtk-recolor(url("assets/scalable/unchecked-symbolic@2.svg")));
+  -gtk-icon-source: -gtk-recolor(url("assets/scalable/unchecked-symbolic.svg"));
 
   &:checked {
-    -gtk-icon-source: -gtk-scaled(-gtk-recolor(url("assets/scalable/checkbox-checked-symbolic.svg")),
-                                  -gtk-recolor(url("assets/scalable/checkbox-checked-symbolic@2.svg")));
+    -gtk-icon-source: -gtk-recolor(url("assets/scalable/checkbox-checked-symbolic.svg"));
   }
 
   &:indeterminate {
-    -gtk-icon-source: -gtk-scaled(-gtk-recolor(url("assets/scalable/mixed-symbolic.svg")),
-                                  -gtk-recolor(url("assets/scalable/mixed-symbolic@2.svg")));
+    -gtk-icon-source: -gtk-recolor(url("assets/scalable/mixed-symbolic.svg"));
   }
 }
 
 %radio,
 radio {
   -gtk-icon-size: 24px;
-  -gtk-icon-source: -gtk-scaled(-gtk-recolor(url("assets/scalable/unchecked-symbolic.svg")),
-                                -gtk-recolor(url("assets/scalable/unchecked-symbolic@2.svg")));
+  -gtk-icon-source: -gtk-recolor(url("assets/scalable/unchecked-symbolic.svg"));
 
   &:checked {
-    -gtk-icon-source: -gtk-scaled(-gtk-recolor(url("assets/scalable/radio-checked-symbolic.svg")),
-                                  -gtk-recolor(url("assets/scalable/radio-checked-symbolic@2.svg")));
+    -gtk-icon-source: -gtk-recolor(url("assets/scalable/radio-checked-symbolic.svg"));
   }
 
   &:indeterminate {
-    -gtk-icon-source: -gtk-scaled(-gtk-recolor(url("assets/scalable/mixed-symbolic.svg")),
-                                  -gtk-recolor(url("assets/scalable/mixed-symbolic@2.svg")));
+    -gtk-icon-source: -gtk-recolor(url("assets/scalable/mixed-symbolic.svg"));
   }
 }
 
@@ -2545,17 +2542,14 @@ popover.menu check {
   min-width: 18px;
   -gtk-icon-size: 18px;
 
-  -gtk-icon-source: -gtk-scaled(-gtk-recolor(url("assets/scalable/small-unchecked-symbolic.svg")),
-                                -gtk-recolor(url("assets/scalable/small-unchecked-symbolic@2.svg")));
+  -gtk-icon-source: -gtk-recolor(url("assets/scalable/small-unchecked-symbolic.svg"));
 
   &:checked {
-    -gtk-icon-source: -gtk-scaled(-gtk-recolor(url("assets/scalable/small-checkbox-checked-symbolic.svg")),
-                                  -gtk-recolor(url("assets/scalable/small-checkbox-checked-symbolic@2.svg")));
+    -gtk-icon-source: -gtk-recolor(url("assets/scalable/small-checkbox-checked-symbolic.svg"));
   }
 
   &:indeterminate {
-    -gtk-icon-source: -gtk-scaled(-gtk-recolor(url("assets/scalable/small-mixed-symbolic.svg")),
-                                  -gtk-recolor(url("assets/scalable/small-mixed-symbolic@2.svg")));
+    -gtk-icon-source: -gtk-recolor(url("assets/scalable/small-mixed-symbolic.svg"));
   }
 }
 
@@ -2566,17 +2560,14 @@ popover.menu radio {
   border-image: none;
   -gtk-icon-size: 18px;
 
-  -gtk-icon-source: -gtk-scaled(-gtk-recolor(url("assets/scalable/small-unchecked-symbolic.svg")),
-                                -gtk-recolor(url("assets/scalable/small-unchecked-symbolic@2.svg")));
+  -gtk-icon-source: -gtk-recolor(url("assets/scalable/small-unchecked-symbolic.svg"));
 
   &:checked {
-    -gtk-icon-source: -gtk-scaled(-gtk-recolor(url("assets/scalable/small-radio-checked-symbolic.svg")),
-                                  -gtk-recolor(url("assets/scalable/small-radio-checked-symbolic@2.svg")));
+    -gtk-icon-source: -gtk-recolor(url("assets/scalable/small-radio-checked-symbolic.svg"));
   }
 
   &:indeterminate {
-    -gtk-icon-source: -gtk-scaled(-gtk-recolor(url("assets/scalable/small-mixed-symbolic.svg")),
-                                  -gtk-recolor(url("assets/scalable/small-mixed-symbolic@2.svg")));
+    -gtk-icon-source: -gtk-recolor(url("assets/scalable/small-mixed-symbolic.svg"));
   }
 }
 
@@ -2598,7 +2589,7 @@ columnview.view {
 
     &:disabled { color: $text-secondary-disabled; }
 
-    &:checked, &:indeterminate { color: $success; }
+    &:checked, &:indeterminate { color: $primary; }
 
     &:checked:disabled, &:indeterminate:disabled { color: $text-secondary-disabled; }
   }
@@ -2625,12 +2616,10 @@ checkbutton.selection-mode {
     border-radius: $circular-radius;
     -gtk-icon-size: 36px;
 
-    -gtk-icon-source: -gtk-scaled(-gtk-recolor(url("assets/scalable/selection-unchecked-symbolic.svg")),
-                                  -gtk-recolor(url("assets/scalable/selection-unchecked-symbolic@2.svg")));
+    -gtk-icon-source: -gtk-recolor(url("assets/scalable/selection-unchecked-symbolic.svg"));
 
     &:checked {
-      -gtk-icon-source: -gtk-scaled(-gtk-recolor(url("assets/scalable/selection-checked-symbolic.svg")),
-                                    -gtk-recolor(url("assets/scalable/selection-checked-symbolic@2.svg")));
+      -gtk-icon-source: -gtk-recolor(url("assets/scalable/selection-checked-symbolic.svg"));
     }
   }
 
@@ -3657,7 +3646,7 @@ row.button {
   }
 
   &.destructive-action {
-    color: $destructive;
+    color: $error;
   }
 }
 
@@ -3935,7 +3924,7 @@ window.dialog.message { // Message Dialog styling
 
         &:not(:disabled) { color: $accent-text; }
 
-        &.destructive-action:not(:disabled) { color: $destructive; }
+        &.destructive-action:not(:disabled) { color: $error; }
       }
     }
   }

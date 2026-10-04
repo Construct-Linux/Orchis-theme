@@ -1030,7 +1030,7 @@ $sidebar-backdrop: if($variant == 'light', $shelf, $background);
 
       &:disabled { color: $titlebar-text-secondary-disabled; }
 
-      &:checked, &:indeterminate { color: $success; }
+      &:checked, &:indeterminate { color: $primary; }
 
       &:checked:disabled, &:indeterminate:disabled { color: $titlebar-text-secondary-disabled; }
     }
