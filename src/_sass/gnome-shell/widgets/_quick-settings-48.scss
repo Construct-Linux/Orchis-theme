@@ -98,7 +98,10 @@ $toggle-height: $space-size * 4 + $margin-size + $base-icon-size;
     font-weight: bold;
   }
 
+  // The title is the control's label, text; its subtitle the state, secondary - a toggle that is
+  // on takes text for both (above), muted failing on its tint.
   & StBoxLayout > .quick-toggle-subtitle {
+    color: $text-secondary;
     font-weight: normal;
     font-size: 0.818em;
   }

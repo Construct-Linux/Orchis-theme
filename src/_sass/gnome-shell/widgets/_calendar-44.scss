@@ -117,7 +117,9 @@
     box-shadow: none !important;
   }
 
-  &:focus { box-shadow: inset 0 0 0 2px $primary !important; }
+  // St paints an inset box-shadow only with a background, and a day has none: one no eye sees
+  // gives the ring something to be painted with. 0.02, as St keeps alpha in 8 bits and 0.01 is 0.
+  &:focus { box-shadow: inset 0 0 0 2px $primary !important; background-color: rgba($primary, 0.02) !important; }
 
   &:active { color: $text; background-color: $track; }
 }
