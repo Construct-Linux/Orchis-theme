@@ -21,6 +21,11 @@ $small-size: if($compact == 'false', 24px, 22px);
 $medium-size: if($compact == 'false', 36px, 32px);
 $large-size: if($compact == 'false', 48px, 40px);
 
+// A headerbar's controls are a step below the window's: 32 px in a 44 px bar. At 36 in 48 the bar
+// read tall over the content beside it (Adwaita: 34 in 47).
+$bar-control-size: $medium-size - 4px;
+$headerbar-size: $bar-control-size + $space-size * 2;
+
 $bar-size: 6px;
 $menuitem-size: if($compact == 'false', 28px, 24px);
 $base-icon-size: 16px;

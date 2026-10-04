@@ -1211,7 +1211,7 @@ toolbarview {
       padding-bottom: 0;
 
       headerbar {
-        min-height: $large-size;
+        min-height: $headerbar-size;
 
         > windowhandle > box {
           padding-top: $space-size;

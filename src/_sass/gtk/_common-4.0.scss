@@ -1181,10 +1181,21 @@ headerbar {
   transition: background-color $duration $ease-out, color $duration $ease-out;
   box-shadow: if($variant == 'light', $title-rule, (inset 0 -1px $popover-border, inset 0 1px highlight($titlebar)));
   color: $titlebar-text;
-  min-height: $large-size;
+  min-height: $headerbar-size;
   padding: 0;
   margin: 0;
   background-color: $titlebar;
+
+  button {
+    padding-top: ($bar-control-size - 24px) / 2;
+    padding-bottom: ($bar-control-size - 24px) / 2;
+
+    &.image-button { padding: ($bar-control-size - 24px) / 2; }
+  }
+
+  splitbutton.image-button > button { padding: ($bar-control-size - 24px) / 2; }
+
+  entry { min-height: $bar-control-size; }
   border-radius: $window-radius $window-radius 0 0;
 
   &:disabled { color: $titlebar-text-disabled; }
@@ -1254,7 +1265,7 @@ headerbar {
     > button,  > menubutton > button {
       min-height: 24px;
       min-width: 24px;
-      padding: ($medium-size - 24px) / 2;
+      padding: ($bar-control-size - 24px) / 2;
       border-radius: $circular-radius;
     }
 
