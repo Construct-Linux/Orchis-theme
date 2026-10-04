@@ -219,30 +219,40 @@ spinner {
 
 // General Typography: libadwaita's sizes, and two weights, 400 and 700 (the brand's TY1). Titles
 // 2 and 3 are then both 15pt at 700: they differed only in weight.
+//
+// Each title takes Adwaita Sans's (Inter's) optical size for the size it is drawn at, in px: Pango
+// sets opsz to the size in points, while Inter's axis is designed in px, so a 20pt title drew
+// with the design for 20 px and not its 27 - looser and plainer than Inter means at that size.
+// SF's text and display split, with the font's own display design rather than tracking.
 .large-title {
   font-weight: 400;
   font-size: 24pt;
+  font-variation-settings: "opsz" 32;
 }
 
 .title {
   &-1 {
     font-weight: 700;
     font-size: 20pt;
+    font-variation-settings: "opsz" 27;
   }
 
   &-2 {
-     font-weight: 700;
-     font-size: 15pt;
+    font-weight: 700;
+    font-size: 15pt;
+    font-variation-settings: "opsz" 20;
   }
 
   &-3 {
     font-weight: 700;
     font-size: 15pt;
+    font-variation-settings: "opsz" 20;
   }
 
   &-4 {
     font-weight: 700;
     font-size: 13pt;
+    font-variation-settings: "opsz" 17;
   }
 }
 
