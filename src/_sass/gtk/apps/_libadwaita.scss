@@ -1374,7 +1374,7 @@ floating-sheet {
   > sheet.background {
     // The ring, as on a window; libadwaita's dialog_bg stays, so its g boxed lists do not sit in
     // an h dialog.
-    box-shadow: 0 0 0 1px if($variant == 'dark', $popover-border, $line-ring), $shadow-z16;
+    box-shadow: $shadow-z16, 0 0 0 1px if($variant == 'dark', $popover-border, $line-ring);
     border-radius: $window-radius;
     outline: none;
   }

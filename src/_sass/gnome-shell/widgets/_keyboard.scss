@@ -1,7 +1,7 @@
 /* On-screen Keyboard */
 
-$keyboard_hover_bg_color: if($variant == 'light', darken($keyboard, 10%), lighten($keyboard, 10%));
-$keyboard_active_bg_color: if($variant == 'light', darken($keyboard, 20%), lighten($keyboard, 20%));
+$keyboard_hover_bg_color: if($variant == 'light', mix(black, $keyboard, 10%), mix(white, $keyboard, 10%));
+$keyboard_active_bg_color: if($variant == 'light', mix(black, $keyboard, 20%), mix(white, $keyboard, 20%));
 
 // draw keys using button function
 #keyboard {

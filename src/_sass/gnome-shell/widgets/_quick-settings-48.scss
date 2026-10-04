@@ -4,7 +4,6 @@ $toggle-height: $space-size * 4 + $margin-size + $base-icon-size;
 .quick-settings {
   padding: $space-size * 3 !important;
   border-radius: $toggle-height / 2 + $space-size * 3 !important;
-  margin-top: $space-size / 2 !important;
 
   .icon-button, .button {
     padding: $space-size * 2;
@@ -29,6 +28,8 @@ $toggle-height: $space-size * 4 + $margin-size + $base-icon-size;
 }
 
 .quick-toggle {
+  // A toggle's title is a control's label, text: .button's secondary colour reached it.
+  color: $text;
   background-color: rgba(white, 0.06) !important;
 
   &:hover {

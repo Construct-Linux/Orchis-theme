@@ -1169,7 +1169,7 @@ searchbar > revealer > box {
 
 headerbar {
   transition: background-color $duration $ease-out, color $duration $ease-out;
-  box-shadow: if($variant == 'light', $title-rule, (inset 0 -1px $divider, inset 0 1px highlight($titlebar)));
+  box-shadow: if($variant == 'light', $title-rule, (inset 0 -1px $popover-border, inset 0 1px highlight($titlebar)));
   color: $titlebar-text;
   min-height: $large-size;
   padding: 0;
@@ -4542,9 +4542,9 @@ window {
     @if $variant == 'light' and $topbar == 'dark' {
       box-shadow: $shadow-z16, 0 16px 16px 2px transparent, 0 6px 18px 5px transparent, inset 0 1px $titlebar;
     } @else if $variant == 'dark' {
-      box-shadow: 0 0 0 1px $popover-border, $shadow-z16, 0 16px 16px 2px transparent, 0 6px 18px 5px transparent;
+      box-shadow: $shadow-z16, 0 16px 16px 2px transparent, 0 6px 18px 5px transparent, 0 0 0 1px $popover-border;
     } @else {
-      box-shadow: 0 0 0 1px $line-ring, $shadow-z16, 0 16px 16px 2px transparent, 0 6px 18px 5px transparent;
+      box-shadow: $shadow-z16, 0 16px 16px 2px transparent, 0 6px 18px 5px transparent, 0 0 0 1px $line-ring;
     }
 
     &:backdrop {
@@ -4557,9 +4557,9 @@ window {
       @if $variant == 'light' and $topbar == 'dark' {
         box-shadow: $shadow-z4, 0 16px 16px 2px transparent, 0 6px 18px 5px transparent, inset 0 1px $titlebar-backdrop;
       } @else if $variant == 'dark' {
-        box-shadow: 0 0 0 1px $popover-border, $shadow-z4, 0 16px 16px 2px transparent, 0 6px 18px 5px transparent;
+        box-shadow: $shadow-z4, 0 16px 16px 2px transparent, 0 6px 18px 5px transparent, 0 0 0 1px $popover-border;
       } @else {
-        box-shadow: 0 0 0 1px $line-ring, $shadow-z4, 0 16px 16px 2px transparent, 0 6px 18px 5px transparent;
+        box-shadow: $shadow-z4, 0 16px 16px 2px transparent, 0 6px 18px 5px transparent, 0 0 0 1px $line-ring;
       }
     }
 

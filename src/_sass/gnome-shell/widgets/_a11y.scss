@@ -19,6 +19,7 @@
 
 // Screen zoom/Magnifier
 .magnifier-zoom-region {
-  border: 2px solid $primary;
+  // The accent's ring means focus only (the brand's intensity scale): the lens's edge is text.
+  border: 2px solid $text;
   &.full-screen { border-width: 0; }
 }

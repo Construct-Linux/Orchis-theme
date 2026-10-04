@@ -43,12 +43,12 @@ $mdborder_color: if($variant == 'light', rgba(black, 0.15), rgba(black, 0.75));
 
     &:hover {
       color: on($destructive) !important;
-      background-color: lighten($destructive, 9%);
+      background-color: mix(white, $destructive, 9%);
     }
 
     &:active {
       color: on($destructive) !important;
-      background-color: darken($destructive, 5%);
+      background-color: mix(black, $destructive, 5%);
     }
   }
 

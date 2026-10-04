@@ -55,13 +55,13 @@ $screenshot_ui_button_red: $error;
 
   &:hover, &:focus {
     .screenshot-ui-capture-button-circle {
-      background-color: darken(on(dark), 15%);
+      background-color: mix(black, on(dark), 15%);
     }
   }
 
   &:active {
     .screenshot-ui-capture-button-circle {
-      background-color: darken(on(dark), 50%);
+      background-color: mix(black, on(dark), 50%);
     }
   }
 
@@ -71,12 +71,12 @@ $screenshot_ui_button_red: $error;
     }
     &:hover, &:focus {
       .screenshot-ui-capture-button-circle {
-        background-color: lighten($screenshot_ui_button_red, 5%);
+        background-color: mix(white, $screenshot_ui_button_red, 5%);
       }
     }
     &:active {
       .screenshot-ui-capture-button-circle {
-        background-color: darken($screenshot_ui_button_red, 7%);
+        background-color: mix(black, $screenshot_ui_button_red, 7%);
       }
     }
   }

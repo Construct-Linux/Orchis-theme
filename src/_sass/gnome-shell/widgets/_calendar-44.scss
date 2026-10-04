@@ -60,7 +60,8 @@
   box-shadow: none;
   text-shadow: none;
   background: none;
-  color: $text-secondary;
+  // The menu's heading - the day and the date - is text; muted read it as a caption.
+  color: $text;
 
   // weekday label
   .day-label {
