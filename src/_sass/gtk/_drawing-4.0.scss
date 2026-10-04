@@ -107,7 +107,7 @@
                 background-image 0ms,
                 border 0ms;
     animation: ripple $ripple-fade-in-duration $ease-out forwards;
-    background-color: $overlay-hover;
+    background-color: $overlay-pressed;
     background-image: radial-gradient(circle, $overlay-active 10%, transparent 0%);
     background-size: 100% 100%;
   }
@@ -167,7 +167,7 @@
                 background-size 0ms,
                 background-image 0ms;
     animation: ripple $ripple-fade-in-duration $ease-out forwards;
-    background-color: $overlay-hover;
+    background-color: $overlay-pressed;
     background-image: radial-gradient(circle, $overlay-active 10%, transparent 0%);
     background-size: 100% 100%;
     color: $text;

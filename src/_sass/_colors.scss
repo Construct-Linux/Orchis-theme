@@ -187,6 +187,10 @@ $overlay-hover:                         gtkalpha(currentColor, 0.08);
 $overlay-focus:                         gtkalpha(currentColor, 0.08);
 $overlay-focus-hover:                   gtkalpha(currentColor, 0.16);
 $overlay-active:                        gtkalpha(currentColor, 0.12);
+// A held button's fill: a step past hover that reads by itself. The ripple drawn over it is an
+// animation; on GNOME 51 a button held half a second showed only the gradient's static 10%, a
+// dot at its centre, and otherwise hover's fill.
+$overlay-pressed:                       gtkalpha(currentColor, 0.16);
 $overlay-checked:                       gtkalpha(currentColor, 0.10);
 $overlay-selected:                      gtkalpha(currentColor, 0.06);
 
