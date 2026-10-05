@@ -61,7 +61,7 @@ $keyboard_active_bg_color: if($variant == 'light', mix(black, $keyboard, 20%), m
   -arrow-base: 20px;
   -arrow-rise: 10px;
   -boxpointer-gap: 5px;
-  box-shadow: $shell-shadow-z2;
+  box-shadow: $elevation-2;
 }
 
 // emoji

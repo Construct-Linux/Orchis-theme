@@ -16,7 +16,8 @@ $screenshot_ui_button_red: $error;
   color: on($osd);
   background-color: $osd;
   border: none;
-  box-shadow: $shell-shadow-z4;
+  // Over whatever is on the screen, as an OSD is: level 3.
+  box-shadow: $elevation-3;
   border-radius: $screenshot_ui_panel_border_radius;
   padding: $screenshot_ui_panel_padding;
   // Reduce the bottom padding a little to accommodate the large capture button.

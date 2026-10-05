@@ -49,5 +49,6 @@ $window_close_button_padding: 3px;
   border-radius: 30px;
   // The desktop's own ink, a step above the black ground.
   background-color: $construct-ink;
-  box-shadow: 0 4px 16px 4px rgba(black, 0.15);
+  // No shadow: a black one does not show on the black ground; the card stands by being lighter.
+  box-shadow: none;
 }

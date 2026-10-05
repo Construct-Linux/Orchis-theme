@@ -95,19 +95,14 @@
     background-color: if($variant == 'light', $base, on(dark, divider));
     margin: 2px 6px 6px;
     border: 2px solid transparent !important;
-    // One shadow: St draws only the first of a list, and logs "Ignoring excess values in shadow
-    // definition" for the rest at every entry it styles.
-    box-shadow: 0 3px 3px rgba(black, 0.24) !important;
+    // An entry is a field of the surface it sits on, not a level of its own (brand THEMING.md's
+    // elevation table): no shadow.
+    box-shadow: none !important;
   }
 
   @if $t == focus {
     color: $text;
-    box-shadow: 0 3px 3px rgba(black, 0.20) !important;
     border: 2px solid $primary !important;
-  }
-
-  @if $t == hover {
-    box-shadow: 0 3px 3px rgba(black, 0.20) !important;
   }
 
   @if $t == insensitive {

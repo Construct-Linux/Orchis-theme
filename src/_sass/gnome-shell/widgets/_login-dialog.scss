@@ -293,7 +293,7 @@
 
 .web-login-spinner {
   background-color: rgba(black, 0.5);
-  border-radius: 50px;
+  border-radius: $circular-radius;
 }
 
 .web-login-title-label { color: on(dark, secondary); text-align: center; }

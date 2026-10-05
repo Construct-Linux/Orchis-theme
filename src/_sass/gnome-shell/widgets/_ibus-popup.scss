@@ -12,7 +12,7 @@
 .candidate-popup-content {
   background-color: $surface;
   border-radius: $menu-radius;
-  box-shadow: 0 3px 8px rgba(black, 0.2);
+  box-shadow: $elevation-2;
   margin: ($space-size / 2) 10px 13px;
   padding: $space-size;
   spacing: $space-size;
