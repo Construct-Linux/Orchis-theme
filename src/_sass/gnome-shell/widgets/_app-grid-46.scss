@@ -107,8 +107,12 @@ StWidget.focused {
 }
 
 // expanded folder
-// Level 3 like the modal dialogs: raised, ringed; concentric with the tiles inside it.
+// Level 3 like the modal dialogs: raised, ringed; concentric with the tiles inside it. Its size is
+// the stylesheet's since GNOME Shell 51, no longer the folder view's: without one the dialog is as
+// tall as its name's row, and the apps it holds are cut off under it.
 .app-folder-dialog {
+  width: $app_folder_size;
+  height: $app_folder_size;
   border-radius: $radius-sheet * 2;
   border: 1px solid $popover-border;
   background-color: $popover;
