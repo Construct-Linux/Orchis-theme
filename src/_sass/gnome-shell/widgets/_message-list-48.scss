@@ -49,8 +49,13 @@
   @extend %heading;
 
   // With nothing to clear the shell leaves the button insensitive, still drawn: a greyed "Clear"
-  // under "No Notifications" asked to be read for nothing.
-  .message-list-clear-button:insensitive { opacity: 0; }
+  // under "No Notifications" asked to be read for nothing. St has no opacity property: the
+  // label and the fill go transparent instead.
+  .message-list-clear-button:insensitive {
+    color: transparent;
+    background-color: transparent;
+    box-shadow: none;
+  }
 }
 
 .message-notification-group {
