@@ -453,7 +453,8 @@ preferencespage > scrolledwindow > viewport > clamp > box {
   border-spacing: $space-size * 4;
 }
 
-// A group's title is the heading in the text colour, its description 9pt muted 3px under it,
+// A group's title is the heading in the text colour, its description 10pt muted 3px under it (9pt
+// read as fine print where it is the page's explanation),
 // and the list 12px below the header; groups are 24px apart (TY4).
 preferencesgroup > box {
   border-spacing: $space-size;
@@ -468,7 +469,7 @@ preferencesgroup > box {
     .labels > .heading { color: $text; }
 
     .labels > label:not(.heading) {
-      font-size: 9pt;
+      font-size: 10pt;
       color: $text-secondary;
     }
   }

@@ -231,11 +231,12 @@
     color: $accent-text !important;
   }
 
-  // Today selected, as the menu opens on it: the solid accent disc, a mark, with on_accent. The
-  // selected tint behind accent text read as a dim circle the eye had to look for.
+  // Today selected, as the menu opens on it: the on tint with text, as a quick toggle that is on.
+  // The selected tint behind accent text read as a dim circle the eye had to look for, and the
+  // solid accent disc as the loudest thing on the screen (the design review's round 1).
   &:selected, &:selected:hover {
-    color: on($primary) !important;
-    background-color: $primary !important;
+    color: $text !important;
+    background-color: rgba($primary, $tint-on) !important;
   }
 }
 
