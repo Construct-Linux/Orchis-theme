@@ -1368,8 +1368,10 @@ toolbarview {
 //
 
 floating-sheet {
+  // On dark windows a quarter of black left the parent's header bar legible around a dialog's
+  // top ("Op…", "New Document"), read as part of it (round 3's council, all three reviewers).
   > dimming {
-    background-color: rgba(black, 0.25);
+    background-color: rgba(black, if($variant == 'dark', 0.5, 0.25));
   }
 
   > sheet.background {
