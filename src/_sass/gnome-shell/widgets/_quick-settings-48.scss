@@ -208,6 +208,13 @@ $toggle-height: $space-size * 4 + $margin-size + $base-icon-size;
 
 // An expanded submenu: a g well inside the h menu (the brand's level 2a), not a white slab.
 .quick-toggle-menu {
+  // The popovers' icon size is a .popup-menu's, and quick settings is none: a network's signal or
+  // a Bluetooth device's icon took St's default 48px, its row twice a row's height, and with
+  // networks around the menu ran past the bottom of the screen and out of reach.
+  .popup-menu-icon {
+    icon-size: $base-icon-size;
+  }
+
   border-radius: $radius-sheet !important;
   padding: $space-size * 2;
   margin-top: $space-size * 2;
