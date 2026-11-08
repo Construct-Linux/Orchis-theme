@@ -2419,7 +2419,9 @@ switch {
     border-radius: $circular-radius;
     outline: none;
     box-shadow: 0 0 0 10px transparent, $shadow-z1;
-    background-color: $surface;
+    // In dark the surface is a row's own colour: an off switch on a row lost its knob and read as
+    // no control at all. The secondary text colour is light enough to stand out on any surface.
+    background-color: if($variant == 'light', $surface, $text-secondary);
   }
 
   &:focus > slider { box-shadow: 0 0 0 10px $overlay-focus, $shadow-z1; }
