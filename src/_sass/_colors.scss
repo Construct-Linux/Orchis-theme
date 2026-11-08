@@ -103,6 +103,9 @@ $selection-alpha:                       if($variant == 'light', $construct-selec
 // accent edge; never a resting surface. A switch's track; its knob is the full accent.
 $tint-decoration:                       if($variant == 'light', $construct-tint-decoration-dark, $construct-tint-decoration-light);
 $tint-track:                            if($variant == 'light', $construct-tint-track-dark, $construct-tint-track-light);
+$tints-on:                              if($variant == 'light', $construct-tint-on-dark, $construct-tint-on-light);
+$tint-on:                               nth($tints-on, 1);
+$tint-on-hover:                         nth($tints-on, 2);
 $drop_target_color:                     $orange-dark;
 // A window is never the desktop's ink: e is the wallpaper's own colour, so a dark window body
 // one step up keeps its edge.

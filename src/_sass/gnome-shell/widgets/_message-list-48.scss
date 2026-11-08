@@ -81,15 +81,16 @@
     box-shadow: none;
     margin: $margin-size;
     color: $text-secondary;
-    // Translucent, so a card stays a step above whatever the menu stands on.
-    background-color: rgba($text, 0.06) !important;
+    // Opaque, a step above the menu's surface: a stacked group's cards lie under the top one, and
+    // through a translucent card their text read as one smear.
+    background-color: mix($text, $popover, 6%) !important;
 
     &:hover {
-      background-color: rgba($text, 0.10) !important;
+      background-color: mix($text, $popover, 10%) !important;
     }
 
     &:active {
-      background-color: rgba($text, 0.14) !important;
+      background-color: mix($text, $popover, 14%) !important;
     }
   }
 

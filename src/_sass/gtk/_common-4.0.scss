@@ -150,8 +150,10 @@ label {
   }
 }
 
+// libadwaita's dim-label is secondary text - group descriptions, row subtitles, status lines - not
+// disabled: in the disabled colour the sentence that explains a page read as switched off.
 %dim-label, .dim-label {
-  color: $text-disabled;
+  color: $text-secondary;
   opacity: 1;
 }
 

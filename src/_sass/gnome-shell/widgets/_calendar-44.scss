@@ -207,7 +207,8 @@
   padding: $space-size 0 0 !important;
   border-radius: $circular-radius;
   background-color: transparent !important;
-  color: $text-disabled !important;
+  // The weekdays label the columns: secondary text, not disabled.
+  color: $text-secondary !important;
   @include font(caption);
   text-align: center;
 }
@@ -226,8 +227,15 @@
   color: $accent-text !important;
 
   // .calendar-day's weekend and states outrank .calendar-today alone
-  &.calendar-weekend, &:hover, &:focus, &:active, &:selected {
+  &.calendar-weekend, &:hover, &:focus, &:active {
     color: $accent-text !important;
+  }
+
+  // Today selected, as the menu opens on it: the solid accent disc, a mark, with on_accent. The
+  // selected tint behind accent text read as a dim circle the eye had to look for.
+  &:selected, &:selected:hover {
+    color: on($primary) !important;
+    background-color: $primary !important;
   }
 }
 
