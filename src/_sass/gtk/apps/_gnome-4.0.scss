@@ -191,8 +191,10 @@
     border-radius: $window-radius;
     color: $titlebar-text-secondary;
 
+    // The list starts at the pane's edge, as every navigation sidebar's: a row's selection is a pill
+    // against that edge, and a margin here left Files' floating inside the pane.
     > scrolledwindow {
-      margin: 0 0 $space-size * 2 $space-size * 2;
+      margin: 0 0 $space-size * 2 0;
       border-radius: $window-radius - $space-size;
       background-color: transparent;
 
@@ -217,7 +219,7 @@
           }
 
           > row.activatable {
-            border-radius: 0;
+            border-radius: 0 $circular-radius $circular-radius 0;
             padding: 0;
             margin: 0 $space-size 0 0;
             animation: none;
@@ -282,12 +284,14 @@
               }
             }
 
-            // The selected place is selected as every sidebar's row is: the accent's tint as a pill
-            // against the pane's edge, its icon the accent; in light the raised surface with its line
-            // and the label in the text at 700. A tab cut out of a tint, in the view's colour, read as
-            // a square with a hole: the pane and the view are one colour here.
+            // The selected place is selected as every sidebar's row is (sidebar-row): the row, not the
+            // box inside it, carries the accent's tint as a pill against the pane's edge, its icon the
+            // accent; in light the raised surface with its line and the label in the text at 700.
+            // Drawn on the inner box, inset by the revealer's padding, it floated off the edge with a
+            // shape no other sidebar had (Files beside the Construct app and Settings).
             &:selected {
-              background-color: transparent;
+              background-color: if($variant == 'light', $construct-bg-a, color-mix(in srgb, $primary #{$tint * 100%}, transparent));
+              box-shadow: if($variant == 'light', $state-line, none);
               font-weight: 700;
 
               image {
@@ -306,9 +310,6 @@
 
               > revealer > box {
                 color: if($variant == 'light', $text, $accent-text);
-                background-color: if($variant == 'light', $construct-bg-a, color-mix(in srgb, $primary #{$tint * 100%}, transparent));
-                box-shadow: $state-line;
-                border-radius: 0 $circular-radius $circular-radius 0;
               }
 
               button.sidebar-button {
