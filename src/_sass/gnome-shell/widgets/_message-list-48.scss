@@ -18,7 +18,8 @@
 
     // icon size and color
     > StIcon {
-      icon-size: 96px; // 48px
+      // GNOME's size: at twice it, an empty list was half the date menu given to one bell.
+      icon-size: 48px;
       margin-bottom: $margin-size * 3;
       -st-icon-style: symbolic;
     }
@@ -46,6 +47,10 @@
   padding: $margin-size;
   spacing: $space-size * 2;
   @extend %heading;
+
+  // With nothing to clear the shell leaves the button insensitive, still drawn: a greyed "Clear"
+  // under "No Notifications" asked to be read for nothing.
+  .message-list-clear-button:insensitive { opacity: 0; }
 }
 
 .message-notification-group {
