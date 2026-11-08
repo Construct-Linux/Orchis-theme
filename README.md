@@ -17,7 +17,8 @@ It builds two themes, `Orchis-Construct-Light` and `Orchis-Construct-Dark`, with
 
 The accent, the surfaces and the success, warning and error colours come from the brand
 repository's `palette.toml`, through its generated `palette/construct.scss`, copied here as
-`src/_sass/_construct-palette.scss`. The GTK PNG assets are rendered from `src/gtk/assets.svg`
+`src/_sass/_construct-palette.scss` by os's `task fork:brand -- orchis-theme`, from brand at the
+commit the image pins (recorded in `brand.ref`); `task fork:check` fails a copy of any other. The GTK PNG assets are rendered from `src/gtk/assets.svg`
 by `src/gtk/render-assets.sh` (Inkscape) and committed.
 
 ## Build and install
